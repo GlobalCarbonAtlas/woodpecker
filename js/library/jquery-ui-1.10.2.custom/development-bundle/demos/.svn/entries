@@ -1,0 +1,129 @@
+10
+
+dir
+75
+svn+ssh://forge.ipsl.jussieu.fr/ipsl/forge/projets/carbon/svn/globalAtlasCarbon/trunk/web/js/library/jquery-ui-1.10.2.custom/development-bundle/demos
+svn+ssh://forge.ipsl.jussieu.fr/ipsl/forge/projets/carbon/svn
+
+
+
+2013-04-08T10:04:11.594134Z
+75
+vmipsl
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+04fdbe24-03cd-46c0-91f6-6dc121fcdb30
+
+
+
+
+
+
+0
+
+accordion
+dir
+
+autocomplete
+dir
+
+button
+dir
+
+datepicker
+dir
+
+demos.css
+file
+
+
+
+
+2013-04-08T00:37:52.000000Z
+c7fc917de57fba6b610ad6191fc1a28a
+2013-04-08T10:04:11.594134Z
+75
+vmipsl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+287
+
+dialog
+dir
+
+draggable
+dir
+
+droppable
+dir
+
+effect
+dir
+
+images
+dir
+
+menu
+dir
+
+position
+dir
+
+progressbar
+dir
+
+resizable
+dir
+
+selectable
+dir
+
+slider
+dir
+
+sortable
+dir
+
+spinner
+dir
+
+tabs
+dir
+
+tooltip
+dir
+
+widget
+dir
+

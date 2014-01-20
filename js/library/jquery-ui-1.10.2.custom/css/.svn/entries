@@ -1,0 +1,38 @@
+10
+
+dir
+75
+svn+ssh://forge.ipsl.jussieu.fr/ipsl/forge/projets/carbon/svn/globalAtlasCarbon/trunk/web/js/library/jquery-ui-1.10.2.custom/css
+svn+ssh://forge.ipsl.jussieu.fr/ipsl/forge/projets/carbon/svn
+
+
+
+2013-04-08T10:04:11.594134Z
+75
+vmipsl
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+04fdbe24-03cd-46c0-91f6-6dc121fcdb30
+
+
+
+
+
+
+0
+
+ui-lightness
+dir
+

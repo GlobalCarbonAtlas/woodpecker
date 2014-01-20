@@ -1,0 +1,573 @@
+body {
+    font-family: "Ubuntu", Arial, sans-serif;
+    margin: 0;
+    font-size: 13px;
+    color: #333333;
+}
+
+#pageWrapper {
+    text-align: left;
+    width: 100%;
+    line-height: 1.1em;
+    height: 100%;
+    float: left;
+}
+
+select {
+    background-color: white;
+}
+
+#pageWrapper h2 {
+    color: #464646;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 26px;
+    margin: 0;
+    padding-left: 34px;
+    position: relative;
+    font-family: "Ubuntu",Arial,sans-serif;
+}
+
+
+/* ============================================== */
+#printable {
+    display: none;
+}
+
+@media print {
+    #non-printable, #leftMenu, #hideOrShowLeftMenu, #rightMenu, #hideOrShowRightMenu {
+        display: none;
+    }
+
+    #printable {
+        display: block;
+    }
+}
+
+/* ============================================== */
+
+select {
+    background-color: white;
+}
+
+/* ******************************************************** */
+/* *********************** SCROLLBAR ********************** */
+/* ******************************************************** */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track-piece {
+/*Fond*/
+    background: transparent none;
+    border: solid 4px transparent;
+    border-right-width: 8px;
+    margin: 4px;
+    -webkit-box-shadow: inset 1px 1px 0 0 rgb(137, 131, 117), inset -1px -1px 0 0 rgb(224, 220, 210);
+}
+
+::-webkit-scrollbar-thumb {
+/* Barre */
+    border: solid 0 transparent;
+    border-right-width: 4px;
+    -webkit-border-radius: 5px;
+    -webkit-border-top-right-radius: 9px 5px;
+    -webkit-border-bottom-right-radius: 9px 5px;
+    -webkit-box-shadow: inset 0 0 0 1px rgb(79, 79, 79), inset 0 0 0 6px rgb(102, 102, 102);
+}
+
+
+/****************************************************************/
+/************************ LEFT MENU *****************************/
+/****************************************************************/
+#leftMenu {
+    width: 200px;
+    height: 100%;
+    background-color: #f2f2f2;
+    float: left;
+    border-right: 1px solid #d6d6d6;
+    position: relative;
+    padding: 0 1px;
+}
+
+.firstLeftMenu {
+    padding-top: 0 !important;
+}
+
+.leftMenu {
+    padding: 10px 1px 11px 0;
+    float: left;
+    width: 100%;
+    background-color: #f2f2f2;
+    border-right: 1px solid #d6d6d6;
+}
+
+.leftMenu h2 {
+    margin-bottom: 5px;
+}
+
+.leftMenu h2 img {
+    left: 0;
+    position: absolute;
+    top: 0;
+}
+
+.leftMenu h5 {
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 14px;
+    margin: 5px 10px;
+}
+
+/********************* STYLES WEDOODATA *************************/
+.menu_link_left, .menu_link_middle, .menu_link_right {
+    color: #333333;
+    display: block;
+    font-size: 10px;
+    height: 32px;
+    line-height: 32px;
+    position: relative;
+    text-decoration: none;
+    text-indent: 10px;
+    text-shadow: 1px 1px #B3B3B3;
+    text-transform: uppercase;
+    float: left;
+}
+
+.menu_link_middle {
+    margin-left: 15px;
+}
+
+/* CENTER */
+.menu_title {
+    background: url("../img/WDD/btn_menu_default_middle.png") repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: left;
+    width: 100%;
+}
+
+.menu_title.active {
+    background: url("../img/WDD/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
+}
+
+.menu_title.disabled {
+    background: url("../img/WDD/btn_menu_disabled_middle.png") repeat scroll 0 0 transparent;
+    cursor: default;
+}
+
+/* LEFT */
+.menu_title .menu_link_left {
+    background: url("../img/WDD/btn_menu_default_left.png") no-repeat scroll 0 0 transparent;
+    width: 5px;
+}
+
+.menu_title.active .menu_link_left {
+    background: url("../img/WDD/btn_menu_active_left.png") no-repeat scroll 0 0 transparent;
+    width: 5px;
+}
+
+.menu_title.disabled .menu_link_left {
+    background: url("../img/WDD/btn_menu_disabled_left.png") no-repeat scroll 0 0 transparent;
+    width: 5px;
+    cursor: default;
+}
+
+/* RIGHT */
+.menu_title .menu_link_right {
+    background: url("../img/WDD/btn_menu_default_right.png") no-repeat scroll 0 0 transparent;
+    float: right;
+    width: 28px;
+}
+
+.menu_title.active .menu_link_right {
+    background: url("../img/WDD/btn_menu_active_right.png") no-repeat scroll 0 0 transparent;
+    float: right;
+    width: 29px;
+}
+
+.menu_title.disabled .menu_link_right {
+    background: url("../img/WDD/btn_menu_disabled_right.png") no-repeat scroll 0 0 transparent;
+    float: right;
+    width: 30px;
+    cursor: default;
+}
+
+/* MENU_LIST */
+.menu_list {
+    height: 175px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: none;
+}
+
+.menu_list_item {
+    border-bottom: 1px solid #4B4B4B;
+    color: #4B4B4B;
+    display: block;
+    font-size: 10px;
+    height: 24px;
+    line-height: 24px;
+    text-decoration: none;
+    text-indent: 10px; /*text-transform: uppercase;*/
+    cursor: pointer;
+}
+
+.menu_list_item:hover {
+    background-color: #4B4B4B;
+    color: #D6D6D6;
+}
+
+.menu_list_item.selected, .menu_list_item:active {
+    background-color: #4B4B4B;
+    color: #faa62e;
+}
+
+/****************************************************************/
+
+/*********************** FANCY MENU *****************************/
+.fancytree-container {
+    background: none !important;
+    border: none;
+    font: none !important;
+    height: auto !important;
+}
+
+.fancytree-container span {
+    color: #333333;
+}
+
+span.fancytree-selected .fancytree-title {
+    font-style: normal;
+}
+
+.fancytree-title {
+    color: #333333 !important;
+    outline: none !important;
+}
+
+span.fancytree-selected .fancytree-title, span.fancytree-active .fancytree-title, .fancytree-focused span.fancytree-selected .fancytree-title, .fancytree-focused span.fancytree-active .fancytree-title {
+    background-color: #FAA62E;
+    color: white !important;
+}
+
+span.fancytree-title div.complexToolTip {
+    display: none;
+}
+
+span.fancytree-title:hover div.complexToolTip {
+    display: block;
+    position: absolute;
+    padding: .5em;
+    content: attr(title);
+   // min-width: 600px;
+    text-align: left;
+    width: auto;
+    height: auto;
+    white-space: normal;
+    margin-top: -13px;
+    margin-left: 50px;
+    background-color: #333333;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    color: #F2F2F2;
+    font-size: .86em;
+}
+
+/****************************************************************/
+/************************ JQuery Dialog *************************/
+/****************************************************************/
+.hideMode {
+    color: #7F7F7F;
+}
+
+/****************************************************************/
+/************************ RIGHT MENU *****************************/
+/****************************************************************/
+#rightMenu {
+    width: 150px;
+    height: 100%;
+    background-color: #f2f2f2;
+    float: right;
+    border-right: 1px solid #d6d6d6;
+    -moz-box-shadow: 0 0 2px rgba(101, 152, 30, 1);
+    -webkit-box-shadow: 0 0 2px rgba(101, 152, 30, 1);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.rightMenuBubble {
+    float: left;
+    margin-left: -21px;
+}
+
+.rightMenuTitle {
+    float: left;
+    background-color: #333333;
+    height: 15px;
+    width: 100%; /*margin: -25px 0 13px;*/
+    padding: 5px 0;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.rightMenuTool {
+    text-align: center;
+    padding-bottom: 13px;
+    background-color: #f2f2f2;
+}
+
+.rightMenu.selected {
+    color: #416A8A;
+}
+
+.rightMenuTool h2 {
+    padding: 0 !important;
+    margin-bottom: 10px;
+}
+
+.rightMenuTool label {
+    display: inline;
+    font-weight: normal;
+}
+
+/****************************************************************/
+/************************* BUTTONS ******************************/
+/****************************************************************/
+.orangeButton {
+    background: url("../img/WDD/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
+    color: white;
+    font-size: 11px;
+    line-height: 28px;
+    text-shadow: 1px 1px #B3B3B3;
+    text-transform: uppercase;
+    margin: 10px auto -5px;
+    padding: 3px 11px;
+    text-align: center;
+    border-right: 1px solid #b04b15;
+    border-left: 1px solid #b04b15;
+    font-weight: 500;
+    height: 26px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.orangeButton:hover {
+    text-shadow: none;
+    background: none;
+    background-color: #416A8A;
+}
+
+.orangeButton.disabled, .orangeButton.disabled:hover {
+    background: url("../img/WDD/btn_menu_disabled_middle.png") repeat scroll 0 0 transparent;
+    color: white;
+    border: none;
+    border-right: 1px solid #777878;
+    border-left: 1px solid #777878;
+    cursor: default;
+}
+
+#submitDeleteMaps .lonelyToolIcone {
+    margin-top: 4px;
+}
+
+#submitcreate[disabled], #submitcreate[disabled]:hover, #submitShowAllLegends[disabled], #submitShowAllLegends[disabled]:hover, #submitHideAllLegends[disabled], #submitHideAllLegends[disabled]:hover {
+    background: -moz-linear-gradient(center top, #7F7F7F -200%, #FFFFFF 80%, #7F7F7F 197%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ccc6c3), color-stop(24%, #828c95), color-stop(41%, #000000), color-stop(100%, #7f7f7f)); /* Chrome, Safari4 + */
+    background: -webkit-linear-gradient(top, #7F7F7F -70%, #FFFFFF 67%, #7F7F7F 113%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #7F7F7F -70%, #FFFFFF 67%, #7F7F7F 113%); /* Opera 11.10+ */
+    background: linear-gradient(#7F7F7F -200%, #FFFFFF 80%, #7F7F7F 197%); /* W3C */
+    color: white;
+    opacity: 0.4;
+}
+
+/* ******************************************************** */
+/* ************************* ERROR ************************ */
+/* ******************************************************** */
+#errors {
+    color: #464646;
+    display: none;
+    min-width: 200px;
+    margin: 10px;
+    position: absolute;
+    z-index: 1;
+    opacity: 0.95;
+}
+
+#errors .containerTitle {
+    background: url("../img/WDD/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
+    color: #464646;
+    font-weight: bold;
+    font-size: 14px;
+    height: 18px;
+    padding: 7px;
+    border-radius: 8px 8px 0 0;
+}
+
+#errors .containerTitleText {
+    float: left;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+#errors .containerTitleClose {
+    float: right;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+#errors .containerContent {
+    background: none repeat scroll 0 0 #faa62e;
+    padding: 10px;
+    border-radius: 0 0 8px 8px;
+}
+
+/* ******************************************************** */
+/* ************************* OTHER ************************ */
+/* ******************************************************** */
+.ui-dialog {
+    z-index:10000 !important;
+}
+
+/******************** HELP ***********************/
+#helpMenu {
+    float: right;
+    margin-right: -1px;
+    cursor: pointer;
+}
+
+.helpFooter {
+    position: absolute;
+    bottom: 10px;
+    width: 91%;
+    line-height: 55px;
+    vertical-align: middle;
+    color: #CCCCCC;
+    font-weight: bold;
+    font-size: 17px;
+    padding: 0 40px;
+}
+
+.helpFooterContentLeft {
+    float: left;
+}
+
+.helpFooterContentMiddle {
+    float: left;
+    font-size: 11px;
+    margin: 0 70px;
+}
+
+.helpFooterContentRight {
+    float: right;
+}
+
+.helpFooterContentFloat {
+    float:left;
+    margin-left: 10px;
+    text-align: center;
+}
+
+.helpFooterLogo1 {
+    position: relative;
+    top:4px;
+}
+
+.helpFooterLogo2{
+    position: relative;
+    top:16px;
+    margin-right: 30px;
+}
+
+/******************** BUBBLE ***********************/
+#variablesBubble:before {
+    background: none repeat scroll 0 0 #FAA62E;
+    border-radius: 30px 30px 30px 30px;
+    content: "";
+    height: 20px;
+    position: absolute;
+    width: 20px;
+    top: -17px;
+    right: 25px;
+}
+
+#variablesBubble:after {
+    background: none repeat scroll 0 0 #FAA62E;
+    border-radius: 15px 15px 15px 15px;
+    content: "";
+    height: 10px;
+    position: absolute;
+    width: 10px;
+    top: -27px;
+    right: 45px;
+}
+
+#variablesBubble {
+    background: none repeat scroll 0 0 #FAA62E;
+    border-radius: 24px;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 5px;
+    position: relative;
+    text-align: center;
+    display: none;
+}
+
+
+/******************** PERIOD ***********************/
+#periodSelect {
+    margin-left: 19px;
+}
+
+.period {
+    font-size: 12px;
+    position: relative;
+    top: -3px;
+}
+
+/******************** RESOURCES & VARIABLES ***********************/
+#resourceSelect ul, #regionSelect ul {
+    outline: none !important;
+}
+
+#resourceSelect {
+    max-height: 175px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+#btnResetSearchResource {
+    cursor: pointer;
+}
+
+#variableSelect, #periodSelect {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 19px;
+    font-size: 12px;
+}
+
+#periodSelect label, #variableSelect label {
+   font-weight:normal;
+   display: inline;
+   margin-left: 5px;
+   position: relative;
+//   top:-2px;
+}
+
+/******************** OTHER ***********************/
+.noticeLSCE {
+//    border-top: 1px solid #CCCCCC;
+//    background-color: white;
+    text-align: center;
+    color: #464646;
+    font-size: 9px;
+}
+
+
+

@@ -1,0 +1,7 @@
+
+sudo convert -colorspace Gray zoom-minus-mini.png zoom-minus-mini2.png
+sudo convert -colorspace Gray zoom-plus-mini.png zoom-plus-mini2.png
+
+sudo wget http://icons.iconarchive.com/icons/visualpharm/icons8-metro-style/32/Maps-and-Geolocation-Layers-icon.png .
+sudo convert -gamma 0 -geometry 26x26 Maps-and-Geolocation-Layers-icon.png layer-switcher-maximize.png
+
