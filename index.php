@@ -45,7 +45,6 @@
 
  	<?php include "body_ts.php" ?>
 
-test webportals
 </BODY>
 </HTML>
 
