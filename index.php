@@ -22,28 +22,29 @@
     <link rel="stylesheet" type="text/css" href="css/WPInterface.css">
     <link rel="stylesheet" type="text/css" href="js/library/jquery-ui-1.10.2.custom/css/smoothness/jquery-ui-1.10.2.custom.css">
 
-    <script type="text/javascript" src="js/d3.v3/d3.v3.js"></script>
-    <script type="text/javascript" src="js/library/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="js/library/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>
-    <script type="text/javascript" src="js/library/jquery.class.js"></script>
-    <script type="text/javascript" src="js/jshashtable-2.1.js"></script>
+    <!--    Files already called by Woodpecker -->
+    <!--    <script type="text/javascript" src="js/d3.v3/d3.v3.js"></script>-->
+    <!--    <script type="text/javascript" src="js/library/jquery-1.9.1.js"></script>-->
+    <!--    <script type="text/javascript" src="js/library/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>-->
+    <!--    <script type="text/javascript" src="js/library/jquery.class.js"></script>-->
+    <!--    <script type="text/javascript" src="js/jshashtable-2.1.js"></script>-->
+    <?php include "Woodpecker/Woodpecker.html" ?>
     <script type="text/javascript" src="js/helper.js"></script>
     <script type="text/javascript" src="js/OpenLayers-2.12/OpenLayers.js"></script>
     <script type="text/javascript" src="js/Help.js"></script>
     <script type="text/javascript" src="js/fancytree-master/src/jquery.fancytree.js"></script>
     <script type="text/javascript" src="js/fancytree-master/src/jquery.fancytree.filter.js"></script>
-    <script type="text/javascript" src="js/library/jquery.i18n.properties-1.0.9.js" ></script>
+    <script type="text/javascript" src="js/library/jquery.i18n.properties-1.0.9.js"></script>
 
     <script type="text/javascript" src="js/regions_categories.js"></script>
     <script type="text/javascript" src="js/WPInterface.js"></script>
-    <?php include "Woodpecker/Woodpecker.html" ?>
 
     <?php include_once "analyticstracking.php" ?>
 
 </HEAD>
 <BODY>
 
- 	<?php include "body_ts.php" ?>
+<?php include "body_ts.php" ?>
 
 </BODY>
 </HTML>

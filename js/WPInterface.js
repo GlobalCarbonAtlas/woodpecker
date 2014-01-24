@@ -19,28 +19,28 @@ var WPInterfaceW = Class.create( {
         this.variable = false;
         this.dataToDisplay = new Array();
         this.graph = false;
-	this.displayFirstVariable = true;
+        this.displayFirstVariable = true;
 
-	this.threddsPath = jQuery.i18n.prop("threddsPath") != "[threddsPath]" ? jQuery.i18n.prop("threddsPath") : "Atlas/Flux";
-	this.imgPath = "img";
-	
-	/**
+        this.threddsPath = jQuery.i18n.prop( "threddsPath" ) != "[threddsPath]" ? jQuery.i18n.prop( "threddsPath" ) : "Atlas/Flux";
+        this.imgPath = "img";
+
+        /**
          * This hash contains :
-	 *   - key : the region key
+         *   - key : the region key
          *   - values : [the region name to display, the title of region parent] */
         this.selectedRegionKeys = new Array();
         this.hashRegions = new Hashtable();
         this.fillHash( this.hashRegions, regionsTreeData, false );
 
-	/**
+        /**
          * This hash contains :
          *   - key : the file name
-	 *   - values : [the file name to display, the url, the title of resource parent] */
+         *   - values : [the file name to display, the url, the title of resource parent] */
         this.selectedResourceKeys = new Array();
         this.hashResources = new Hashtable();
         this.fillHash( this.hashResources, resourcesTreeData, false );
 
-	/** This hashVariables contains :
+        /** This hashVariables contains :
          *   - key : the variable name
          *   - values : the name to display */
         this.hashVariables = new Hashtable();
@@ -48,13 +48,13 @@ var WPInterfaceW = Class.create( {
         this.variableNamesToDisplay = variableNamesToKeepArray;
 
         // Keys
-	this.isShiftKeyPressed = false;
+        this.isShiftKeyPressed = false;
         this.isCtrlKeyPressed = false;
         $( document ).keydown( jQuery.proxy( function( event )
         {
             this.isShiftKeyPressed = (16 == event.keyCode);
             this.isCtrlKeyPressed = (17 == event.keyCode);
-	    if( 112 == event.keyCode )
+            if( 112 == event.keyCode )
             {
                 if( this.help )
                     this.removeHelp();
@@ -68,11 +68,11 @@ var WPInterfaceW = Class.create( {
             this.isCtrlKeyPressed = false;
         }, this ) );
 
-	this.createOrUpdateSelectedPeriod();
+        this.createOrUpdateSelectedPeriod();
         this.bindActions();
-	this.createRegionSelect( regionsTreeData );
+        this.createRegionSelect( regionsTreeData );
         this.mapregion1 = this.createRegionMap();
-	this.createResourceSelect( resourcesTreeData );
+        this.createResourceSelect( resourcesTreeData );
 
     },
 
@@ -105,7 +105,7 @@ var WPInterfaceW = Class.create( {
                 data.node.setSelected( !data.node.isSelected() );
                 data.node.setActive( false );
             },
-	    expand: jQuery.proxy( function()
+            expand: jQuery.proxy( function()
             {
                 this.activateTitleForRegionMap();
             }, this )
@@ -134,8 +134,8 @@ var WPInterfaceW = Class.create( {
                     $( "input[name=searchRegion]" ).val( "" );
                     tree.clearFilter();
                 } ).attr( "disabled", true );
-	
-	this.activateTitleForRegionMap();
+
+        this.activateTitleForRegionMap();
     },
 
     activateTitleForRegionMap: function()
@@ -163,61 +163,61 @@ var WPInterfaceW = Class.create( {
                 if( !node.folder )
                     return node.key;
             } );
-	this.activateTitleForRegionMap();
-	this.createVariables();
-	this.displayVariableBubble();
+        this.activateTitleForRegionMap();
+        this.createVariables();
+        this.displayVariableBubble();
     },
 
-    createRegionMap: function(region)
+    createRegionMap: function( region )
     {
-	$("#regionMapDiv").show();
+        $( "#regionMapDiv" ).show();
         var mapland = new OpenLayers.Layer.WMS(
                 "Land mask",
                 "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-                {
-                VERSION: '1.1.1',
-                LAYERS: "GCA:GCA_landMask",
-                transparent: true,
-                FORMAT: 'image/png',
-                }, {
-                isBaseLayer: true,
-                wrapDateLine: true
-                });
-            
-        var mapregion1  = new OpenLayers.Layer.WMS(
-            "Region",
-	    "http://www.globalcarbonatlas.org:8080/thredds/wms/Atlas/Flux/Inversions/yearlymean/regions/regions_mask.nc",
-            {   
-                VERSION: '1.3.0',
-                LAYERS: 'mask_region',
-                ELEVATION: region,
-                NUMCOLORBANDS: 1,
-                STYLES: 'boxfill/orange' ,
-                COLORSCALERANGE: '1,1',
-                TRANSPARENT: 'true', 
-                ABOVEMAXCOLOR: 'transparent',
-                BELOWMINCOLOR: 'transparent',
-                FORMAT: 'image/png'
-            }, {
-                opacity: 0.75
-            } );
-                        
-         var map1 = new OpenLayers.Map( 'regionMap',
-                        {
-			controls: [], 		// to remove zoom control (select2 is modal so disable other actions elsewhere)
-                        projection: new OpenLayers.Projection( "EPSG:3857" ),
-                        tileSize:  new OpenLayers.Size(128,128)
-                        });
-         map1.addLayers([mapland, mapregion1]);
-         map1.zoomToMaxExtent();
-	 $("#regionMapDiv").hide();
+        {
+            VERSION: '1.1.1',
+            LAYERS: "GCA:GCA_landMask",
+            transparent: true,
+            FORMAT: 'image/png'
+        }, {
+            isBaseLayer: true,
+            wrapDateLine: true
+        } );
 
-	 return mapregion1;
+        var mapregion1 = new OpenLayers.Layer.WMS(
+                "Region",
+                "http://www.globalcarbonatlas.org:8080/thredds/wms/Atlas/Flux/Inversions/yearlymean/regions/regions_mask.nc",
+        {
+            VERSION: '1.3.0',
+            LAYERS: 'mask_region',
+            ELEVATION: region,
+            NUMCOLORBANDS: 1,
+            STYLES: 'boxfill/orange' ,
+            COLORSCALERANGE: '1,1',
+            TRANSPARENT: 'true',
+            ABOVEMAXCOLOR: 'transparent',
+            BELOWMINCOLOR: 'transparent',
+            FORMAT: 'image/png'
+        }, {
+            opacity: 0.75
+        } );
+
+        var map1 = new OpenLayers.Map( 'regionMap',
+        {
+            controls: [],         // to remove zoom control (select2 is modal so disable other actions elsewhere)
+            projection: new OpenLayers.Projection( "EPSG:3857" ),
+            tileSize:  new OpenLayers.Size( 128, 128 )
+        } );
+        map1.addLayers( [mapland, mapregion1] );
+        map1.zoomToMaxExtent();
+        $( "#regionMapDiv" ).hide();
+
+        return mapregion1;
     },
 
-    updateRegionMap: function(newregion)
+    updateRegionMap: function( newregion )
     {
-	this.mapregion1.mergeNewParams({ ELEVATION: newregion });
+        this.mapregion1.mergeNewParams( { ELEVATION: newregion } );
     },
 
 
@@ -240,7 +240,7 @@ var WPInterfaceW = Class.create( {
     getSelectedPeriodValue: function( resourceKey )
     {
         if( "longterm" == this.selectedPeriod.value )
-	    if( "Inversions" == resourceKey )
+            if( "Inversions" == resourceKey )
                 return "longterm-2001-2004";
             else
                 return "longterm-2000-2009";
@@ -335,18 +335,18 @@ var WPInterfaceW = Class.create( {
     },
 
     /**
-    * We take only the first region to get variables because they are the same between each regions
-    */
+     * We take only the first region to get variables because they are the same between each regions
+     */
     createAllVariables: function( i )
     {
         if( i < this.selectedResourceKeys.length )
         {
-	    var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[i] )[1] );
-	    // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
-	    var url = "http://" + location.hostname + "/thredds/wms/" + this.threddsPath + "/" +
+            var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[i] )[1] );
+            // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
+            var url = "http://" + location.hostname + "/thredds/wms/" + this.threddsPath + "/" +
                     this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
                     this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
-	    //var url = "http://" + location.hostname + "/thredds/wms?DATASET=/data/Flux/" +
+            //var url = "http://" + location.hostname + "/thredds/wms?DATASET=/data/Flux/" +
             //        this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
             //        this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
 
@@ -362,7 +362,7 @@ var WPInterfaceW = Class.create( {
             }
 
             this.variable = this.hashVariables.keys()[0];
-	    this.hashVariables = sortHashTable( this.hashVariables );
+            this.hashVariables = sortHashTable( this.hashVariables );
             jQuery.each( this.hashVariables.keys(), jQuery.proxy( function( i, d )
             {
                 var divVariable = $( '<input type="radio" name="variableRadio" id="' + d + '"><label for="' + d + '"><span class="variable">' + this.hashVariables.get( d ) + '</span></label><BR/>' );
@@ -371,13 +371,13 @@ var WPInterfaceW = Class.create( {
                     if( "label" == element.currentTarget.localName )
                         return;
                     this.variable = element.currentTarget.id;
-                    this.extractDataFromCSVAndDisplayGraph( 0,0 );
+                    this.extractDataFromCSVAndDisplayGraph( 0, 0 );
                     this.hideVariableBubble();
                 }, this ) );
                 $( "#variableSelect" ).append( divVariable );
             }, this ) );
 
-           if( this.displayFirstVariable )
+            if( this.displayFirstVariable )
             {
                 $( "#" + this.hashVariables.keys()[0] ).click();
                 this.displayFirstVariable = false;
@@ -387,10 +387,10 @@ var WPInterfaceW = Class.create( {
 
     getVariables: function( url, i )
     {
-	$.ajax( {
+        $.ajax( {
             type: "GET",
-           url: url,
-	    dataType: "xml",
+            url: url,
+            dataType: "xml",
             success: jQuery.proxy( function( xml )
             {
                 this.getVariablesSuccess( xml, i );
@@ -404,7 +404,7 @@ var WPInterfaceW = Class.create( {
 
     getVariablesSuccess: function( data, i )
     {
-	$( data ).find( 'Layer' ).each( jQuery.proxy( function( i, element )
+        $( data ).find( 'Layer' ).each( jQuery.proxy( function( i, element )
         {
             if( '1' == $( element ).attr( 'queryable' ) )
             {
@@ -416,12 +416,12 @@ var WPInterfaceW = Class.create( {
         }, this ) );
         this.reduceVariablesByRegionByResource();
         i++;
-        this.createAllVariables(i);
+        this.createAllVariables( i );
     },
 
     reduceVariablesByRegionByResource: function()
     {
-	var hashResult = new Hashtable();
+        var hashResult = new Hashtable();
         var selectedParentRegions = new Array();
         jQuery.each( this.selectedRegionKeys, jQuery.proxy( function( i, d )
         {
@@ -457,7 +457,7 @@ var WPInterfaceW = Class.create( {
 
     displayVariableBubble: function()
     {
-	$( "input[name='variableRadio']" ).val( ['0'] );
+        $( "input[name='variableRadio']" ).val( ['0'] );
         $( "#variablesBubble" ).fadeIn();
     },
 
@@ -471,50 +471,50 @@ var WPInterfaceW = Class.create( {
 // *************************** DATA *****************************
 // **************************************************************
     /**
-    * @param regionIndex : index of regions
-    * @param resourceIndex : index of resources
-    */
+     * @param regionIndex : index of regions
+     * @param resourceIndex : index of resources
+     */
     extractDataFromCSVAndDisplayGraph: function ( regionIndex, resourceIndex )
     {
-      if( regionIndex < this.selectedRegionKeys.length )
-      {
-        if( resourceIndex < this.selectedResourceKeys.length )
+        if( regionIndex < this.selectedRegionKeys.length )
         {
-	    var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[1] );
-               
-	    // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
-	    var request = "http://" + location.hostname + "/thredds/ncss/grid/" + this.threddsPath + "/" +
+            if( resourceIndex < this.selectedResourceKeys.length )
+            {
+                var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[1] );
+
+                // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
+                var request = "http://" + location.hostname + "/thredds/ncss/grid/" + this.threddsPath + "/" +
                         this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[1] + "/" + selectedPeriod + "/" +
-			"regions/region" + this.selectedRegionKeys[regionIndex] + "/" +
+                        "regions/region" + this.selectedRegionKeys[regionIndex] + "/" +
                         this.selectedResourceKeys[resourceIndex] + "_" + selectedPeriod + "_region" + this.selectedRegionKeys[regionIndex] + ".nc"
                         + "?var=" + this.variable
                         + "&latitude=0&longitude=0&temporal=all&accept=csv";
-            //console.log( "extractDataFromCSVAndDisplayGraph : " + request );
+                //console.log( "extractDataFromCSVAndDisplayGraph : " + request );
 
-	    d3.text( request, jQuery.proxy( this.extractDataFromCSV, [this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[0], regionIndex, resourceIndex, this] ) );
+                d3.text( request, jQuery.proxy( this.extractDataFromCSV, [this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[0], regionIndex, resourceIndex, this] ) );
+            }
+            else
+            {
+                resourceIndex = 0;
+                regionIndex++;
+                this.extractDataFromCSVAndDisplayGraph( regionIndex, resourceIndex );
+            }
         }
-	else
-	{
- 	    resourceIndex = 0;
-            regionIndex++;
-            this.extractDataFromCSVAndDisplayGraph( regionIndex, resourceIndex );
-	}
-      }
-      else
-      {
+        else
+        {
             if( !this.graph )
             {
-  	        var options = {containerId: "graph",
-		height: $("#leftMenu").height() * 2 / 3,
-                xAxisLabelText:'Date',
-                yAxisLabelText: this.yLabel,
-                interpolation:$( "#interpolationValue" ).html(),
-                data:this.dataToDisplay,
-                displayContextuelMenu: true,
-                displayIconesMenu: true,
-                toolsContainer: "#pageWrapper",
-                activeKeys:true,
-                imagesToInsertInExport:this.getFooterToExport()};
+                var options = {containerId: "graph",
+                    height: $( "#leftMenu" ).height() * 2 / 3,
+                    xAxisLabelText:'Date',
+                    yAxisLabelText: this.yLabel,
+                    interpolation:$( "#interpolationValue" ).html(),
+                    data:this.dataToDisplay,
+                    displayContextuelMenu: true,
+                    displayIconesMenu: true,
+                    toolsContainer: "#pageWrapper",
+                    activeKeys:true,
+                    imagesToInsertInExport:this.getFooterToExport()};
 
                 $( "#graph" ).removeAttr( "style" );
                 $( "#graph" ).empty();
@@ -525,14 +525,14 @@ var WPInterfaceW = Class.create( {
                 this.graph.setData( this.dataToDisplay );
                 this.graph.update();
             }
-      }
+        }
     },
 
     extractDataFromCSV:function()
     {
         var resourceLabel = this[0];
         var regionIndex = this[1];
-	var resourceIndex = this[2];
+        var resourceIndex = this[2];
         var context = this[3];
 
         // Extract data from csv
@@ -548,27 +548,27 @@ var WPInterfaceW = Class.create( {
             var dataToDisplay =
             {
                 data:extractedData,
-                label: resourceLabel + " / " + context.hashVariables.get(context.variable) + " / " + context.hashRegions.get( context.selectedRegionKeys[regionIndex])[0] + " / " + context.selectedPeriod.title
+                label: resourceLabel + " / " + context.hashVariables.get( context.variable ) + " / " + context.hashRegions.get( context.selectedRegionKeys[regionIndex] )[0] + " / " + context.selectedPeriod.title
             };
             context.dataToDisplay.push( dataToDisplay );
-		
-	    context.yLabel = 'Flux (' + dataArray[0][variableIndex].replace( context.variable, "" ).replace( "[unit=\"", "" ).replace( "\"]", "" ) +')';
+
+            context.yLabel = 'Flux (' + dataArray[0][variableIndex].replace( context.variable, "" ).replace( "[unit=\"", "" ).replace( "\"]", "" ) + ')';
             if( context.graph && context.graph.yAxisLabelText != context.yLabel )
             {
-		if( 1 >= context.graph.data.length )
+                if( 1 >= context.graph.data.length )
                     context.graph.setYAxisLabelText( context.yLabel );
                 else
                 {
-	                context.containerContentErrors.empty();
-	                context.containerContentErrors.html( "- Differents units, we display the first one<BR/>");
-	                context.containerErrors.show();
-		}
+                    context.containerContentErrors.empty();
+                    context.containerContentErrors.html( "- Differents units, we display the first one<BR/>" );
+                    context.containerErrors.show();
+                }
             }
         }
         else
         {
             context.containerContentErrors.empty();
-            context.containerContentErrors.html( "- No data for " + resourceLabel + ", " + context.hashVariables.get(context.variable) + ", " + context.hashRegions.get( context.selectedRegionKeys[regionIndex] )[0] + ", " + context.selectedPeriod.title + "<BR/>" );
+            context.containerContentErrors.html( "- No data for " + resourceLabel + ", " + context.hashVariables.get( context.variable ) + ", " + context.hashRegions.get( context.selectedRegionKeys[regionIndex] )[0] + ", " + context.selectedPeriod.title + "<BR/>" );
             context.containerErrors.show();
         }
         resourceIndex++;
@@ -602,28 +602,28 @@ var WPInterfaceW = Class.create( {
 // **************************************************************
     createHelp: function()
     {
-	this.displayElementsForHelp();
-        var lastIdForLegend = 0 < $(".legend").size() ? $(".legend").size() -1 : false;
+        this.displayElementsForHelp();
+        var lastIdForLegend = 0 < $( ".legend" ).size() ? $( ".legend" ).size() - 1 : false;
 
         var parameters = new Object();
 
         parameters.helpArray = [
-	    {linkType:"simple", divToHelpId:"regionSelect", text:"Select a region in the given list. A map helps you by showing the differents regions", textLengthByLine:35, marginTop:8, marginLeft:-40},
+            {linkType:"simple", divToHelpId:"regionSelect", text:"Select a region in the given list. A map helps you by showing the differents regions", textLengthByLine:35, marginTop:8, marginLeft:-40},
             {linkType:"simple", divToHelpId:"periodSelect", text:"Choose your period", textLengthByLine:35, marginTop:8, marginLeft:-40},
-	    {linkType:"simple", divToHelpId:"resourceSelect", text:"Select one or several resources in the given list", textLengthByLine:30, marginTop:10, marginLeft:-40},
+            {linkType:"simple", divToHelpId:"resourceSelect", text:"Select one or several resources in the given list", textLengthByLine:30, marginTop:10, marginLeft:-40},
             {linkType:"simple", divToHelpId:"variableSelect", text:"Union of the variables available for each selected resources. Pick one, it will automatically display in the graph", textLengthByLine:65, marginTop:10, marginLeft:-35},
 
             {linkType:"left", divToHelpId:"WPlineIcone", text:"Remove all lines", marginTop:36, marginLeft: 20, stage:9},
             {linkType:"left", divToHelpId:"WPexportIcone", text:"Export your graph",  linkedHelp: ["WPExport"], marginTop:36, marginLeft: 20, stage:8},
-	    {linkType:"left", divToHelpId:"WPpointIcone", text:"Hide or display data points. Move your mouse over a point to get data value", textLengthByLine:40, marginTop:36, marginLeft: 20, stage:7},
+            {linkType:"left", divToHelpId:"WPpointIcone", text:"Hide or display data points. Move your mouse over a point to get data value", textLengthByLine:40, marginTop:36, marginLeft: 20, stage:7},
             {linkType:"left", divToHelpId:"WPXaxisImage", text:"Block the pan and zoom on the X axis", marginTop:36, marginLeft: 20, stage:6},
             {linkType:"left", divToHelpId:"WPYaxisImage", text:"Block the pan and zoom on the Y axis", marginTop:36, marginLeft: 20, stage:5},
             {linkType:"left", divToHelpId:"WPaxisIcone", text:"Change your bounds", linkedHelp: ["WPaxis"], marginTop:36, marginLeft: 20, stage:4},
             {linkType:"left", divToHelpId:"WPinterpolationIcone", text:"Change your graph interpolation", linkedHelp: ["WPinterpolationTree"], marginTop:36, marginLeft: 20, stage:3},
             {linkType:"left", divToHelpId:"WPzoomIcone", text:"Initialize your graph with the best zoom and pan you can get", textLengthByLine:30, marginTop:36, marginLeft: 20, stage:1},
 
-            {linkType:"right", divToHelpId:"WPLegendImage"+lastIdForLegend, text:"You can remove a line by clicking on this icon", marginTop:25, marginLeft:5, stage:1},
-            {linkType:"right", divToHelpId:"WPLegendCircle"+lastIdForLegend, text:"You can change the color of a line by clicking on this icon or directly on the line in the graph. Then use the color picker", linkedHelp: ["WPcolor"], textLengthByLine:72, marginTop:19, stage:3},
+            {linkType:"right", divToHelpId:"WPLegendImage" + lastIdForLegend, text:"You can remove a line by clicking on this icon", marginTop:25, marginLeft:5, stage:1},
+            {linkType:"right", divToHelpId:"WPLegendCircle" + lastIdForLegend, text:"You can change the color of a line by clicking on this icon or directly on the line in the graph. Then use the color picker", linkedHelp: ["WPcolor"], textLengthByLine:72, marginTop:19, stage:3},
 
             {linkType:"middle", divToHelpId:"WPcolor", text:"You can change the color of a line by clicking on the circle to select a new color palette. Then use the square to pick a specific gradation", textLengthByLine:25, marginTop:$( "#WPcolor" ).height() - 15, marginLeft:$( "#WPcolor" ).width() / 2, stage:1},
             {linkType:"right", divToHelpId:"WPinterpolationTree", text:"Select a new interpolation. It will automatically update your graph", textLengthByLine:36, marginTop:$( "#WPinterpolationTree" ).height() - 15, marginLeft:$( "#WPinterpolationTree" ).width() / 2, stage:2},
@@ -631,11 +631,11 @@ var WPInterfaceW = Class.create( {
             {linkType:"simple", divToHelpId:"WPExport", text:"Choose svg or png to export your graph in a new tab", textLengthByLine:20, marginTop:$( "#WPExport" ).height() / 2}
         ];
 
-	parameters.parentContainerId = "#pageWrapper";
+        parameters.parentContainerId = "#pageWrapper";
         //parameters.globalMarginTop = -110;
         //parameters.globalMarginLeft = -110;		// TODO: do not handle width resizing 
 
-	this.help = new Help( parameters );
+        this.help = new Help( parameters );
 
         // Remove added elements
         this.help.wrapper.on( "click", jQuery.proxy( function()
@@ -719,14 +719,14 @@ var WPInterfaceW = Class.create( {
 
     addFooter: function()
     {
-	var divFooter = $( '<p class="helpFooter"></p>' );
+        var divFooter = $( '<p class="helpFooter"></p>' );
         this.help.wrapper.append( divFooter );
 
         var divContentFooter = $( '' +
-            '<div class="helpFooterContentRight">' +
-            '<div class="helpFooterContentFloat">A project realised by</div>' +
-	    '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="'+ this.imgPath + '/logo_lsce_small.png"/></div><div><img src="'+ this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
-            '</div>' );
+                '<div class="helpFooterContentRight">' +
+                '<div class="helpFooterContentFloat">A project realised by</div>' +
+                '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
+                '</div>' );
 
         divFooter.append( divContentFooter );
     },
@@ -737,22 +737,23 @@ var WPInterfaceW = Class.create( {
 // **************************************************************
     bindActions: function()
     {
-	// Help
-	$( "#helpMenu" ).on( "click", jQuery.proxy( function()
+        // Help
+        $( "#helpMenu" ).on( "click", jQuery.proxy( function()
         {
             this.createHelp();
         }, this ) );
 
-	$( "input[name='period']" ).on( 'click', jQuery.proxy( function()
+        $( "input[name='period']" ).on( 'click', jQuery.proxy( function()
         {
-	    this.createOrUpdateSelectedPeriod();
+            this.createOrUpdateSelectedPeriod();
             this.displayVariableBubble();
         }, this ) );
 
-	this.containerErrors.draggable();
-        $("#errorsClose").on("click", function(){
-           $("#errors").hide();
-        });
+        this.containerErrors.draggable();
+        $( "#errorsClose" ).on( "click", function()
+        {
+            $( "#errors" ).hide();
+        } );
     },
 
     /**
@@ -768,7 +769,7 @@ var WPInterfaceW = Class.create( {
                 this.fillHash( hash, element.children, element.title );
             else
             {
-		var value = element.url ? [element.title, element.url, parentName] : [element.title, parentName];
+                var value = element.url ? [element.title, element.url, parentName] : [element.title, parentName];
                 hash.put( element.key, value );
             }
         }, this ) );
@@ -779,7 +780,7 @@ var WPInterfaceW = Class.create( {
     getFooterToExport: function()
     {
         var logoGCA = this.getEncodedImageToExport( this.imgPath + "/GCA_logo_white.png" );
-	return {"displayBackground":false,
+        return {"displayBackground":false,
             "images":[
                 {"encodedImage":logoGCA, "width":218, "height":93}
             ]};

@@ -1,0 +1,118 @@
+body {
+    background-color: #FDFDFD;
+}
+
+footer {
+    text-align: right;
+}
+
+footer hr {
+    margin-bottom: 10px;
+}
+
+#chart {
+    height: 280px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#message {
+    font-size: 16px;
+    height: 32px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+#link {
+    float: right;
+    margin-top: 18px;
+}
+
+#link .git-icon {
+    height: 32px;
+}
+
+.nav {
+    margin: 8px 0;
+}
+
+h1 {
+    color: #428BCA;
+}
+
+.page-header.title, .page-header.title h1 {
+    margin-top: 12px;
+}
+
+.page-header.sub {
+    margin-top: 0;
+}
+
+.chart {
+    margin-bottom: 50px;
+}
+
+.sourcecode pre {
+    border-radius: 0 0 0 0;
+    font-size: 1em;
+    padding: 12px 0;
+}
+
+.sourcecode h3 {
+    border-bottom: 1px solid #EEEEEE;
+    margin-bottom: 0;
+    margin-left: 4px;
+    padding-bottom: 8px;
+}
+
+.sourcecode code > .comment {
+    color: #BB3333;
+}
+
+.sourcecode code > .tag {
+    color: #3333BB;
+}
+
+.sourcecode code > .attr {
+    color: #BB33BB;
+}
+
+.sourcecode code > .value {
+    color: #339933;
+}
+
+.highlight {
+    border-left: 4px solid #CCCCCC;
+}
+
+.highlight pre {
+    padding: 0 8px;
+}
+
+.section {
+    margin-bottom: 48px;
+}
+
+h2 {
+    color: #428BCA;
+}
+
+/*.section > a > h2 {*/
+    /*color: #AAAAAA;*/
+    /*line-height: 1em;*/
+    /*margin-bottom: 4px;*/
+/*}*/
+
+h3 {
+    font-size: 30px;
+    color: #62ABEA;
+}
+
+h4 {
+    color: #AAAAAA;
+    font-size: 24px;
+}
+
+.section > div {
+    padding-left: 26px;
+}

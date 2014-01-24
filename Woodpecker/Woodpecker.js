@@ -15,18 +15,18 @@
  ##########################################################################
  This class needs the followed files :
  - for the right menu
-   - js/wdContextMenu/wdContextMenu/src/Plugins/jquery.contextmenu.js
-   - css/wdContextMenu/css/contextmenu.css
+ - js/wdContextMenu/wdContextMenu/src/Plugins/jquery.contextmenu.js
+ - css/wdContextMenu/css/contextmenu.css
  - for the colorpicker
-   - js/farbtastic/farbtastic.js
+ - js/farbtastic/farbtastic.js
 
  Parameters :
-   - imagesToInsertInExport :
-        - displayBackground : boolean to indicates if we add a background to the images (for transparents images by example). Use of exportFooter style in css.
-        - images : array of images to display
-            - encodedImage : the encoded image in base64
-            - width : the width of the image (need to calculate the rect width if a background is asked)
-            - height : the height of the image (need to calculate the rect height if a background is asked)
+ - imagesToInsertInExport :
+ - displayBackground : boolean to indicates if we add a background to the images (for transparents images by example). Use of exportFooter style in css.
+ - images : array of images to display
+ - encodedImage : the encoded image in base64
+ - width : the width of the image (need to calculate the rect width if a background is asked)
+ - height : the height of the image (need to calculate the rect height if a background is asked)
  */
 
 var Woodpecker = Class.create( {
@@ -41,23 +41,23 @@ var Woodpecker = Class.create( {
         this.displayContextuelMenu = parameters.displayContextuelMenu;
         this.displayIconesMenu = parameters.displayIconesMenu;
         this.activeKeys = parameters.activeKeys;
-	this.imagesToInsertInExport = parameters.imagesToInsertInExport ? parameters.imagesToInsertInExport : false;
+        this.imagesToInsertInExport = parameters.imagesToInsertInExport ? parameters.imagesToInsertInExport : false;
 
         this.translateGraph = {"top": 10, "right": 0, "bottom": 70, "left": 70};
-	this.isFirefox = /firefox/i.test( window.navigator.userAgent.toLowerCase() );
-        this.svgWidth = parameters.width ? parameters.width : this.container.width();
+        this.isFirefox = /firefox/i.test( window.navigator.userAgent.toLowerCase() );
+        this.svgWidth = parameters.width ? parameters.width : (this.container.width() ? this.container.width() : 500);
         if( this.displayIconesMenu )
             this.svgWidth = this.svgWidth - 20;
-        this.svgHeight = parameters.height ? parameters.height : this.container.height() - 160;
+        this.svgHeight = parameters.height ? parameters.height : (260 < this.container.height() ? this.container.height() - 160 : 400);
         this.plotSize = {
             "width":  this.svgWidth - this.translateGraph.left - this.translateGraph.right,
             "height": this.svgHeight - this.translateGraph.top - this.translateGraph.bottom
         };
-	this.zIndex = 0;
+        this.zIndex = 0;
 
         this.displayPoints = false;
         this.dotRadius = 2.5;
-	this.imgPath = "Woodpecker/img";	
+        this.imgPath = parameters.imgPath ? parameters.imgPath : "Woodpecker/img";
 
         this.xAxisLabelText = parameters.xAxisLabelText ? parameters.xAxisLabelText : false;
         this.yAxisLabelText = parameters.yAxisLabelText ? parameters.yAxisLabelText : false;
@@ -69,7 +69,7 @@ var Woodpecker = Class.create( {
         this.xDomain = false;
         this.yDomain = false;
 
-	this.color = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf","#aec7e8","#ffbb78","#98df8a","#ff9896","#c5b0d5","#c49c94","#f7b6d2","#c7c7c7","#dbdb8d","#9edae5"];
+        this.color = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf","#aec7e8","#ffbb78","#98df8a","#ff9896","#c5b0d5","#c49c94","#f7b6d2","#c7c7c7","#dbdb8d","#9edae5"];
         this.selectedLineIndex = 0;
         this.selectedLine = false;
 
@@ -83,7 +83,7 @@ var Woodpecker = Class.create( {
         this.interpolation = parameters.interpolation ? parameters.interpolation : "linear";
         this.containerInterpolationTree = "WPinterpolationTree";
         this.containerInterpolationTreeContent = "WPinterpolationTreeContent";
-        this.containerInterpolationValue = $( "#interpolationValue" );
+//        this.containerInterpolationValue = $( "#interpolationValue" );
         this.interpolationInitWidth = 150;
         this.treeDepth = 100;
         this.treeCreated = false;
@@ -96,14 +96,18 @@ var Woodpecker = Class.create( {
             d3.select( "body" ).on( "keypress", jQuery.proxy( this.keydownXY, this ) );
             d3.select( "body" ).on( "keyup", jQuery.proxy( this.keyupXY, this ) );
         }
-        this.createDivsForGraph( this.toolsContainer );
+
+        if( this.displayContextuelMenu || this.displayIconesMenu )
+        {
+            this.createDivsForGraph( this.toolsContainer );
+
+            // Preload icon image
+            $( '<img/>' )[0].src = this.imgPath + "/axisY_lock.svg";
+            $( '<img/>' )[0].src = this.imgPath + "/axisX_lock.svg";
+            $( '<img/>' )[0].src = this.imgPath + "/line.svg";
+        }
         this.createGraph( true );
         this.bindTools();
-
-	// Preload icon image
-        $( '<img/>' )[0].src = this.imgPath + "/axisY_lock.svg";
-        $( '<img/>' )[0].src = this.imgPath + "/axisX_lock.svg";
-	$( '<img/>' )[0].src = this.imgPath + "/line.svg";
     },
 
 
@@ -119,10 +123,13 @@ var Woodpecker = Class.create( {
             this.createOrUpdateIconesMenu();
         if( isNewGraph )
         {
-	    this.updateXYDomains();
+            this.updateXYDomains();
             this.createSVG();
-            this.createColorPicker();
-            this.createTreeForInterpolation();
+            if( this.displayContextuelMenu || this.displayIconesMenu )
+            {
+                this.createColorPicker();
+                this.createTreeForInterpolation();
+            }
         }
         this.addOrUpdateLinesAndPoints();
         this.createOrUpdateAxis();
@@ -130,7 +137,7 @@ var Woodpecker = Class.create( {
         this.bindZoomsToGraph();
         if( this.displayContextuelMenu )
             this.createOrUpdateContextMenu();
-	this.redraw();
+        this.redraw();
     },
 
     update: function()
@@ -227,11 +234,11 @@ var Woodpecker = Class.create( {
         var g = d3.select( 'g.wrap' );
 
         // X axis
-	//this.xAxisLabelText = "Flux/kgC/m2/h/m33/g/m2/m2/d";
-	this.xPosition=this.x.range()[1]/2 -  getTextWidth(this.containerId, this.xAxisLabelText)/2;
-        var xLabel = this.getAxisLabelInArrayWithExponent(this.xAxisLabelText);
-	
-	g.select( '.x.axis' ).append( 'text' )
+        //this.xAxisLabelText = "Flux/kgC/m2/h/m33/g/m2/m2/d";
+        this.xPosition = this.x.range()[1] / 2 - getTextWidth( this.containerId, this.xAxisLabelText ) / 2;
+        var xLabel = this.getAxisLabelInArrayWithExponent( this.xAxisLabelText );
+
+        g.select( '.x.axis' ).append( 'text' )
                 .attr( 'class', 'axislabel' )
                 .attr( 'text-anchor', 'middle' )
                 .attr( 'x', this.x.range()[1] / 2 + 35 )
@@ -263,11 +270,11 @@ var Woodpecker = Class.create( {
                 .classed( 'zero', true );
 
         // Y axis
-	//this.yAxisLabelText = "m2/h/m33/g/m2/m2/d";
-        this.xPosition=-this.y.range()[0] /2  - getTextWidth(this.containerId, this.yAxisLabelText)/2;
-        var yLabel = this.getAxisLabelInArrayWithExponent(this.yAxisLabelText);
+        //this.yAxisLabelText = "m2/h/m33/g/m2/m2/d";
+        this.xPosition = -this.y.range()[0] / 2 - getTextWidth( this.containerId, this.yAxisLabelText ) / 2;
+        var yLabel = this.getAxisLabelInArrayWithExponent( this.yAxisLabelText );
 
-	g.select( '.y.axis' ).append( 'text' )
+        g.select( '.y.axis' ).append( 'text' )
                 .attr( 'class', 'axislabel' )
                 .attr( 'transform', 'rotate(-90)' )
                 .attr( 'y', 15 - this.translateGraph.left )
@@ -286,7 +293,7 @@ var Woodpecker = Class.create( {
         yAxisLabel.text( function( d )
         {
             return d.label
-        } );	
+        } );
 
         g.select( '.y.axis' )
                 .call( this.yAxis )
@@ -301,64 +308,72 @@ var Woodpecker = Class.create( {
         g.selectAll( '.x.axis g text' ).attr( "y", 5 );
     },
 
-   /**
+    /**
      * This method returns a array of object with :
      *   .label = subString of the label
      *   .isExponent = indicates if the subString is a basic text or an exponent
      * @param label
      */
-    getAxisLabelInArrayWithExponent : function(label)
+    getAxisLabelInArrayWithExponent : function( label )
     {
         var labelArray = new Array();
 
         // numbersInString is an array with extracted numbers from the label
-        var numbersInString = label.match(/\d+/g);
-        if(null == numbersInString)
-            return [{"label":label, "isExponent":false}];
-        numbersInString= jQuery.unique(numbersInString);
+        var numbersInString = label.match( /\d+/g );
+        if( null == numbersInString )
+            return [
+                {"label":label, "isExponent":false}
+            ];
+        numbersInString = jQuery.unique( numbersInString );
         // indexHash contains : key = index of number position, value = length of numer
-        var indexHash= new Hashtable();
-        jQuery.each(numbersInString, function(i, d){
-            var indexArray = label.allIndexOf(d);
-            jQuery.each(indexArray, function(ii, dd){
-                indexHash.put(dd, d.length);
-            });
-        });
-
-        var keys = indexHash.keys().sort(function(a,b){return a - b;});
-        jQuery.each(keys, function(i, d){
-            var subLabel = new Object();
-            if(0 == i )
+        var indexHash = new Hashtable();
+        jQuery.each( numbersInString, function( i, d )
+        {
+            var indexArray = label.allIndexOf( d );
+            jQuery.each( indexArray, function( ii, dd )
             {
-                subLabel.label = label.slice(0,d );
-                subLabel.isExponent = subLabel.label.match(/\d+/g) != undefined;
-                labelArray.push(subLabel);
+                indexHash.put( dd, d.length );
+            } );
+        } );
+
+        var keys = indexHash.keys().sort( function( a, b )
+        {
+            return a - b;
+        } );
+        jQuery.each( keys, function( i, d )
+        {
+            var subLabel = new Object();
+            if( 0 == i )
+            {
+                subLabel.label = label.slice( 0, d );
+                subLabel.isExponent = subLabel.label.match( /\d+/g ) != undefined;
+                labelArray.push( subLabel );
                 subLabel = new Object();
-                subLabel.label = label.slice(d, d+indexHash.get(d) );
-                subLabel.isExponent = subLabel.label.match(/\d+/g) != undefined;
-                labelArray.push(subLabel);
+                subLabel.label = label.slice( d, d + indexHash.get( d ) );
+                subLabel.isExponent = subLabel.label.match( /\d+/g ) != undefined;
+                labelArray.push( subLabel );
             }
             else
             {
-                subLabel.label = label.slice(keys[i-1]+indexHash.get(keys[i-1]),d );
-                subLabel.isExponent = subLabel.label.match(/\d+/g) != undefined;
-                labelArray.push(subLabel);
+                subLabel.label = label.slice( keys[i - 1] + indexHash.get( keys[i - 1] ), d );
+                subLabel.isExponent = subLabel.label.match( /\d+/g ) != undefined;
+                labelArray.push( subLabel );
                 subLabel = new Object();
-                subLabel.label = label.slice(d,d+indexHash.get(d) );
-                subLabel.isExponent = subLabel.label.match(/\d+/g) != undefined;
-                labelArray.push(subLabel);
+                subLabel.label = label.slice( d, d + indexHash.get( d ) );
+                subLabel.isExponent = subLabel.label.match( /\d+/g ) != undefined;
+                labelArray.push( subLabel );
             }
-        });
+        } );
         var subLabel = new Object();
-        subLabel.label = label.slice(keys[keys.length-1]+indexHash.get(keys[keys.length-1]),label.length );
-        subLabel.isExponent = subLabel.label.match(/\d+/g);
-        labelArray.push(subLabel);
+        subLabel.label = label.slice( keys[keys.length - 1] + indexHash.get( keys[keys.length - 1] ), label.length );
+        subLabel.isExponent = subLabel.label.match( /\d+/g );
+        labelArray.push( subLabel );
         return labelArray;
     },
- 
+
     onClickAxis: function()
     {
-	this.zIndex ++;
+        this.zIndex ++;
         this.divAxis.css( {position:"absolute", top:$( "#WPaxisIcone" ).offset().top + 50 + "px", left : $( "#WPaxisIcone" ).offset().left + "px", "zIndex": this.zIndex} );
         this.divAxis.fadeToggle();
         var xDomain = this.getXDomain();
@@ -427,13 +442,13 @@ var Woodpecker = Class.create( {
                 .style( 'fill', jQuery.proxy( function( d, i )
         {
             if( !d.color )
-                d.color = this.getFreeColor(i);
+                d.color = this.getFreeColor( i );
             return d.color
         }, this ) )
                 .style( 'stroke', jQuery.proxy( function( d, i )
         {
             if( !d.color )
-                d.color = this.getFreeColor(i);
+                d.color = this.getFreeColor( i );
             return d.color
         }, this ) )
                 .on( 'click', jQuery.proxy( function( d, i )
@@ -549,10 +564,10 @@ var Woodpecker = Class.create( {
         var legendsEnter = legends.enter().append( 'g' ).attr( 'class', 'legend' );
 
         legendsEnter.append( 'circle' )
-		.attr( 'r', 5 )
-		.attr("id", jQuery.proxy( function( d, i )
+                .attr( 'r', 5 )
+                .attr( "id", jQuery.proxy( function( d, i )
         {
-            return "WPLegendCircle"+i;
+            return "WPLegendCircle" + i;
         }, this ) );
         legendsEnter.append( 'text' )
                 .attr( 'text-anchor', 'start' )
@@ -575,15 +590,15 @@ var Woodpecker = Class.create( {
         {
             this.onMouseOverOrOutLegend( d, false );
         }, this ) );
-        legendsEnter.append("svg:image")
-                .attr("xlink:href", this.imgPath + "/trash2.svg")
-                .attr("width", "20")
-                .attr("height", "20")
-                .attr("x", "-35")
-                .attr("y", "-12")
-		.attr("id", jQuery.proxy( function( d, i )
+        legendsEnter.append( "svg:image" )
+                .attr( "xlink:href", this.imgPath + "/trash2.svg" )
+                .attr( "width", "20" )
+                .attr( "height", "20" )
+                .attr( "x", "-35" )
+                .attr( "y", "-12" )
+                .attr( "id", jQuery.proxy( function( d, i )
         {
-            return "WPLegendImage"+i;
+            return "WPLegendImage" + i;
         }, this ) )
                 .attr( "class", "removeLegend" )
                 .on( 'click', jQuery.proxy( function( d, i )
@@ -604,11 +619,11 @@ var Woodpecker = Class.create( {
         {
             if( d.disabled )
                 return "white";
-            return d.color || this.getFreeColor(i)
+            return d.color || this.getFreeColor( i )
         }, this ) )
                 .style( 'stroke', jQuery.proxy( function( d, i )
         {
-            return d.color || this.getFreeColor(i)
+            return d.color || this.getFreeColor( i )
         }, this ) );
         legends.select( 'text.removeLegend' )
                 .style( 'fill', jQuery.proxy( function( d, i )
@@ -687,8 +702,8 @@ var Woodpecker = Class.create( {
             this.containerColor.fadeToggle();
         else
             this.containerColor.fadeIn();
-	if( d3.event )
-	        this.containerColor.css( {position:"absolute", top:d3.event.pageY + 10 + "px", left : d3.event.pageX + 10 + "px"} );
+        if( d3.event )
+            this.containerColor.css( {position:"absolute", top:d3.event.pageY + 10 + "px", left : d3.event.pageX + 10 + "px"} );
         this.containerColor.css( { backgroundColor:this.selectedLine.color } );
         this.selectedLineIndex = i;
     },
@@ -728,7 +743,7 @@ var Woodpecker = Class.create( {
         else
             this.y.domain( this.yDomain ).range( [this.plotSize.height, 0] );
 
-	this.xDomain = this.updateDomainIfUniqueValue( this.xDomain, this.x.domain() );
+        this.xDomain = this.updateDomainIfUniqueValue( this.xDomain, this.x.domain() );
         this.yDomain = this.updateDomainIfUniqueValue( this.yDomain, this.y.domain() );
     },
 
@@ -904,7 +919,7 @@ var Woodpecker = Class.create( {
         this.xDomain = false;
         this.yDomain = false;
         this.updateXYDomains();
-	this.createOrUpdateAxis();
+        this.createOrUpdateAxis();
         this.redraw();
         this.bindZoom();
     },
@@ -1004,7 +1019,7 @@ var Woodpecker = Class.create( {
         var option = { width: 230, items: items};
 
         // Add a title to the menu
-        var menuTitleDiv = $( '<div class="WPcontainerTitle WPmenuTitleClose"><div class="WPcontainerTitleText">Menu </div><div class="WPcontainerTitleClose"><img src="'+ this.imgPath + '/close.png"></div></div>' );
+        var menuTitleDiv = $( '<div class="WPcontainerTitle WPmenuTitleClose"><div class="WPcontainerTitleText">Menu </div><div class="WPcontainerTitleClose"><img src="' + this.imgPath + '/close.png"></div></div>' );
         this.container.contextmenu( option, "WPrightMenu" + this.containerId, menuTitleDiv, true );
     },
 
@@ -1022,40 +1037,40 @@ var Woodpecker = Class.create( {
 
         if( 0 < this.data.length )
         {
-            var divZoom = $( '<div id="WPzoomIcone" class="WPiconeMenu"><img src="'+ this.imgPath + '/maximize2.svg" title="Reset zoom"/></div>' );
+            var divZoom = $( '<div id="WPzoomIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/maximize2.svg" title="Reset zoom"/></div>' );
             divZoom.on( "click", jQuery.proxy( this.initZoom, this ) );
-            var divTrash = $( '<div id="WPlineIcone" class="WPiconeMenu"><img src="'+ this.imgPath + '/trash2.svg" title="Delete line(s)"/></div>' );
+            var divTrash = $( '<div id="WPlineIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/trash2.svg" title="Delete line(s)"/></div>' );
             divTrash.on( "click", jQuery.proxy( this.onClickRemoveLines, this ) );
             if( this.displayPoints )
-                var divPoint = $( '<div id="WPpointIcone" class="WPiconeMenu"><img src="'+ this.imgPath + '/line.svg" title="Hide points"/></div>' );
+                var divPoint = $( '<div id="WPpointIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/line.svg" title="Hide points"/></div>' );
             else
-                var divPoint = $( '<div id="WPpointIcone" class="WPiconeMenu"><img src="'+ this.imgPath + '/points.svg" title="Display points"/></div>' );
+                var divPoint = $( '<div id="WPpointIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/points.svg" title="Display points"/></div>' );
             divPoint.on( "click", jQuery.proxy( this.onClickPoint, this ) );
-            var divAxis = $( '<div id="WPaxisIcone" class="WPiconeMenu"><img src="'+ this.imgPath + '/axis.svg" title="Change axis bounds"/></div>' );
+            var divAxis = $( '<div id="WPaxisIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/axis.svg" title="Change axis bounds"/></div>' );
             divAxis.on( "click", jQuery.proxy( this.onClickAxis, this ) );
         }
         else
         {
-            var divZoom = $( '<div id="WPzoomIcone" class="WPiconeMenu disabled"><img src="'+ this.imgPath + '/maximize2.svg" title="Reset zoom"/></div>' );
-            var divTrash = $( '<div id="WPlineIcone" class="WPiconeMenu disabled"><img src="'+ this.imgPath + '/trash2.svg" title="Delete line(s)"/></div>' );
-            var divPoint = $( '<div id="WPpointIcone" class="WPiconeMenu disabled"><img src="'+ this.imgPath + '/points.svg" title="Display points"/></div>' );
-            var divAxis = $( '<div id="WPaxisIcone" class="WPiconeMenu disabled"><img src="'+ this.imgPath + '/axis.svg" title="Change axis bounds"/></div>' );
+            var divZoom = $( '<div id="WPzoomIcone" class="WPiconeMenu disabled"><img src="' + this.imgPath + '/maximize2.svg" title="Reset zoom"/></div>' );
+            var divTrash = $( '<div id="WPlineIcone" class="WPiconeMenu disabled"><img src="' + this.imgPath + '/trash2.svg" title="Delete line(s)"/></div>' );
+            var divPoint = $( '<div id="WPpointIcone" class="WPiconeMenu disabled"><img src="' + this.imgPath + '/points.svg" title="Display points"/></div>' );
+            var divAxis = $( '<div id="WPaxisIcone" class="WPiconeMenu disabled"><img src="' + this.imgPath + '/axis.svg" title="Change axis bounds"/></div>' );
         }
 
-        var divInterpolation = $( '<div id="WPinterpolationIcone" class="WPiconeMenu"><img src="'+ this.imgPath + '/interpolation.svg" title="Interpolation"/></div>' );
+        var divInterpolation = $( '<div id="WPinterpolationIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/interpolation.svg" title="Interpolation"/></div>' );
         divInterpolation.on( "click", jQuery.proxy( this.onClickDisplayInterpolation, this ) );
-        var divExport = $( '<div id="WPexportIcone" class="WPiconeMenu"><img src="'+ this.imgPath + '/export.svg" title="Export graph"/></div>' );
+        var divExport = $( '<div id="WPexportIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/export.svg" title="Export graph"/></div>' );
         divExport.on( "click", jQuery.proxy( this.onClickExport, this ) );
-        var divXAxis = $( '<div id="WPXaxisImage" class="WPiconeMenu"><img src="'+ this.imgPath + '/axisX.svg" title="Lock or unlock zoom in on X"/></div>' );
+        var divXAxis = $( '<div id="WPXaxisImage" class="WPiconeMenu"><img src="' + this.imgPath + '/axisX.svg" title="Lock or unlock zoom in on X"/></div>' );
         if( !this.zoomXAvailable )
-            divXAxis = $( '<div id="WPXaxisImage" class="WPiconeMenu"><img src="'+ this.imgPath + '/axisX_lock.svg" title="Lock or unlock zoom in on X"/></div>' );
+            divXAxis = $( '<div id="WPXaxisImage" class="WPiconeMenu"><img src="' + this.imgPath + '/axisX_lock.svg" title="Lock or unlock zoom in on X"/></div>' );
         divXAxis.on( "click", jQuery.proxy( function()
         {
             this.onClickZoomX();
         }, this ) );
-        var divYAxis = $( '<div id="WPYaxisImage" class="WPiconeMenu"><img src="'+ this.imgPath + '/axisY.svg" title="Lock or unlock zoom in on Y"/></div>' );
+        var divYAxis = $( '<div id="WPYaxisImage" class="WPiconeMenu"><img src="' + this.imgPath + '/axisY.svg" title="Lock or unlock zoom in on Y"/></div>' );
         if( !this.zoomYAvailable )
-            divYAxis = $( '<div id="WPYaxisImage" class="WPiconeMenu"><img src="'+ this.imgPath + '/axisY_lock.svg" title="Lock or unlock zoom in on Y"/></div>' );
+            divYAxis = $( '<div id="WPYaxisImage" class="WPiconeMenu"><img src="' + this.imgPath + '/axisY_lock.svg" title="Lock or unlock zoom in on Y"/></div>' );
         divYAxis.on( "click", jQuery.proxy( function()
         {
             this.onClickZoomY();
@@ -1092,22 +1107,23 @@ var Woodpecker = Class.create( {
         this.redraw();
     },
 
-    getFreeColor: function(i)
+    getFreeColor: function( i )
     {
-        var color = this.color[i%20];
-        if(20 <= i)
+        var color = this.color[i % 20];
+        if( 20 <= i )
             return color;
         var isColorFree = true;
-        jQuery.each(this.data, jQuery.proxy(function(i, element){
-            if(element.color == color)
-                isColorFree= false;
-        }, this));
-        if(isColorFree)
+        jQuery.each( this.data, jQuery.proxy( function( i, element )
+        {
+            if( element.color == color )
+                isColorFree = false;
+        }, this ) );
+        if( isColorFree )
             return color;
         else
         {
             i++;
-            return this.getFreeColor(i);
+            return this.getFreeColor( i );
         }
     },
 
@@ -1118,7 +1134,7 @@ var Woodpecker = Class.create( {
     {
         $( "#WPiTree" ).remove();
         // Display default value
-        this.containerInterpolationValue.html( this.interpolation );
+//        this.containerInterpolationValue.html( this.interpolation );
         $( "#" + this.containerInterpolationTree ).width( this.interpolationInitWidth );
 
         var data = this.getDataForInterpolation();
@@ -1150,8 +1166,8 @@ var Woodpecker = Class.create( {
 
     onClickDisplayInterpolation: function()
     {
-	this.zIndex++;
-	$( "#" + this.containerInterpolationTree ).css( {position:"absolute", top:$( "#WPinterpolationIcone" ).offset().top + 50 + "px", left : $( "#WPinterpolationIcone" ).offset().left - 140 + "px", "zIndex":this.zIndex} );
+        this.zIndex++;
+        $( "#" + this.containerInterpolationTree ).css( {position:"absolute", top:$( "#WPinterpolationIcone" ).offset().top + 50 + "px", left : $( "#WPinterpolationIcone" ).offset().left - 140 + "px", "zIndex":this.zIndex} );
         $( "#" + this.containerInterpolationTree ).fadeToggle();
     },
 
@@ -1171,7 +1187,7 @@ var Woodpecker = Class.create( {
 
         if( !argument.children && !argument._children )
         {
-            this.containerInterpolationValue.html( argument.name );
+//            this.containerInterpolationValue.html( argument.name );
             this.interpolation = argument.name;
             this.redraw();
         }
@@ -1183,8 +1199,8 @@ var Woodpecker = Class.create( {
 // **************************************************************
     onClickExport: function()
     {
-	this.zIndex ++;
-	$( "#WPExport" ).css( {position:"absolute", top:$( "#WPexportIcone" ).offset().top + 50 + "px", left : $( "#WPexportIcone" ).offset().left - 150 + "px", "zIndex":this.zIndex} );
+        this.zIndex ++;
+        $( "#WPExport" ).css( {position:"absolute", top:$( "#WPexportIcone" ).offset().top + 50 + "px", left : $( "#WPexportIcone" ).offset().left - 150 + "px", "zIndex":this.zIndex} );
         $( "#WPExport" ).fadeToggle();
     },
 
@@ -1206,7 +1222,7 @@ var Woodpecker = Class.create( {
      */
     onClickExportWithParameters: function( value )
     {
-	var context = this[0];
+        var context = this[0];
         var value = this[1];
 
         $( "#WPdivToCloneToExportGraph" ).show();
@@ -1217,7 +1233,7 @@ var Woodpecker = Class.create( {
 
         var fontSize = getStyleSheetPropertyValue( "#WPgraphSvg text, #divToGetCss", "fontSize" );
         var fontWeight = getStyleSheetPropertyValue( "#WPgraphSvg text, #divToGetCss", "fontWeight" );
-	if( null == fontSize )
+        if( null == fontSize )
             fontSize = "15px";
         if( null == fontWeight )
             fontWeight = "bold";
@@ -1227,16 +1243,16 @@ var Woodpecker = Class.create( {
         d3.select( "#WPdivToCloneToExportGraph svg" ).selectAll( "path.domain" ).attr( "style", "shape-rendering: crispedges; stroke:#000000; stroke-opacity: 0.75" );
         d3.select( "#WPdivToCloneToExportGraph svg" ).selectAll( "line.zero" ).attr( "style", "shape-rendering: crispedges; stroke:#000000; stroke-opacity: 0.75" );
         d3.select( "#WPdivToCloneToExportGraph svg" ).selectAll( ".lines path" ).attr( "style", "fill:none; stroke-linecap: round; stroke-width: 3.5px" );
-        d3.select( "#WPdivToCloneToExportGraph svg" ).selectAll( "text" ).attr( "style", "font-size: " + fontSize + "; font-weight: " + fontWeight + "; font-family: 'Ubuntu',Arial,sans-serif");
-        d3.select( "#WPdivToCloneToExportGraph svg" ).selectAll( "g.y.axis text" ).attr( "style", "text-anchor: end; cursor: ns-resize; stroke: none; font-size: " + fontSize + "; font-weight: " + fontWeight + "; font-family: 'Ubuntu',Arial,sans-serif");
-        d3.select( "#WPdivToCloneToExportGraph svg" ).selectAll( "g.x.axis text" ).attr( "style", "text-anchor: middle; cursor: ns-resize; stroke: none; font-size: " + fontSize + "; font-weight: " + fontWeight + "; font-family: 'Ubuntu',Arial,sans-serif");
+        d3.select( "#WPdivToCloneToExportGraph svg" ).selectAll( "text" ).attr( "style", "font-size: " + fontSize + "; font-weight: " + fontWeight + "; font-family: 'Ubuntu',Arial,sans-serif" );
+        d3.select( "#WPdivToCloneToExportGraph svg" ).selectAll( "g.y.axis text" ).attr( "style", "text-anchor: end; cursor: ns-resize; stroke: none; font-size: " + fontSize + "; font-weight: " + fontWeight + "; font-family: 'Ubuntu',Arial,sans-serif" );
+        d3.select( "#WPdivToCloneToExportGraph svg" ).selectAll( "g.x.axis text" ).attr( "style", "text-anchor: middle; cursor: ns-resize; stroke: none; font-size: " + fontSize + "; font-weight: " + fontWeight + "; font-family: 'Ubuntu',Arial,sans-serif" );
         d3.select( "#WPdivToCloneToExportGraph svg" ).select( "g.y.axis text.axislabel" ).attr( 'x', -context.y.range()[0] / 4 - 45 );
 
         d3.select( "#WPdivToCloneToExportGraph svg" )
                 .attr( "width", $( "#WPdivToExportGraph" ).width() )
                 .attr( "height", $( "#WPdivToExportGraph" ).height() );
 
-	// Add logo if necessary
+        // Add logo if necessary
         if( context.imagesToInsertInExport )
         {
             var footerRectWidth = 0;
@@ -1251,12 +1267,12 @@ var Woodpecker = Class.create( {
             var footerExport = d3.select( "#WPdivToCloneToExportGraph svg" ).append( "g" )
                     .attr( 'transform', 'translate(' + (context.plotSize.width - footerRectWidth + 50) + ',' + (context.plotSize.height + 20 + $( ".legend" ).size() * 20 / 2) + ')' );
 
-	    if( context.imagesToInsertInExport.displayBackground )
+            if( context.imagesToInsertInExport.displayBackground )
             {
-	            footerExport.append( "rect" ).attr( 'class', 'exportFooter' )
-	                    .attr( "width", footerRectWidth + "px" )
-	                    .attr( "height", footerRectHeight + "px" );
-	    }
+                footerExport.append( "rect" ).attr( 'class', 'exportFooter' )
+                        .attr( "width", footerRectWidth + "px" )
+                        .attr( "height", footerRectHeight + "px" );
+            }
             var footerExportImages = footerExport.selectAll( "image" ).data( context.imagesToInsertInExport.images );
             footerExportImages.enter().append( "svg:image" ).attr( "xlink:href", function( d )
             {
@@ -1293,7 +1309,7 @@ var Woodpecker = Class.create( {
     submitDownloadForm: function( output_format )
     {
         // Get the d3js SVG element
-	var svg = $( "#WPdivToCloneToExportGraph svg" )[0];
+        var svg = $( "#WPdivToCloneToExportGraph svg" )[0];
 
         // Extract the data as SVG text string
         var svg_xml = (new XMLSerializer).serializeToString( svg );
@@ -1303,7 +1319,7 @@ var Woodpecker = Class.create( {
         var form = document.getElementById( "WPsvg-form" );
         form['WPoutput_format'].value = output_format;
         form['WPdata'].value = svg_xml;
-	var exportDate = $.datepicker.formatDate( 'yy_mm_dd', new Date() );
+        var exportDate = $.datepicker.formatDate( 'yy_mm_dd', new Date() );
         form['WPfileName'].value = "GCA_TimeSeries_" + exportDate + "." + output_format;
         form.submit();
     },
@@ -1314,11 +1330,12 @@ var Woodpecker = Class.create( {
 // **************************************************************
     createSimpleBox: function( id, text )
     {
+        console.log( "createSimpleBox" );
         var div = $( '<div id="' + id + '" class="WPcontainer WPcontainerForOver"></div>' );
         var divTitle = $( '<div class="WPcontainerTitle">' );
         div.append( divTitle );
         divTitle.append( '<div class="WPcontainerTitleText">' + text + '</div>' );
-        divTitle.append( '<div class="WPcontainerTitleClose"><img src="'+ this.imgPath + '/close.png"></div>' );
+        divTitle.append( '<div class="WPcontainerTitleClose"><img src="' + this.imgPath + '/close.png"></div>' );
         divTitle.append( '</div>' );
         return div;
     },
@@ -1334,6 +1351,7 @@ var Woodpecker = Class.create( {
         var divInterpolation = this.createSimpleBox( this.containerInterpolationTree, "Interpolation" );
         divInterpolation.append( '<div id="' + this.containerInterpolationTreeContent + '" class="WPcontainerContent"></div>' );
         $( divContainer ).append( divInterpolation );
+
         // Color
         this.containerColor = this.createSimpleBox( "WPcolor", "Color" );
         this.containerColor.append( '<div id="WPcolorContent" class="WPcontainerContent"><form><input type="text" id="WPcolor" name="color" value="#123456"/></form><div id="WPcolorpicker"></div></div>' );
@@ -1350,10 +1368,10 @@ var Woodpecker = Class.create( {
 
         // Export
         var divExport = this.createSimpleBox( "WPExport", "Export" );
-        divExport.append( '<div id="WPExportSVG"><img src="'+ this.imgPath + '/exportSVG.png"><BR/>Export SVG</div><div id="WPExportPNG"><img src="'+ this.imgPath + '/exportPNG.png"><BR/>Export PNG</div><div id="WPExportPDF"><img src="'+ this.imgPath + '/exportPDF.png"><BR/>Export PDF</div>' );
+        divExport.append( '<div id="WPExportSVG"><img src="' + this.imgPath + '/exportSVG.png"><BR/>Export SVG</div><div id="WPExportPNG"><img src="' + this.imgPath + '/exportPNG.png"><BR/>Export PNG</div><div id="WPExportPDF"><img src="' + this.imgPath + '/exportPDF.png"><BR/>Export PDF</div>' );
         $( divContainer ).append( divExport );
 
-	// Form for export
+        // Form for export
         var divFormExport = $( '<form id="WPsvg-form" method="post" action="/cgi-bin/export/download.pl"><input type="hidden" name="WPoutput_format"><input type="hidden" name="WPdata"><input type="hidden" name="WPfileName"></form>' );
         $( divContainer ).parent().append( divFormExport );
     },
@@ -1372,8 +1390,8 @@ var Woodpecker = Class.create( {
         {
             this.onClickUpdateAxis();
         }, this ) );
-	
-	$( "#WPExportSVG" ).on( "click", jQuery.proxy( this.onClickExportWithParameters, [this, "svg"] ) );
+
+        $( "#WPExportSVG" ).on( "click", jQuery.proxy( this.onClickExportWithParameters, [this, "svg"] ) );
         $( "#WPExportPNG" ).on( "click", jQuery.proxy( this.onClickExportWithParameters, [this, "png"] ) );
         $( "#WPExportPDF" ).on( "click", jQuery.proxy( this.onClickExportWithParameters, [this, "pdf"] ) );
     }
@@ -1387,25 +1405,35 @@ var Woodpecker = Class.create( {
  searchstring [String] - the desired string with which to find starting indexes
  ignoreCase [Boolean] - set to true to make both the string and searchstring case insensitive
  */
-(function(){
-    String.prototype.allIndexOf = function(string, ignoreCase) {
-        if (null === this) { return [-1]; }
+(function()
+{
+    String.prototype.allIndexOf = function( string, ignoreCase )
+    {
+        if( null === this )
+        {
+            return [-1];
+        }
         var t = (ignoreCase) ? this.toLowerCase() : this,
-            s = (ignoreCase) ? string.toString().toLowerCase() : string.toString(),
-            i = this.indexOf(s),
-            len = this.length,
-            n,
-            indx = 0,
-            result = [];
-        if (i === -1 || 0 === len) {
+                s = (ignoreCase) ? string.toString().toLowerCase() : string.toString(),
+                i = this.indexOf( s ),
+                len = this.length,
+                n,
+                indx = 0,
+                result = [];
+        if( i === -1 || 0 === len )
+        {
             return [i];
         } // "".indexOf("") is 0
-        for (n = 0; n <= len; n++) {
-            i = t.indexOf(s, indx);
-            if (i !== -1) {
+        for( n = 0; n <= len; n++ )
+        {
+            i = t.indexOf( s, indx );
+            if( i !== -1 )
+            {
                 indx = i + 1;
-                result.push(i);
-            } else {
+                result.push( i );
+            }
+            else
+            {
                 return result;
             }
         }
@@ -1422,27 +1450,30 @@ function getTextWidth( wrapperId, text )
     var timeForId = new Date().getTime();
     var divTextToGetWidthId = "WPDivToGetWidth_" + timeForId;
     $( "#" + divTextToGetWidthId ).remove();
-    var fontSize = getStyleSheetPropertyValue("#WPgraphSvg text, #divToGetCss", "fontSize");
-    var fontWeight = getStyleSheetPropertyValue("#WPgraphSvg text, #divToGetCss", "fontWeight");
-    if(null == fontSize)
+    var fontSize = getStyleSheetPropertyValue( "#WPgraphSvg text, #divToGetCss", "fontSize" );
+    var fontWeight = getStyleSheetPropertyValue( "#WPgraphSvg text, #divToGetCss", "fontWeight" );
+    if( null == fontSize )
         fontSize = "15px";
-    if(null == fontWeight)
+    if( null == fontWeight )
         fontWeight = "bold";
-    var divTextToGetWidth = $( "<span id='" + divTextToGetWidthId + "' style='visibility:hidden; font-size:"+fontSize+";font-weight:"+fontWeight+";'>" + text + "</span>" );
-    $("#"+wrapperId).append( divTextToGetWidth );
-    var textWidth =  divTextToGetWidth.width();
+    var divTextToGetWidth = $( "<span id='" + divTextToGetWidthId + "' style='visibility:hidden; font-size:" + fontSize + ";font-weight:" + fontWeight + ";'>" + text + "</span>" );
+    $( "#" + wrapperId ).append( divTextToGetWidth );
+    var textWidth = divTextToGetWidth.width();
     $( "#" + divTextToGetWidthId ).remove();
     return textWidth;
 }
 
-function getStyleSheetPropertyValue(selectorText, propertyName) {
+function getStyleSheetPropertyValue( selectorText, propertyName )
+{
     // search backwards because the last match is more likely the right one
-    for (var s= document.styleSheets.length - 1; s >= 0; s--) {
+    for( var s = document.styleSheets.length - 1; s >= 0; s-- )
+    {
         var cssRules = document.styleSheets[s].cssRules ||
                 document.styleSheets[s].rules || []; // IE support
-        for (var c=0; c < cssRules.length; c++) {
-            if (cssRules[c].selectorText === selectorText)
-                    return cssRules[c].style[propertyName];
+        for( var c = 0; c < cssRules.length; c++ )
+        {
+            if( cssRules[c].selectorText === selectorText )
+                return cssRules[c].style[propertyName];
         }
     }
     return null;
