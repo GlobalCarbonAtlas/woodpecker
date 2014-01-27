@@ -36,11 +36,10 @@
     </div>
 
     <div class="page-header title">
-        <h1>Contextual menu</h1>
-        Create a contextual menu (mouse right-click on the graph) to get access to the same functionalities as the icones menu.
+        <h1>Zoom in or out on Y axis by press Y key and use mouse wheel</h1>
     </div>
 
-    <div id="woodpeckerContainer"></div>
+    <div id="woodpeckerContainer" class="chart"></div>
 
     <h4>Code</h4>
 
@@ -64,11 +63,12 @@
                 xAxisLabelText:'Date',
                 yAxisLabelText: 'Values',
                 data:dataToDisplay,
-                <span class="value">displayContextuelMenu: true,</span>
+                displayIconesMenu: false,
+                <span class="value">activeKeys: true,</span>
                 imgPath:"../Woodpecker/img"
             };
 
-            var chart = new Woodpecker( options );
+            new Woodpecker( options );
         </code></pre>
     </div>
 
@@ -98,13 +98,11 @@
             xAxisLabelText:'Date',
             yAxisLabelText: 'Values',
             data:dataToDisplay,
-            displayContextuelMenu: true,
+            displayIconesMenu: false,
+            activeKeys: true,
             imgPath:"../Woodpecker/img"};
 
         new Woodpecker( options );
-
-        $( '#woodpeckerContainer' ).trigger('contextmenu');
-        $("#WPrightMenuwoodpeckerContainer").css({ left: "480px", top: "200px" });
     } );
 
 </script>

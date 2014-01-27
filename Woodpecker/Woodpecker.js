@@ -1,16 +1,15 @@
 /* 
  * Copyright Patrick Brockmann, Vanessa Maigne & Pascal Evano, 2013  
- *  *
- *   * Patrick.Brockmann@lsce.ipsl.fr
- *    * Vanessa.Maigne@lsce.ipsl.fr
- *     * Pascal.Evano@lsce.ipsl.fr
- *      *
- *       * Licensed under the CeCILL-B license under French law and abiding 
- *        * by the rules of distribution of free software. You can  use, modify 
- *         * and/or redistribute the software under the terms of the CeCILL-B
- *          * license as circulated by CEA, CNRS and INRIA at the following URL
- *           * "http://www.cecill.info".
  *
+ * Patrick.Brockmann@lsce.ipsl.fr
+ * Vanessa.Maigne@lsce.ipsl.fr
+ * Pascal.Evano@lsce.ipsl.fr
+ *
+ * Licensed under the CeCILL-B license under French law and abiding
+ * by the rules of distribution of free software. You can  use, modify
+ * and/or redistribute the software under the terms of the CeCILL-B
+ * license as circulated by CEA, CNRS and INRIA at the following URL
+ * "http://www.cecill.info".
  *
  ##########################################################################
  This class needs the followed files :
@@ -97,10 +96,10 @@ var Woodpecker = Class.create( {
             d3.select( "body" ).on( "keyup", jQuery.proxy( this.keyupXY, this ) );
         }
 
+        this.createDivsForGraph( this.toolsContainer );
+
         if( this.displayContextuelMenu || this.displayIconesMenu )
         {
-            this.createDivsForGraph( this.toolsContainer );
-
             // Preload icon image
             $( '<img/>' )[0].src = this.imgPath + "/axisY_lock.svg";
             $( '<img/>' )[0].src = this.imgPath + "/axisX_lock.svg";
@@ -125,11 +124,9 @@ var Woodpecker = Class.create( {
         {
             this.updateXYDomains();
             this.createSVG();
+            this.createColorPicker();
             if( this.displayContextuelMenu || this.displayIconesMenu )
-            {
-                this.createColorPicker();
                 this.createTreeForInterpolation();
-            }
         }
         this.addOrUpdateLinesAndPoints();
         this.createOrUpdateAxis();
@@ -926,8 +923,10 @@ var Woodpecker = Class.create( {
 
     updateZoomXY: function()
     {
-        this.createOrUpdateIconesMenu();
-        this.createOrUpdateContextMenu();
+        if( this.displayIconesMenu )
+            this.createOrUpdateIconesMenu();
+        if( this.displayContextuelMenu )
+            this.createOrUpdateContextMenu();
         this.bindZoom();
     },
 
@@ -1330,7 +1329,6 @@ var Woodpecker = Class.create( {
 // **************************************************************
     createSimpleBox: function( id, text )
     {
-        console.log( "createSimpleBox" );
         var div = $( '<div id="' + id + '" class="WPcontainer WPcontainerForOver"></div>' );
         var divTitle = $( '<div class="WPcontainerTitle">' );
         div.append( divTitle );
