@@ -213,6 +213,11 @@ var Woodpecker = Class.create( {
         this.data = data;
     },
 
+    addData: function( data )
+    {
+        this.data.push( data );
+    },
+
 
 // **************************************************************
 // *********************** AXIS *********************************
@@ -1187,6 +1192,11 @@ var Woodpecker = Class.create( {
             this.interpolation = argument.name;
             this.redraw();
         }
+    },
+
+    setInterpolation: function( interpolation )
+    {
+        this.interpolation = interpolation;
     },
 
 
