@@ -319,6 +319,8 @@
             function ()
             {
                 setMessage( 'Simple line chart' );
+                graph.setInterpolation( "linear" );
+                graph.setDisplayPoints(false);
                 graph.setData( [dataToDisplay[0]] );
                 graph.update();
             },
@@ -378,8 +380,10 @@
     function startDemo()
     {
         setMessage( 'Starting Demo..' );
+        currentIndex = 0;
         timer = setInterval( function()
         {
+//            if( currentIndex == demos.length ) currentIndex = 0;
             demos[currentIndex++]();
         }, 2000 );
     }
