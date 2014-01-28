@@ -380,7 +380,6 @@
         setMessage( 'Starting Demo..' );
         timer = setInterval( function()
         {
-//            if( currentIndex == demos.length ) currentIndex = 0;
             demos[currentIndex++]();
         }, 2000 );
     }
