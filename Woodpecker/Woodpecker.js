@@ -31,7 +31,7 @@
 var Woodpecker = Class.create( {
     initialize: function( parameters )
     {
-        // Param
+        // Parameters
         this.containerId = parameters.containerId;
         this.container = $( "#" + this.containerId );
         this.data = parameters.data ? parameters.data : false;
@@ -39,9 +39,21 @@ var Woodpecker = Class.create( {
         this.toolsContainer = parameters.toolsContainer ? parameters.toolsContainer : "body";
         this.displayContextuelMenu = parameters.displayContextuelMenu;
         this.displayIconesMenu = parameters.displayIconesMenu;
-        this.activeKeys = parameters.activeKeys;
+        this.displayPoints = parameters.displayPoints ? parameters.displayPoints : false;
         this.imagesToInsertInExport = parameters.imagesToInsertInExport ? parameters.imagesToInsertInExport : false;
+        this.imgPath = parameters.imgPath ? parameters.imgPath : "Woodpecker/img";
+        this.activeKeys = parameters.activeKeys;
 
+        this.xAxisLabelText = parameters.xAxisLabelText ? parameters.xAxisLabelText : false;
+        this.yAxisLabelText = parameters.yAxisLabelText ? parameters.yAxisLabelText : false;
+        this.xmax = parameters.xmax || 100;
+        this.xmin = parameters.xmin || 0;
+        this.ymax = parameters.ymax || 100;
+        this.ymin = parameters.ymin || 0;
+        this.xDomain = parameters.xDomain ? parameters.xDomain : false;
+        this.yDomain = parameters.yDomain ? parameters.yDomain : false;
+
+        // Dimensions
         this.translateGraph = {"top": 10, "right": 0, "bottom": 70, "left": 70};
         this.isFirefox = /firefox/i.test( window.navigator.userAgent.toLowerCase() );
         this.svgWidth = parameters.width ? parameters.width : (this.container.width() ? this.container.width() : 500);
@@ -52,21 +64,10 @@ var Woodpecker = Class.create( {
             "width":  this.svgWidth - this.translateGraph.left - this.translateGraph.right,
             "height": this.svgHeight - this.translateGraph.top - this.translateGraph.bottom
         };
+
+        // Variables
         this.zIndex = 0;
-
-        this.displayPoints = parameters.displayPoints ? parameters.displayPoints : false;
         this.dotRadius = 2.5;
-        this.imgPath = parameters.imgPath ? parameters.imgPath : "Woodpecker/img";
-
-        this.xAxisLabelText = parameters.xAxisLabelText ? parameters.xAxisLabelText : false;
-        this.yAxisLabelText = parameters.yAxisLabelText ? parameters.yAxisLabelText : false;
-
-        this.xmax = parameters.xmax || 100;
-        this.xmin = parameters.xmin || 0;
-        this.ymax = parameters.ymax || 100;
-        this.ymin = parameters.ymin || 0;
-        this.xDomain = parameters.xDomain ? parameters.xDomain : false;
-        this.yDomain = parameters.yDomain ? parameters.yDomain : false;
 
         this.color = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf","#aec7e8","#ffbb78","#98df8a","#ff9896","#c5b0d5","#c49c94","#f7b6d2","#c7c7c7","#dbdb8d","#9edae5"];
         this.selectedLineIndex = 0;
@@ -110,7 +111,7 @@ var Woodpecker = Class.create( {
 
 
 // **************************************************************
-// ********************** GRAPH ********************************
+// ********************** GRAPH *********************************
 // **************************************************************
     createGraph: function( isNewGraph )
     {
