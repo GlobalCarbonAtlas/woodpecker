@@ -7,7 +7,7 @@
  ##########################################################################
  This class create a help in superposition of the body.
 
-It takes as argument an array of fields to set the helps :
+ It takes as argument an array of fields to set the helps :
 
  - linkType : the nature of the svg link. 5 choices :
  - simple : a horizontal line from left to right. the text is display at the right of the line.
@@ -42,8 +42,8 @@ var Help = Class.create( {
     {
         // Parameters
         this.helpArray = parameters.helpArray;
-	this.parentContainerId = parameters.parentContainerId ? parameters.parentContainerId : "body";
-	this.globalMarginTop = parameters.globalMarginTop ? parameters.globalMarginTop : 0;
+        this.parentContainerId = parameters.parentContainerId ? parameters.parentContainerId : "body";
+        this.globalMarginTop = parameters.globalMarginTop ? parameters.globalMarginTop : 0;
         this.globalMarginLeft = parameters.globalMarginLeft ? parameters.globalMarginLeft : 0;
 
         // Variables
@@ -56,20 +56,20 @@ var Help = Class.create( {
         this.circleRadius = 5;
         this.heightPath = 30;
         this.textGap = 10;
-	this.fontSize = "14px";
+        this.fontSize = "14px";
 
         // Update wrapper size
         this.wrapper.height( Math.max( this.wrapper.height(), $( this.parentContainerId ).height() ) );
         this.wrapper.width( Math.max( this.wrapper.width(), $( this.parentContainerId ).width() ) );
-/*        window.onscroll = jQuery.proxy( function( event )
-        {
-            if( "none" != this.wrapper.css( "display" ) )
-            {
-                this.wrapper.height( Math.max( this.wrapper.height(), $( document ).height() ) );
-                this.wrapper.width( Math.max( this.wrapper.width(), $( document ).width() ) );
-            }
-        }, this );
-*/
+        /*        window.onscroll = jQuery.proxy( function( event )
+         {
+         if( "none" != this.wrapper.css( "display" ) )
+         {
+         this.wrapper.height( Math.max( this.wrapper.height(), $( document ).height() ) );
+         this.wrapper.width( Math.max( this.wrapper.width(), $( document ).width() ) );
+         }
+         }, this );
+         */
         // Bind wrapper
         this.wrapper.on( "click", jQuery.proxy( function()
         {
@@ -95,9 +95,9 @@ var Help = Class.create( {
         var wrapperId = "helpWrapper_" + this.timeForId;
         this.maxIndex = this.getMaxIndex() + 1;
         var wrapperDiv = $( '<div id="' + wrapperId + '" style="' +
-            'background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);' +
-            'position: absolute; display: none; z-index: ' + this.maxIndex +
-            '"></div>' );
+                'background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);' +
+                'position: absolute; display: none; z-index: ' + this.maxIndex +
+                '"></div>' );
         $( this.parentContainerId ).append( wrapperDiv );
         return wrapperDiv;
     },
@@ -192,7 +192,7 @@ var Help = Class.create( {
             }
 
             var helpId = this.createDivHelp( element, divTop, divLeft );
-	    svgWidth += 20;
+            svgWidth += 20;
             this.addSvgAndText( helpId, element, textArray, x1, y1, x2, y2, dValue, svgWidth, svgHeight );
 
         }, this ) );
@@ -211,7 +211,7 @@ var Help = Class.create( {
         if( element.marginLeft )
             divLeft += element.marginLeft;
 
-	divTop += this.globalMarginTop;
+        divTop += this.globalMarginTop;
         divLeft += this.globalMarginLeft;
 
         var helpId = "help_" + this.timeForId + "_" + this.number;
@@ -236,24 +236,24 @@ var Help = Class.create( {
     addSvgAndText: function( helpId, element, textArray, x1, y1, x2, y2, dValue, svgWidth, svgHeight )
     {
         var helpSvg = d3.select( "#" + helpId )
-            .append( 'svg' )
-            .attr( "height", svgHeight )
-            .attr( "width", svgWidth );
+                .append( 'svg' )
+                .attr( "height", svgHeight )
+                .attr( "width", svgWidth );
         helpSvg.append( 'path' )
-            .style( "fill", "none" )
-            .style( "stroke", "#CCCCCC" )
-            .style( "stroke-width", "1.5px" )
-            .attr( "d", dValue );
+                .style( "fill", "none" )
+                .style( "stroke", "#CCCCCC" )
+                .style( "stroke-width", "1.5px" )
+                .attr( "d", dValue );
         helpSvg.append( "circle" )
-            .style( 'fill', "white" )
-            .attr( "cx", x1 )
-            .attr( "cy", y1 )
-            .attr( "r", this.circleRadius );
+                .style( 'fill', "white" )
+                .attr( "cx", x1 )
+                .attr( "cy", y1 )
+                .attr( "r", this.circleRadius );
         helpSvg.append( "circle" )
-            .style( 'fill', "white" )
-            .attr( "cx", x2 )
-            .attr( "cy", y2 )
-            .attr( "r", this.circleRadius );
+                .style( 'fill', "white" )
+                .attr( "cx", x2 )
+                .attr( "cy", y2 )
+                .attr( "r", this.circleRadius );
 
         // Add a small "i" in the circle to inform linkedHelp
         if( element.linkedHelp )
@@ -261,46 +261,46 @@ var Help = Class.create( {
             var xx = "simpleLeft" != element.linkType ? x2 - 2 : x1 - 2;
             var yy = "simpleLeft" != element.linkType ? y2 + 3 : y2 + 3;
             helpSvg.append( "text" )
-                .style( 'fill', "black" )
-                .style( 'font-size', "9px" )
-                .style( 'font-weight', "bold" )
-                .attr( "class", "helpInfo" )
-                .attr( 'x', xx )
-                .attr( 'y', yy )
-                .text( "i" );
+                    .style( 'fill', "black" )
+                    .style( 'font-size', "9px" )
+                    .style( 'font-weight', "bold" )
+                    .attr( "class", "helpInfo" )
+                    .attr( 'x', xx )
+                    .attr( 'y', yy )
+                    .text( "i" );
         }
 
         jQuery.each( textArray, jQuery.proxy( function( linesNumber, text )
         {
             var color = "white";
             var helpSvgText = helpSvg.append( 'text' )
-                .style( "fill", color )
-                .style( 'font-size', this.fontSize )
-                .text( text );
+                    .style( "fill", color )
+                    .style( 'font-size', this.fontSize )
+                    .text( text );
 
             switch( element.linkType )
             {
                 case "simple":
                     helpSvgText.attr( 'x', x2 + this.textGap )
-                        .attr( 'y', y2 + 5 + 15 * linesNumber );
+                            .attr( 'y', y2 + 5 + 15 * linesNumber );
                     break;
                 case "simpleLeft":
                     helpSvgText.attr( "text-anchor", "end" )
-                        .attr( 'x', x1 - this.textGap )
-                        .attr( 'y', y1 + 5 + 15 * linesNumber );
+                            .attr( 'x', x1 - this.textGap )
+                            .attr( 'y', y1 + 5 + 15 * linesNumber );
                     break;
                 case "left":
                     helpSvgText.attr( "text-anchor", "end" )
-                        .attr( 'x', x2 - this.textGap )
-                        .attr( 'y', y2 + 3 + 15 * linesNumber );
+                            .attr( 'x', x2 - this.textGap )
+                            .attr( 'y', y2 + 3 + 15 * linesNumber );
                     break;
                 case "right":
                     helpSvgText.attr( 'x', x2 + this.textGap )
-                        .attr( 'y', y2 + 3 + 15 * linesNumber );
+                            .attr( 'y', y2 + 3 + 15 * linesNumber );
                     break;
                 case "middle" :
                     helpSvgText.attr( 'x', 0 )
-                        .attr( 'y', y2 + 20 + 20 * linesNumber );
+                            .attr( 'y', y2 + 20 + 20 * linesNumber );
                     break;
             }
         }, this ) );
@@ -374,12 +374,12 @@ var Help = Class.create( {
         d3.selectAll( "div[name=" + divToHelpId + "]" ).selectAll( "path" ).style( "stroke", "white" );
     },
 
-    /**
-     * This function returns the div to help.
-     *   - If it's a simple DOM element like a div or a span, the identifiant is enough.
-     *   - Otherwise, if it's a svg element, we looks for the last one.
-     * @param element
-     */
+/**
+ * This function returns the div to help.
+ *   - If it's a simple DOM element like a div or a span, the identifiant is enough.
+ *   - Otherwise, if it's a svg element, we looks for the last one.
+ * @param element
+ */
 //    getDiv: function( element )
 //    {
 //        DOM element
