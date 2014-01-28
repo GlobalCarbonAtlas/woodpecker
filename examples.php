@@ -164,13 +164,13 @@
         <div class="row">
             <div class="col-md-4">
                 <h4>Simple Line Chart &nbsp;&nbsp;<a role="button" href="examples/simple.html" class="btn btn-default">view »</a></h4>
-                <p>Simple line chart for getting started.</p>
-            </div>
 
+                <p>Create simple line chart for getting started.</p>
+            </div>
             <div class="col-md-4">
                 <h4>Multiple Line Chart &nbsp;&nbsp;<a role="button" href="examples/multiple.html" class="btn btn-default">view »</a></h4>
-                <p>Multiple line chart with multiple data.</p>
 
+                <p>Create multiple line chart with multiple data.</p>
             </div>
         </div>
     </div>
@@ -182,13 +182,26 @@
     <div>
         <div class="row">
             <div class="col-md-4">
+                <h4>Chart with points&nbsp;&nbsp;<a role="button" href="examples/points.html" class="btn btn-default">view »</a></h4>
+
+                <p>Create simple line chart with points.</p>
+            </div>
+            <div class="col-md-4">
                 <h4>Icones menu &nbsp;&nbsp;<a role="button" href="examples/iconesMenu.html" class="btn btn-default">view »</a></h4>
+
                 <p>Show icones menu to access to functionalities.</p>
             </div>
-
             <div class="col-md-4">
                 <h4>Contextual menu &nbsp;&nbsp;<a role="button" href="examples/contextualMenu.html" class="btn btn-default">view »</a></h4>
+
                 <p>Add a contextual menu to access to functionalities with the mouse right-click.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Interpolation&nbsp;&nbsp;<a role="button" href="examples/interpolation.html" class="btn btn-default">view »</a></h4>
+
+                <p>Init interpolation.</p>
             </div>
         </div>
     </div>
@@ -201,13 +214,28 @@
         <div class="row">
             <div class="col-md-4">
                 <h4>Zoom on X axis</h4>
-                <p>- by mouse wheel event only on X axis&nbsp;&nbsp;<a role="button" href="examples/zoomXMouse.html" class="btn btn-default">view »</a></p>
-                <p>- by X key only on X axis&nbsp;&nbsp;<a role="button" href="examples/zoomXKey.html" class="btn btn-default">view »</a></p>
+
+                <p>- by mouse wheel event only on X axis.&nbsp;&nbsp;<a role="button" href="examples/zoomXMouse.html" class="btn btn-default">view »</a></p>
+
+                <p>- by X key only on X axis.&nbsp;&nbsp;<a role="button" href="examples/zoomXKey.html" class="btn btn-default">view »</a></p>
             </div>
             <div class="col-md-4">
                 <h4>Zoom on Y axis</h4>
-                <p>- by mouse wheel event only on Y axis&nbsp;&nbsp;<a role="button" href="examples/zoomYMouse.html" class="btn btn-default">view »</a></p>
-                <p>- by Y key only on Y axis&nbsp;&nbsp;<a role="button" href="examples/zoomYKey.html" class="btn btn-default">view »</a></p>
+
+                <p>- by mouse wheel event only on Y axis.&nbsp;&nbsp;<a role="button" href="examples/zoomYMouse.html" class="btn btn-default">view »</a></p>
+
+                <p>- by Y key only on Y axis.&nbsp;&nbsp;<a role="button" href="examples/zoomYKey.html" class="btn btn-default">view »</a></p>
+            </div>
+            <div class="col-md-4">
+                <h4>Interpolation&nbsp;&nbsp;<a role="button" href="examples/interpolationTree.html" class="btn btn-default">view »</a></h4>
+
+                <p>Change interpolation on live.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Line color&nbsp;&nbsp;<a role="button" href="examples/color.html" class="btn btn-default">view »</a></h4>
+                <p>Change lines color on live.</p>
             </div>
         </div>
     </div>

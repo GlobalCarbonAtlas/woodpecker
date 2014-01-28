@@ -54,7 +54,7 @@ var Woodpecker = Class.create( {
         };
         this.zIndex = 0;
 
-        this.displayPoints = false;
+        this.displayPoints = parameters.displayPoints ? parameters.displayPoints : false;
         this.dotRadius = 2.5;
         this.imgPath = parameters.imgPath ? parameters.imgPath : "Woodpecker/img";
 
@@ -82,7 +82,6 @@ var Woodpecker = Class.create( {
         this.interpolation = parameters.interpolation ? parameters.interpolation : "linear";
         this.containerInterpolationTree = "WPinterpolationTree";
         this.containerInterpolationTreeContent = "WPinterpolationTreeContent";
-//        this.containerInterpolationValue = $( "#interpolationValue" );
         this.interpolationInitWidth = 150;
         this.treeDepth = 100;
         this.treeCreated = false;
@@ -534,8 +533,7 @@ var Woodpecker = Class.create( {
 
     onClickLine: function( i, d )
     {
-        this.selectedLine = d;
-        this.onClickLegendCircle( i );
+        this.onClickLegendCircle( d, i );
     },
 
     removeAllLines: function()
@@ -632,8 +630,7 @@ var Woodpecker = Class.create( {
         var legendsCircles = gLegends.selectAll( '.legend circle' );
         legendsCircles.on( 'click', jQuery.proxy( function( d, i )
         {
-            this.selectedLine = d;
-            this.onClickLegendCircle( i );
+            this.onClickLegendCircle( d, i );
         }, this ) );
 
         var ypos = 5;
@@ -693,8 +690,9 @@ var Woodpecker = Class.create( {
         this.addOrUpdateLinesAndPoints();
     },
 
-    onClickLegendCircle: function( i )
+    onClickLegendCircle: function( d, i )
     {
+        this.selectedLine = d;
         if( this.selectedLineIndex == i )
             this.containerColor.fadeToggle();
         else
@@ -1133,7 +1131,6 @@ var Woodpecker = Class.create( {
     {
         $( "#WPiTree" ).remove();
         // Display default value
-//        this.containerInterpolationValue.html( this.interpolation );
         $( "#" + this.containerInterpolationTree ).width( this.interpolationInitWidth );
 
         var data = this.getDataForInterpolation();
@@ -1186,7 +1183,6 @@ var Woodpecker = Class.create( {
 
         if( !argument.children && !argument._children )
         {
-//            this.containerInterpolationValue.html( argument.name );
             this.interpolation = argument.name;
             this.redraw();
         }

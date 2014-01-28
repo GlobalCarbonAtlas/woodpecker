@@ -36,7 +36,7 @@
     </div>
 
     <div class="page-header title">
-        <h1>Simple Chart</h1>
+        <h1>Simple Chart with points</h1>
     </div>
 
     <div id="woodpeckerContainer"></div>
@@ -63,6 +63,7 @@
                 xAxisLabelText:'Date',
                 yAxisLabelText: 'Values',
                 data:dataToDisplay,
+                <span class="value">displayPoints: true,</span>
                 imgPath:"../Woodpecker/img"
             };
 
@@ -96,6 +97,7 @@
             xAxisLabelText:'Date',
             yAxisLabelText: 'Values',
             data:dataToDisplay,
+            displayPoints: true,
             imgPath:"../Woodpecker/img"};
 
         new Woodpecker( options );

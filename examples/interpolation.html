@@ -36,10 +36,10 @@
     </div>
 
     <div class="page-header title">
-        <h1>Simple Chart</h1>
+        <h1>Interpolation</h1>
     </div>
 
-    <div id="woodpeckerContainer"></div>
+    <div id="woodpeckerContainer" class="chart"></div>
 
     <h4>Code</h4>
 
@@ -57,14 +57,13 @@
             label:"Simple line"
             }];
 
-            var options = {
-                containerId: "woodpeckerContainer",
+            var options = {containerId: "woodpeckerContainer",
                 height: 250,
                 xAxisLabelText:'Date',
                 yAxisLabelText: 'Values',
                 data:dataToDisplay,
-                imgPath:"../Woodpecker/img"
-            };
+                <span class="value">interpolation: "cardinal",</span>
+                imgPath:"../Woodpecker/img"};
 
             new Woodpecker( options );
         </code></pre>
@@ -96,6 +95,7 @@
             xAxisLabelText:'Date',
             yAxisLabelText: 'Values',
             data:dataToDisplay,
+            interpolation: "cardinal",
             imgPath:"../Woodpecker/img"};
 
         new Woodpecker( options );

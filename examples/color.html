@@ -36,10 +36,26 @@
     </div>
 
     <div class="page-header title">
-        <h1>Multiple Chart</h1>
+        <h1>Line color</h1>
     </div>
 
     <div id="woodpeckerContainer"></div>
+
+    <div style="position: absolute; left: 147px; top: 411px;">
+        <svg width="314" height="115">
+            <path d="M5,5L5,45L45,45" style="fill: none; stroke: grey; stroke-width: 1.5px;"></path>
+            <circle r="5" cy="45" cx="45" style="fill: grey;"></circle>
+            <text y="50" x="55" style="fill: grey; font-size: 14px;">Click on the circle !</text>
+        </svg>
+    </div>
+
+    <div style="position: absolute; left: 598px; top: 190px;">
+        <svg width="195" height="65">
+            <path d="M82.5,0L82.5,35" style="fill: none; stroke: grey; stroke-width: 1.5px;"></path>
+            <circle r="5" cy="35" cx="82.5" style="fill: grey;"></circle>
+            <text y="55" x="23" style="fill: grey; font-size: 14px;">Click on the line !</text>
+        </svg>
+    </div>
 
     <h4>Code</h4>
 
@@ -78,18 +94,18 @@
                             [new Date( 1391004254838 ),10],
                         ],
                 label:"Line 3"
-            }];
+            }
+        ];
 
-            var options = {
-                containerId: "woodpeckerContainer",
-                height: 250,
-                xAxisLabelText:'Date',
-                yAxisLabelText: 'Values',
-                data:dataToDisplay,
-                imgPath:"../Woodpecker/img"
-            };
 
-            new Woodpecker( options );
+        var options = {containerId: "woodpeckerContainer",
+            height: 250,
+            xAxisLabelText:'Date',
+            yAxisLabelText: 'Values',
+            data:dataToDisplay,
+            imgPath:"../Woodpecker/img"};
+
+        new Woodpecker( options );
         </code></pre>
     </div>
 
