@@ -208,6 +208,11 @@ var Woodpecker = Class.create( {
             this.createOrUpdateIconesMenu();
     },
 
+    setDisplayPoints: function( displayPoints )
+    {
+        this.displayPoints = displayPoints;
+    },
+
     setData: function( data )
     {
         this.data = data;
