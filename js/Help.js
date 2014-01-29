@@ -28,9 +28,9 @@
  Example :
  var parameters = new Object();
  parameters.helpArray = [
- {linkType:"left", divToHelpId:"WPaxisIcone", text:"Change your bounds", linkedHelp: ["WPaxis"], marginTop:36, marginLeft: 20, stage:4},
+ {linkType:"left", divToHelpId:"WPaxisIcon", text:"Change your bounds", linkedHelp: ["WPaxis"], marginTop:36, marginLeft: 20, stage:4},
  {linkType:"simple", divToHelpId:"WPaxis", text:"Put the axis bounds you want.", linkedHelp: ["WPYaxisImage", "WPXaxisImage"], textLengthByLine:38, marginTop:$( "#WPaxis" ).height() / 2 - 50},
- {linkType:"left", divToHelpId:"WPpointIcone", text:"Hide or display data points. Move your mouse over a point to get data value", textLengthByLine:40, marginTop:36, marginLeft: 20, stage:7},
+ {linkType:"left", divToHelpId:"WPpointIcon", text:"Hide or display data points. Move your mouse over a point to get data value", textLengthByLine:40, marginTop:36, marginLeft: 20, stage:7},
  {linkType:"right", divToHelpId:"WPXaxisImage", text:"Block the pan and zoom on the X axis", marginTop:36, marginLeft: 20, stage:6},
  {linkType:"right", divToHelpId:"WPYaxisImage", text:"Block the pan and zoom on the Y axis", marginTop:36, marginLeft: 20, stage:5},
  ];

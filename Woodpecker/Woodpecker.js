@@ -37,8 +37,8 @@ var Woodpecker = Class.create( {
         this.data = parameters.data ? parameters.data : false;
         this.displayPlot = !parameters.displayPlot;
         this.toolsContainer = parameters.toolsContainer ? parameters.toolsContainer : "body";
-        this.displayContextuelMenu = parameters.displayContextuelMenu;
-        this.displayIconesMenu = parameters.displayIconesMenu;
+        this.displayContextualMenu = parameters.displayContextualMenu;
+        this.displayIconsMenu = parameters.displayIconsMenu;
         this.displayPoints = parameters.displayPoints ? parameters.displayPoints : false;
         this.imagesToInsertInExport = parameters.imagesToInsertInExport ? parameters.imagesToInsertInExport : false;
         this.imgPath = parameters.imgPath ? parameters.imgPath : "Woodpecker/img";
@@ -57,7 +57,7 @@ var Woodpecker = Class.create( {
         this.translateGraph = {"top": 10, "right": 0, "bottom": 70, "left": 70};
         this.isFirefox = /firefox/i.test( window.navigator.userAgent.toLowerCase() );
         this.svgWidth = parameters.width ? parameters.width : (this.container.width() ? this.container.width() : 500);
-        if( this.displayIconesMenu )
+        if( this.displayIconsMenu )
             this.svgWidth = this.svgWidth - 20;
         this.svgHeight = parameters.height ? parameters.height : (260 < this.container.height() ? this.container.height() - 160 : 400);
         this.plotSize = {
@@ -98,7 +98,7 @@ var Woodpecker = Class.create( {
 
         this.createDivsForGraph( this.toolsContainer );
 
-        if( this.displayContextuelMenu || this.displayIconesMenu )
+        if( this.displayContextualMenu || this.displayIconsMenu )
         {
             // Preload icon image
             $( '<img/>' )[0].src = this.imgPath + "/axisY_lock.svg";
@@ -107,6 +107,38 @@ var Woodpecker = Class.create( {
         }
         this.createGraph( true );
         this.bindTools();
+    },
+
+// **************************************************************
+// ********************** ACCESSORS *****************************
+// **************************************************************
+    setDisplayPoints: function( displayPoints )
+    {
+        this.displayPoints = displayPoints;
+    },
+
+    setDisplayIconsMenu: function(displayIconsMenu)
+    {
+        this.displayIconsMenu = displayIconsMenu;
+    },
+
+    setDisplayContextualMenu: function(displayContextualMenu)
+    {
+        this.displayContextualMenu = displayContextualMenu;
+    },
+
+
+// **************************************************************
+// *********************** DATA *********************************
+// **************************************************************
+    setData: function( data )
+    {
+        this.data = data;
+    },
+
+    addData: function( data )
+    {
+        this.data.push( data );
     },
 
 
@@ -118,21 +150,21 @@ var Woodpecker = Class.create( {
         // This div is neeeded to clone the graph in one invisible div to remove unprintable elements
         var divToCloneGraph = $( '<div id="WPdivToCloneToExportGraph"></div>' );
         this.container.append( divToCloneGraph );
-        if( this.displayIconesMenu )
-            this.createOrUpdateIconesMenu();
+        if( this.displayIconsMenu )
+            this.createOrUpdateIconsMenu();
         if( isNewGraph )
         {
             this.updateXYDomains();
             this.createSVG();
             this.createColorPicker();
-            if( this.displayContextuelMenu || this.displayIconesMenu )
+            if( this.displayContextualMenu || this.displayIconsMenu )
                 this.createTreeForInterpolation();
         }
         this.addOrUpdateLinesAndPoints();
         this.createOrUpdateAxis();
         this.createOrUpdateLegend();
         this.bindZoomsToGraph();
-        if( this.displayContextuelMenu )
+        if( this.displayContextualMenu )
             this.createOrUpdateContextMenu();
         this.redraw();
     },
@@ -191,10 +223,10 @@ var Woodpecker = Class.create( {
     onClickRemoveLines: function()
     {
         this.removeAllLines();
-        if( this.displayContextuelMenu )
+        if( this.displayContextualMenu )
             this.createOrUpdateContextMenu();
-        if( this.displayIconesMenu )
-            this.createOrUpdateIconesMenu();
+        if( this.displayIconsMenu )
+            this.createOrUpdateIconsMenu();
         this.selectedLineIndex = 0;
     },
 
@@ -202,25 +234,10 @@ var Woodpecker = Class.create( {
     {
         this.displayPoints = !this.displayPoints;
         this.redraw();
-        if( this.displayContextuelMenu )
+        if( this.displayContextualMenu )
             this.createOrUpdateContextMenu();
-        if( this.displayIconesMenu )
-            this.createOrUpdateIconesMenu();
-    },
-
-    setDisplayPoints: function( displayPoints )
-    {
-        this.displayPoints = displayPoints;
-    },
-
-    setData: function( data )
-    {
-        this.data = data;
-    },
-
-    addData: function( data )
-    {
-        this.data.push( data );
+        if( this.displayIconsMenu )
+            this.createOrUpdateIconsMenu();
     },
 
 
@@ -381,7 +398,7 @@ var Woodpecker = Class.create( {
     onClickAxis: function()
     {
         this.zIndex ++;
-        this.divAxis.css( {position:"absolute", top:$( "#WPaxisIcone" ).offset().top + 50 + "px", left : $( "#WPaxisIcone" ).offset().left + "px", "zIndex": this.zIndex} );
+        this.divAxis.css( {position:"absolute", top:$( "#WPaxisIcon" ).offset().top + 50 + "px", left : $( "#WPaxisIcon" ).offset().left + "px", "zIndex": this.zIndex} );
         this.divAxis.fadeToggle();
         var xDomain = this.getXDomain();
         var xTime = Date.parse( xDomain[0] );
@@ -932,9 +949,9 @@ var Woodpecker = Class.create( {
 
     updateZoomXY: function()
     {
-        if( this.displayIconesMenu )
-            this.createOrUpdateIconesMenu();
-        if( this.displayContextuelMenu )
+        if( this.displayIconsMenu )
+            this.createOrUpdateIconsMenu();
+        if( this.displayContextualMenu )
             this.createOrUpdateContextMenu();
         this.bindZoom();
     },
@@ -942,7 +959,7 @@ var Woodpecker = Class.create( {
     onClickZoomX:function()
     {
         this.zoomXAvailable = !this.zoomXAvailable;
-        this.createOrUpdateIconesMenu();
+        this.createOrUpdateIconsMenu();
         this.createOrUpdateContextMenu();
         this.bindZoom();
     },
@@ -950,7 +967,7 @@ var Woodpecker = Class.create( {
     onClickZoomY:function()
     {
         this.zoomYAvailable = !this.zoomYAvailable;
-        this.createOrUpdateIconesMenu();
+        this.createOrUpdateIconsMenu();
         this.createOrUpdateContextMenu();
         this.bindZoom();
     },
@@ -1031,54 +1048,54 @@ var Woodpecker = Class.create( {
         this.container.contextmenu( option, "WPrightMenu" + this.containerId, menuTitleDiv, true );
     },
 
-    createOrUpdateIconesMenu: function()
+    createOrUpdateIconsMenu: function()
     {
-        $( "#WPiconesMenu" ).empty();
+        $( "#WPiconsMenu" ).empty();
         var divMenu;
-        if( $( "#WPiconesMenu" )[0] )
-            divMenu = $( "#WPiconesMenu" );
+        if( $( "#WPiconsMenu" )[0] )
+            divMenu = $( "#WPiconsMenu" );
         else
         {
-            divMenu = $( '<div id="WPiconesMenu"></div>' );
+            divMenu = $( '<div id="WPiconsMenu"></div>' );
             this.container.append( divMenu );
         }
 
         if( 0 < this.data.length )
         {
-            var divZoom = $( '<div id="WPzoomIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/maximize2.svg" title="Reset zoom"/></div>' );
+            var divZoom = $( '<div id="WPzoomIcon" class="WPiconMenu"><img src="' + this.imgPath + '/maximize2.svg" title="Reset zoom"/></div>' );
             divZoom.on( "click", jQuery.proxy( this.initZoom, this ) );
-            var divTrash = $( '<div id="WPlineIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/trash2.svg" title="Delete line(s)"/></div>' );
+            var divTrash = $( '<div id="WPlineIcon" class="WPiconMenu"><img src="' + this.imgPath + '/trash2.svg" title="Delete line(s)"/></div>' );
             divTrash.on( "click", jQuery.proxy( this.onClickRemoveLines, this ) );
             if( this.displayPoints )
-                var divPoint = $( '<div id="WPpointIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/line.svg" title="Hide points"/></div>' );
+                var divPoint = $( '<div id="WPpointIcon" class="WPiconMenu"><img src="' + this.imgPath + '/line.svg" title="Hide points"/></div>' );
             else
-                var divPoint = $( '<div id="WPpointIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/points.svg" title="Display points"/></div>' );
+                var divPoint = $( '<div id="WPpointIcon" class="WPiconMenu"><img src="' + this.imgPath + '/points.svg" title="Display points"/></div>' );
             divPoint.on( "click", jQuery.proxy( this.onClickPoint, this ) );
-            var divAxis = $( '<div id="WPaxisIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/axis.svg" title="Change axis bounds"/></div>' );
+            var divAxis = $( '<div id="WPaxisIcon" class="WPiconMenu"><img src="' + this.imgPath + '/axis.svg" title="Change axis bounds"/></div>' );
             divAxis.on( "click", jQuery.proxy( this.onClickAxis, this ) );
         }
         else
         {
-            var divZoom = $( '<div id="WPzoomIcone" class="WPiconeMenu disabled"><img src="' + this.imgPath + '/maximize2.svg" title="Reset zoom"/></div>' );
-            var divTrash = $( '<div id="WPlineIcone" class="WPiconeMenu disabled"><img src="' + this.imgPath + '/trash2.svg" title="Delete line(s)"/></div>' );
-            var divPoint = $( '<div id="WPpointIcone" class="WPiconeMenu disabled"><img src="' + this.imgPath + '/points.svg" title="Display points"/></div>' );
-            var divAxis = $( '<div id="WPaxisIcone" class="WPiconeMenu disabled"><img src="' + this.imgPath + '/axis.svg" title="Change axis bounds"/></div>' );
+            var divZoom = $( '<div id="WPzoomIcon" class="WPiconMenu disabled"><img src="' + this.imgPath + '/maximize2.svg" title="Reset zoom"/></div>' );
+            var divTrash = $( '<div id="WPlineIcon" class="WPiconMenu disabled"><img src="' + this.imgPath + '/trash2.svg" title="Delete line(s)"/></div>' );
+            var divPoint = $( '<div id="WPpointIcon" class="WPiconMenu disabled"><img src="' + this.imgPath + '/points.svg" title="Display points"/></div>' );
+            var divAxis = $( '<div id="WPaxisIcon" class="WPiconMenu disabled"><img src="' + this.imgPath + '/axis.svg" title="Change axis bounds"/></div>' );
         }
 
-        var divInterpolation = $( '<div id="WPinterpolationIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/interpolation.svg" title="Interpolation"/></div>' );
+        var divInterpolation = $( '<div id="WPinterpolationIcon" class="WPiconMenu"><img src="' + this.imgPath + '/interpolation.svg" title="Interpolation"/></div>' );
         divInterpolation.on( "click", jQuery.proxy( this.onClickDisplayInterpolation, this ) );
-        var divExport = $( '<div id="WPexportIcone" class="WPiconeMenu"><img src="' + this.imgPath + '/export.svg" title="Export graph"/></div>' );
+        var divExport = $( '<div id="WPexportIcon" class="WPiconMenu"><img src="' + this.imgPath + '/export.svg" title="Export graph"/></div>' );
         divExport.on( "click", jQuery.proxy( this.onClickExport, this ) );
-        var divXAxis = $( '<div id="WPXaxisImage" class="WPiconeMenu"><img src="' + this.imgPath + '/axisX.svg" title="Lock or unlock zoom in on X"/></div>' );
+        var divXAxis = $( '<div id="WPXaxisImage" class="WPiconMenu"><img src="' + this.imgPath + '/axisX.svg" title="Lock or unlock zoom in on X"/></div>' );
         if( !this.zoomXAvailable )
-            divXAxis = $( '<div id="WPXaxisImage" class="WPiconeMenu"><img src="' + this.imgPath + '/axisX_lock.svg" title="Lock or unlock zoom in on X"/></div>' );
+            divXAxis = $( '<div id="WPXaxisImage" class="WPiconMenu"><img src="' + this.imgPath + '/axisX_lock.svg" title="Lock or unlock zoom in on X"/></div>' );
         divXAxis.on( "click", jQuery.proxy( function()
         {
             this.onClickZoomX();
         }, this ) );
-        var divYAxis = $( '<div id="WPYaxisImage" class="WPiconeMenu"><img src="' + this.imgPath + '/axisY.svg" title="Lock or unlock zoom in on Y"/></div>' );
+        var divYAxis = $( '<div id="WPYaxisImage" class="WPiconMenu"><img src="' + this.imgPath + '/axisY.svg" title="Lock or unlock zoom in on Y"/></div>' );
         if( !this.zoomYAvailable )
-            divYAxis = $( '<div id="WPYaxisImage" class="WPiconeMenu"><img src="' + this.imgPath + '/axisY_lock.svg" title="Lock or unlock zoom in on Y"/></div>' );
+            divYAxis = $( '<div id="WPYaxisImage" class="WPiconMenu"><img src="' + this.imgPath + '/axisY_lock.svg" title="Lock or unlock zoom in on Y"/></div>' );
         divYAxis.on( "click", jQuery.proxy( function()
         {
             this.onClickZoomY();
@@ -1174,7 +1191,7 @@ var Woodpecker = Class.create( {
     onClickDisplayInterpolation: function()
     {
         this.zIndex++;
-        $( "#" + this.containerInterpolationTree ).css( {position:"absolute", top:$( "#WPinterpolationIcone" ).offset().top + 50 + "px", left : $( "#WPinterpolationIcone" ).offset().left - 140 + "px", "zIndex":this.zIndex} );
+        $( "#" + this.containerInterpolationTree ).css( {position:"absolute", top:$( "#WPinterpolationIcon" ).offset().top + 50 + "px", left : $( "#WPinterpolationIcon" ).offset().left - 140 + "px", "zIndex":this.zIndex} );
         $( "#" + this.containerInterpolationTree ).fadeToggle();
     },
 
@@ -1211,7 +1228,7 @@ var Woodpecker = Class.create( {
     onClickExport: function()
     {
         this.zIndex ++;
-        $( "#WPExport" ).css( {position:"absolute", top:$( "#WPexportIcone" ).offset().top + 50 + "px", left : $( "#WPexportIcone" ).offset().left - 150 + "px", "zIndex":this.zIndex} );
+        $( "#WPExport" ).css( {position:"absolute", top:$( "#WPexportIcon" ).offset().top + 50 + "px", left : $( "#WPexportIcon" ).offset().left - 150 + "px", "zIndex":this.zIndex} );
         $( "#WPExport" ).fadeToggle();
     },
 
@@ -1227,7 +1244,7 @@ var Woodpecker = Class.create( {
 
     /**
      * The div "WPdivToExportGraph" is needed because we have to put the svg in one parent div to display only the content on this parent.
-     *  Without this div, the export add the iconesMenu which is not what we want and which doesn't work !
+     *  Without this div, the export add the iconsMenu which is not what we want and which doesn't work !
      * The div "WPdivToCloneToExportGraph" is needed because we have to clone the svg before the export to remove some elements (".removeLegend") and change the style
      * @param value
      */

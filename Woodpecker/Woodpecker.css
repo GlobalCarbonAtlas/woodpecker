@@ -1,5 +1,5 @@
 @media print {
-    #tools, #WPiconesMenu, #WPXaxisImage, #WPYaxisImage, .removeLegend {
+    #tools, #WPiconsMenu, #WPXaxisImage, #WPYaxisImage, .removeLegend {
         display: none;
     }
 }
@@ -136,7 +136,7 @@ rect {
 /* ******************************************************** */
 /* ************************* MENU ************************* */
 /* ******************************************************** */
-#WPiconesMenu {
+#WPiconsMenu {
     float: right;
     margin-right: 40px;
     margin-bottom: 10px;
@@ -144,18 +144,18 @@ rect {
     top: 10px;
 }
 
-.WPiconeMenu, .WPiconeMenu2 {
+.WPiconMenu, .WPiconMenu2 {
     float: left;
     margin-left: 10px;
     cursor: pointer;
 }
 
-.WPiconeMenu.disabled, .WPiconeMenu2.disabled {
+.WPiconMenu.disabled, .WPiconMenu2.disabled {
     opacity: 0.5;
     cursor: auto;
 }
 
-.WPiconeMenu2 {
+.WPiconMenu2 {
     margin-top: 6px;
 }
 

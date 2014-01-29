@@ -145,8 +145,8 @@
 <!--        xAxisLabelText:'Date',-->
 <!--        yAxisLabelText: 'Values',-->
 <!--        data:dataToDisplay,-->
-<!--        displayContextuelMenu: true,-->
-<!--        displayIconesMenu: true,-->
+<!--        displayContextualMenu: true,-->
+<!--        displayIconsMenu: true,-->
 <!--        activeKeys:true};-->
 <!---->
 <!--    new Woodpecker( options );</span>-->
@@ -187,9 +187,9 @@
                 <p>Create simple line chart with points.</p>
             </div>
             <div class="col-md-4">
-                <h4>Icones menu &nbsp;&nbsp;<a role="button" href="examples/iconesMenu.html" class="btn btn-default">view »</a></h4>
+                <h4>Icons menu &nbsp;&nbsp;<a role="button" href="examples/iconsMenu.html" class="btn btn-default">view »</a></h4>
 
-                <p>Show icones menu to access to functionalities.</p>
+                <p>Show icons menu to access to functionalities.</p>
             </div>
             <div class="col-md-4">
                 <h4>Contextual menu &nbsp;&nbsp;<a role="button" href="examples/contextualMenu.html" class="btn btn-default">view »</a></h4>
@@ -232,7 +232,7 @@
                 <p>- by Y key only on Y axis.&nbsp;&nbsp;<a role="button" href="examples/zoomYKey.html" class="btn btn-default">view »</a></p>
             </div>
             <div class="col-md-4">
-                <h4>Interpolation&nbsp;&nbsp;<a role="button" href="examples/interpolationIcone.html" class="btn btn-default">view »</a></h4>
+                <h4>Interpolation&nbsp;&nbsp;<a role="button" href="examples/interpolationIcon.html" class="btn btn-default">view »</a></h4>
 
                 <p>Change interpolation on live.</p>
             </div>
@@ -249,7 +249,7 @@
                 <p>Change lines color on live.</p>
             </div>
             <div class="col-md-4">
-                <h4>Axis domains&nbsp;&nbsp;<a role="button" href="examples/domainsIcone.html" class="btn btn-default">view »</a></h4>
+                <h4>Axis domains&nbsp;&nbsp;<a role="button" href="examples/domainsIcon.html" class="btn btn-default">view »</a></h4>
 
                 <p>Change axis domains on live.</p>
             </div>
@@ -311,65 +311,65 @@
     var currentIndex = 0;
     var timer;
     var demos = [
-            function ()
-            {
-                setMessage( 'Remove all lines' );
-                graph.removeAllLines();
-            },
-            function ()
-            {
-                setMessage( 'Simple line chart' );
-                graph.setInterpolation( "linear" );
-                graph.setDisplayPoints(false);
-                graph.setData( [dataToDisplay[0]] );
-                graph.update();
-            },
-            function ()
-            {
-                setMessage( 'Multiple line chart' );
-                graph.addData( dataToDisplay[1] );
-                graph.update();
-            },
-            function ()
-            {
-                graph.addData( dataToDisplay[2] );
-                graph.update();
-            },
-            function ()
-            {
-                setMessage( 'Reset zoom' );
-                graph.initZoom();
-            },
-            function ()
-            {
-                setMessage( 'Display points' );
-                graph.onClickPoint();
-            },
-            function ()
-            {
-                setMessage( 'Hide points' );
-                graph.onClickPoint();
-            },
-            function ()
-            {
-                setMessage( 'Interpolation : bundle' );
-                graph.setInterpolation( "bundle" );
-                graph.update();
-            },
-            function ()
-            {
-                setMessage( 'Interpolation : step-after' );
-                graph.setInterpolation( "step-after" );
-                graph.update();
-            },
-            function ()
-            {
-                setMessage( 'End Demo' );
-            },
-            function ()
-            {
-                stopDemo();
-            }
+        function ()
+        {
+            setMessage( 'Remove all lines' );
+            graph.removeAllLines();
+        },
+        function ()
+        {
+            setMessage( 'Simple line chart' );
+            graph.setInterpolation( "linear" );
+            graph.setDisplayPoints(false);
+            graph.setData( [dataToDisplay[0]] );
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'Multiple line chart' );
+            graph.addData( dataToDisplay[1] );
+            graph.update();
+        },
+        function ()
+        {
+            graph.addData( dataToDisplay[2] );
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'Reset zoom' );
+            graph.initZoom();
+        },
+        function ()
+        {
+            setMessage( 'Display points' );
+            graph.onClickPoint();
+        },
+        function ()
+        {
+            setMessage( 'Hide points' );
+            graph.onClickPoint();
+        },
+        function ()
+        {
+            setMessage( 'Interpolation : bundle' );
+            graph.setInterpolation( "bundle" );
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'Interpolation : step-after' );
+            graph.setInterpolation( "step-after" );
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'End Demo' );
+        },
+        function ()
+        {
+            stopDemo();
+        }
     ];
 
     function setMessage( message )
@@ -403,8 +403,8 @@
         xAxisLabelText:'Date',
         yAxisLabelText: 'Values',
         data:generateData(),
-        displayContextuelMenu: true,
-        displayIconesMenu: true,
+        displayContextualMenu: true,
+        displayIconsMenu: true,
         activeKeys:true};
 
     var graph = new Woodpecker( options );

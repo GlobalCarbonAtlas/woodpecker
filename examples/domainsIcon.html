@@ -36,10 +36,10 @@
     </div>
 
     <div class="page-header title">
-        <h1>Interpolation on live</h1>
+        <h1>Axis domains on live</h1>
     </div>
 
-    <div id="woodpeckerContainer" class="chart"></div>
+    <div id="woodpeckerContainer"></div>
 
     <h4>Code</h4>
 
@@ -62,11 +62,11 @@
                 xAxisLabelText:'Date',
                 yAxisLabelText: 'Values',
                 data:dataToDisplay,
-                <span class="value">displayIconesMenu: true,</span>
+                <span class="value">displayIconsMenu: true,</span>
                 imgPath:"../Woodpecker/img"};
 
             <span class="value">var graph = new Woodpecker( options );
-            graph.onClickDisplayInterpolation();</span>
+            graph.onClickAxis();</span>
         </code></pre>
     </div>
 
@@ -96,11 +96,11 @@
             xAxisLabelText:'Date',
             yAxisLabelText: 'Values',
             data:dataToDisplay,
-            displayIconesMenu: true,
+            displayIconsMenu: true,
             imgPath:"../Woodpecker/img"};
 
         var graph = new Woodpecker( options );
-        graph.onClickDisplayInterpolation();
+        graph.onClickAxis();
     } );
 
 </script>
