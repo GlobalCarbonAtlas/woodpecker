@@ -145,8 +145,8 @@
 <!--        xAxisLabelText:'Date',-->
 <!--        yAxisLabelText: 'Values',-->
 <!--        data:dataToDisplay,-->
-<!--        displayContextuelMenu: true,-->
-<!--        displayIconesMenu: true,-->
+<!--        displayContextualMenu: true,-->
+<!--        displayIconsMenu: true,-->
 <!--        activeKeys:true};-->
 <!---->
 <!--    new Woodpecker( options );</span>-->
@@ -163,12 +163,12 @@
     <div>
         <div class="row">
             <div class="col-md-4">
-                <h4>Simple Line Chart &nbsp;&nbsp;<a role="button" href="examples/simple.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/simple.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Simple Line Chart</h4>
 
                 <p>Create simple line chart for getting started.</p>
             </div>
             <div class="col-md-4">
-                <h4>Multiple Line Chart &nbsp;&nbsp;<a role="button" href="examples/multiple.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/multiple.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Multiple Line Chart</h4>
 
                 <p>Create multiple line chart with multiple data.</p>
             </div>
@@ -182,29 +182,29 @@
     <div>
         <div class="row">
             <div class="col-md-4">
-                <h4>Chart with points&nbsp;&nbsp;<a role="button" href="examples/points.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/points.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Chart with points</h4>
 
                 <p>Create simple line chart with points.</p>
             </div>
             <div class="col-md-4">
-                <h4>Icones menu &nbsp;&nbsp;<a role="button" href="examples/iconesMenu.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/iconsMenu.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Icons menu</h4>
 
-                <p>Show icones menu to access to functionalities.</p>
+                <p>Show icons menu to access to functionalities.</p>
             </div>
             <div class="col-md-4">
-                <h4>Contextual menu &nbsp;&nbsp;<a role="button" href="examples/contextualMenu.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/contextualMenu.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Contextual menu</h4>
 
                 <p>Add a contextual menu to access to functionalities with the mouse right-click.</p>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <h4>Interpolation&nbsp;&nbsp;<a role="button" href="examples/interpolation.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/interpolation.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Interpolation</h4>
 
                 <p>Init interpolation.</p>
             </div>
             <div class="col-md-4">
-                <h4>Axis domains&nbsp;&nbsp;<a role="button" href="examples/domains.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/domains.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Axis domains</h4>
 
                 <p>Init axis domains.</p>
             </div>
@@ -220,36 +220,36 @@
             <div class="col-md-4">
                 <h4>Zoom on X axis</h4>
 
-                <p>- by mouse wheel event only on X axis.&nbsp;&nbsp;<a role="button" href="examples/zoomXMouse.html" class="btn btn-default">view »</a></p>
+                <p><a role="button" href="examples/zoomXMouse.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by mouse wheel event only on X axis.</p>
 
-                <p>- by X key only on X axis.&nbsp;&nbsp;<a role="button" href="examples/zoomXKey.html" class="btn btn-default">view »</a></p>
+                <p><a role="button" href="examples/zoomXKey.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by X key only on X axis.</p>
             </div>
             <div class="col-md-4">
                 <h4>Zoom on Y axis</h4>
 
-                <p>- by mouse wheel event only on Y axis.&nbsp;&nbsp;<a role="button" href="examples/zoomYMouse.html" class="btn btn-default">view »</a></p>
+                <p><a role="button" href="examples/zoomYMouse.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by mouse wheel event only on Y axis.</p>
 
-                <p>- by Y key only on Y axis.&nbsp;&nbsp;<a role="button" href="examples/zoomYKey.html" class="btn btn-default">view »</a></p>
+                <p><a role="button" href="examples/zoomYKey.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by Y key only on Y axis.</p>
             </div>
             <div class="col-md-4">
-                <h4>Interpolation&nbsp;&nbsp;<a role="button" href="examples/interpolationIcone.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/interpolationIcon.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Interpolation</h4>
 
                 <p>Change interpolation on live.</p>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <h4>Hide line&nbsp;&nbsp;<a role="button" href="examples/hide.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/hide.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Hide line</h4>
 
                 <p>Hide or display line on live.</p>
             </div>
             <div class="col-md-4">
-                <h4>Line color&nbsp;&nbsp;<a role="button" href="examples/color.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/color.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Line color</h4>
 
                 <p>Change lines color on live.</p>
             </div>
             <div class="col-md-4">
-                <h4>Axis domains&nbsp;&nbsp;<a role="button" href="examples/domainsIcone.html" class="btn btn-default">view »</a></h4>
+                <h4><a role="button" href="examples/domainsIcon.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Axis domains</h4>
 
                 <p>Change axis domains on live.</p>
             </div>
@@ -301,8 +301,6 @@
     }
 
     var dataToDisplay = generateData();
-    var bob = generateData();
-
 
     //  **********************************************************************
     //  ******************************** DEMO ********************************
@@ -311,65 +309,139 @@
     var currentIndex = 0;
     var timer;
     var demos = [
-            function ()
-            {
-                setMessage( 'Remove all lines' );
-                graph.removeAllLines();
-            },
-            function ()
-            {
-                setMessage( 'Simple line chart' );
-                graph.setInterpolation( "linear" );
-                graph.setDisplayPoints(false);
-                graph.setData( [dataToDisplay[0]] );
-                graph.update();
-            },
-            function ()
-            {
-                setMessage( 'Multiple line chart' );
-                graph.addData( dataToDisplay[1] );
-                graph.update();
-            },
-            function ()
-            {
-                graph.addData( dataToDisplay[2] );
-                graph.update();
-            },
-            function ()
-            {
-                setMessage( 'Reset zoom' );
-                graph.initZoom();
-            },
-            function ()
-            {
-                setMessage( 'Display points' );
-                graph.onClickPoint();
-            },
-            function ()
-            {
-                setMessage( 'Hide points' );
-                graph.onClickPoint();
-            },
-            function ()
-            {
-                setMessage( 'Interpolation : bundle' );
-                graph.setInterpolation( "bundle" );
-                graph.update();
-            },
-            function ()
-            {
-                setMessage( 'Interpolation : step-after' );
-                graph.setInterpolation( "step-after" );
-                graph.update();
-            },
-            function ()
-            {
-                setMessage( 'End Demo' );
-            },
-            function ()
-            {
-                stopDemo();
-            }
+        function ()
+        {
+            console.log("currentIndex : "+currentIndex);
+            setMessage( 'Change line color 2 : Cosine Wave' );
+            graph.changeColor(1, "red");
+            console.log("currentIndex : "+currentIndex);
+        },
+//        function ()
+//        {
+//            setMessage( 'Zoom in' );
+//            graph.zoomWithScale(0.5);
+//        },
+//        function ()
+//        {
+//            setMessage( 'Zoom out' );
+//            graph.zoomWithScale(0.5);
+//        },
+//        function ()
+//        {
+//            setMessage( 'Zoom in on X axis' );
+//            graph.zoomWithScale(0.5);
+//        },
+//        function ()
+//        {
+//            setMessage( 'Zoom out on X axis' );
+//            graph.zoomWithScale(0.5);
+//        },
+//        function ()
+//        {
+//            setMessage( 'Zoom in on Y axis' );
+//            graph.zoomWithScale(0.5);
+//        },
+//        function ()
+//        {
+//            setMessage( 'Zoom out on Y axis' );
+//            graph.zoomWithScale(0.5);
+//        },
+//        function ()
+//        {
+//            setMessage( 'Change axis domains' );
+//        },
+//        function ()
+//        {
+//            setMessage( 'Remove line 1 : Sine Wave' );
+//        },
+        function ()
+        {
+            console.log("currentIndex : "+currentIndex);
+            setMessage( 'Hide icons menu' );
+            graph.setDisplayIconsMenu(false);
+            graph.update();
+            console.log("currentIndex : "+currentIndex);
+        },
+        function ()
+        {
+            setMessage( 'Show icons menu' );
+            graph.setDisplayIconsMenu(true);
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'Remove all lines' );
+            graph.removeAllLines();
+        },
+        function ()
+        {
+            setMessage( 'Simple line chart' );
+            graph.setInterpolation( "linear" );
+            graph.setDisplayPoints(false);
+            graph.setData( [dataToDisplay[0]] );
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'Multiple line chart' );
+            graph.addData( dataToDisplay[1] );
+            graph.update();
+        },
+        function ()
+        {
+            graph.addData( dataToDisplay[2] );
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'Reset zoom' );
+            graph.initZoom();
+        },
+//        function ()
+//        {
+//            setMessage( 'Change line color 2 : Cosine Wave' );
+//            graph.changeColor(1, "red");
+//        },
+        function ()
+        {
+            setMessage( 'Display points' );
+            graph.onClickPoint();
+        },
+        function ()
+        {
+            setMessage( 'Hide points' );
+            graph.onClickPoint();
+        },
+        function ()
+        {
+            setMessage( 'Hide line 2 : Cosine Wave' );
+            graph.hideOrDisplayLine(1);
+        },
+        function ()
+        {
+            setMessage( 'Show line 2 : Cosine Wave' );
+            graph.hideOrDisplayLine(1);
+        },
+        function ()
+        {
+            setMessage( 'Interpolation : bundle' );
+            graph.setInterpolation( "bundle" );
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'Interpolation : step-after' );
+            graph.setInterpolation( "step-after" );
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'End Demo' );
+        },
+        function ()
+        {
+            stopDemo();
+        }
     ];
 
     function setMessage( message )
@@ -380,7 +452,7 @@
     function startDemo()
     {
         setMessage( 'Starting Demo..' );
-        currentIndex = 0;
+        console.log("currentIndex : "+currentIndex);
         timer = setInterval( function()
         {
 //            if( currentIndex == demos.length ) currentIndex = 0;
@@ -390,8 +462,10 @@
 
     function stopDemo()
     {
+        graph.init();
         clearInterval( timer );
-        document.getElementById( 'message' ).innerHTML = defaultMessage;
+        currentIndex = 0;
+        $( '#message' ).html(defaultMessage);
     }
 
 
@@ -402,14 +476,13 @@
         height: 200,
         xAxisLabelText:'Date',
         yAxisLabelText: 'Values',
-        data:generateData(),
-        displayContextuelMenu: true,
-        displayIconesMenu: true,
+        data: jQuery.extend(true, new Array(), dataToDisplay),
+        displayContextualMenu: true,
+        displayIconsMenu: true,
         activeKeys:true};
 
     var graph = new Woodpecker( options );
     startDemo();
-
 
 </script>
 
