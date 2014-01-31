@@ -265,57 +265,51 @@
 </div>
 
 <script type="text/javascript">
-    function generateData()
+var today = new Date();
+
+function generateData()
+{
+    var sin = [],
+            sin2 = [],
+            cos = [],
+            cos2 = [],
+            r1 = Math.random(),
+            r2 = Math.random(),
+            r3 = Math.random(),
+            r4 = Math.random();
+
+    for( var i = 0; 100 > i; i++ )
     {
-        var today = new Date();
-        var sin = [],
-                sin2 = [],
-                cos = [],
-                cos2 = [],
-                r1 = Math.random(),
-                r2 = Math.random(),
-                r3 = Math.random(),
-                r4 = Math.random();
-
-        for( var i = 0; 100 > i; i++ )
-        {
-            sin.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r1 * Math.sin( r2 + i / (10 * (r4 + .5) ) )] );
-            cos.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r2 * Math.cos( r3 + i / (10 * (r3 + .5) ) )] );
-            sin2.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r3 * Math.sin( r1 + i / (10 * (r2 + .5) ) )] );
-        }
-
-        return [
-            {
-                data: sin,
-                label: "Sine Wave"
-            },
-            {
-                data: cos,
-                label: "Cosine Wave"
-            },
-            {
-                data: sin2,
-                label: "Sine2 Wave"
-            }
-        ];
+        sin.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r1 * Math.sin( r2 + i / (10 * (r4 + .5) ) )] );
+        cos.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r2 * Math.cos( r3 + i / (10 * (r3 + .5) ) )] );
+        sin2.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r3 * Math.sin( r1 + i / (10 * (r2 + .5) ) )] );
     }
 
-    var dataToDisplay = generateData();
-
-    //  **********************************************************************
-    //  ******************************** DEMO ********************************
-    //  **********************************************************************
-    var defaultMessage = $( '#message' ).html();
-    var currentIndex = 0;
-    var timer;
-    var demos = [
-        function ()
+    return [
         {
-            console.log("currentIndex : "+currentIndex);
-            setMessage( 'Change line color 2 : Cosine Wave' );
-            graph.changeColor(1, "red");
-            console.log("currentIndex : "+currentIndex);
+            data: sin,
+            label: "Sine Wave"
         },
+        {
+            data: cos,
+            label: "Cosine Wave"
+        },
+        {
+            data: sin2,
+            label: "Sine2 Wave"
+        }
+    ];
+}
+
+var dataToDisplay = generateData();
+
+//  **********************************************************************
+//  ******************************** DEMO ********************************
+//  **********************************************************************
+var defaultMessage = $( '#message' ).html();
+var currentIndex = 0;
+var timer;
+var demos = [
 //        function ()
 //        {
 //            setMessage( 'Zoom in' );
@@ -346,27 +340,22 @@
 //            setMessage( 'Zoom out on Y axis' );
 //            graph.zoomWithScale(0.5);
 //        },
-//        function ()
-//        {
-//            setMessage( 'Change axis domains' );
-//        },
-//        function ()
-//        {
-//            setMessage( 'Remove line 1 : Sine Wave' );
-//        },
         function ()
         {
-            console.log("currentIndex : "+currentIndex);
             setMessage( 'Hide icons menu' );
-            graph.setDisplayIconsMenu(false);
+            graph.setDisplayIconsMenu( false );
             graph.update();
-            console.log("currentIndex : "+currentIndex);
         },
         function ()
         {
             setMessage( 'Show icons menu' );
-            graph.setDisplayIconsMenu(true);
+            graph.setDisplayIconsMenu( true );
             graph.update();
+        },
+        function ()
+        {
+            setMessage( 'Remove line 1 : Sine Wave' );
+            graph.removeLine( 0 );
         },
         function ()
         {
@@ -377,7 +366,7 @@
         {
             setMessage( 'Simple line chart' );
             graph.setInterpolation( "linear" );
-            graph.setDisplayPoints(false);
+            graph.setDisplayPoints( false );
             graph.setData( [dataToDisplay[0]] );
             graph.update();
         },
@@ -397,11 +386,22 @@
             setMessage( 'Reset zoom' );
             graph.initZoom();
         },
-//        function ()
-//        {
-//            setMessage( 'Change line color 2 : Cosine Wave' );
-//            graph.changeColor(1, "red");
-//        },
+        function ()
+        {
+            setMessage( 'Change axis domains' );
+            graph.updateXYDomainsWithValues( [new Date( today.getTime() + 20 * 1000 * 60 * 60 * 24 ), new Date( today.getTime() + 50 * 1000 * 60 * 60 * 24 )], [0,1] );
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'Reset zoom' );
+            graph.initZoom();
+        },
+        function ()
+        {
+            setMessage( 'Change line color 2 : Cosine Wave' );
+            graph.changeColor( 1, "red" );
+        },
         function ()
         {
             setMessage( 'Display points' );
@@ -415,12 +415,12 @@
         function ()
         {
             setMessage( 'Hide line 2 : Cosine Wave' );
-            graph.hideOrDisplayLine(1);
+            graph.hideOrDisplayLine( 1 );
         },
         function ()
         {
             setMessage( 'Show line 2 : Cosine Wave' );
-            graph.hideOrDisplayLine(1);
+            graph.hideOrDisplayLine( 1 );
         },
         function ()
         {
@@ -437,52 +437,48 @@
         function ()
         {
             setMessage( 'End Demo' );
-        },
-        function ()
-        {
             stopDemo();
         }
-    ];
+];
 
-    function setMessage( message )
+function setMessage( message )
+{
+    $( "#message" ).html( '<button id="demoMessage" type="button" class="btn btn-default" onclick="stopDemo();" data-toggle="tooltip" data-animation="false" title="Stop Demo" onclick="stopDemo();">' + message + '</button>' );
+}
+
+function startDemo()
+{
+    setMessage( 'Starting Demo..' );
+    timer = setInterval( function()
     {
-        $( "#message" ).html( '<button id="demoMessage" type="button" class="btn btn-default" onclick="stopDemo();" data-toggle="tooltip" data-animation="false" title="Stop Demo" onclick="stopDemo();">' + message + '</button>' );
-    }
+        demos[currentIndex++]();
+    }, 2000 );
+}
 
-    function startDemo()
-    {
-        setMessage( 'Starting Demo..' );
-        console.log("currentIndex : "+currentIndex);
-        timer = setInterval( function()
-        {
-//            if( currentIndex == demos.length ) currentIndex = 0;
-            demos[currentIndex++]();
-        }, 2000 );
-    }
+function stopDemo()
+{
+    graph.init();
 
-    function stopDemo()
-    {
-        graph.init();
-        clearInterval( timer );
-        currentIndex = 0;
-        $( '#message' ).html(defaultMessage);
-    }
+    clearInterval( timer );
+    currentIndex = 0;
+    $( '#message' ).html( defaultMessage );
+}
 
 
-    //  **********************************************************************
-    //  ******************************** GRAPH *******************************
-    //  **********************************************************************
-    var options = {containerId: "woodpeckerContainer",
-        height: 200,
-        xAxisLabelText:'Date',
-        yAxisLabelText: 'Values',
-        data: jQuery.extend(true, new Array(), dataToDisplay),
-        displayContextualMenu: true,
-        displayIconsMenu: true,
-        activeKeys:true};
+//  **********************************************************************
+//  ******************************** GRAPH *******************************
+//  **********************************************************************
+var options = {containerId: "woodpeckerContainer",
+    height: 200,
+    xAxisLabelText:'Date',
+    yAxisLabelText: 'Values',
+    data: jQuery.extend( true, new Array(), dataToDisplay ),
+    displayContextualMenu: true,
+    displayIconsMenu: true,
+    activeKeys:true};
 
-    var graph = new Woodpecker( options );
-    startDemo();
+var graph = new Woodpecker( options );
+startDemo();
 
 </script>
 

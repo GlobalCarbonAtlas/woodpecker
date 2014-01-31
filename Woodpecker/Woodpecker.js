@@ -1,5 +1,5 @@
 /* 
- * Copyright Patrick Brockmann, Vanessa Maigne & Pascal Evano, 2013  
+ * Copyright Patrick Brockmann, Vanessa Maigne & Pascal Evano, 2013
  *
  * Patrick.Brockmann@lsce.ipsl.fr
  * Vanessa.Maigne@lsce.ipsl.fr
@@ -189,14 +189,9 @@ var Woodpecker = Class.create( {
         {
             this[d] = this.initContext[d];
         }, this ) );
-//        jQuery.proxy( this.initContext.createGraph( false ), this.initContext );
         this.initContext = jQuery.extend( true, {}, this );
         this.createGraph( false );
-    },
-
-    init2: function()
-    {
-        this.createGraph( false );
+        this.initZoom();
     },
 
     createSVG: function()
@@ -253,6 +248,11 @@ var Woodpecker = Class.create( {
         if( this.displayIconsMenu )
             this.createOrUpdateIconsMenu();
         this.selectedLineIndex = 0;
+    },
+
+    removeLine: function( i )
+    {
+        this.onDblClickLegend( this.data[i] );
     },
 
     onClickPoint: function()
