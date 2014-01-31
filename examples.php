@@ -306,51 +306,49 @@ var dataToDisplay = generateData();
 //  **********************************************************************
 //  ******************************** DEMO ********************************
 //  **********************************************************************
+function zoom( message, zoomXAvailable, zoomYAvailable, isIn )
+{
+    setMessage( message );
+    graph.setZoomXAvailable( zoomXAvailable );
+    graph.setZoomYAvailable( zoomYAvailable );
+    var xDomain = graph.getXDomain();
+    var yDomain = graph.getYDomain();
+    if( isIn )
+    {
+        var newXDomain = [new Date( xDomain[0].getTime() + stepZoom * 1000 * 60 * 60 * 24 ), new Date( xDomain[1].getTime() - stepZoom * 1000 * 60 * 60 * 24 )];
+        var newYDomain = [yDomain[0] + stepZoom * 0.1,yDomain[1] - stepZoom * 0.1];
+    }
+    else
+    {
+        var newXDomain = [new Date( xDomain[0].getTime() - stepZoom * 1000 * 60 * 60 * 24 ), new Date( xDomain[1].getTime() + stepZoom * 1000 * 60 * 60 * 24 )];
+        var newYDomain = [yDomain[0] - stepZoom * 0.1,yDomain[1] + stepZoom * 0.1];
+    }
+    if( zoomXAvailable && zoomYAvailable )
+        graph.updateXYDomainsWithValues( newXDomain, newYDomain );
+    else if( zoomXAvailable )
+        graph.updateXYDomainsWithValues( newXDomain, yDomain );
+    else
+        graph.updateXYDomainsWithValues( xDomain, newYDomain );
+    graph.updateZoomXY();
+    graph.redraw();
+}
+
 var defaultMessage = $( '#message' ).html();
 var currentIndex = 0;
 var timer;
+var stepZoom = 2;
 var demos = [
-//        function ()
-//        {
-//            setMessage( 'Zoom in' );
-//            graph.zoomWithScale(0.5);
-//        },
-//        function ()
-//        {
-//            setMessage( 'Zoom out' );
-//            graph.zoomWithScale(0.5);
-//        },
-//        function ()
-//        {
-//            setMessage( 'Zoom in on X axis' );
-//            graph.zoomWithScale(0.5);
-//        },
-//        function ()
-//        {
-//            setMessage( 'Zoom out on X axis' );
-//            graph.zoomWithScale(0.5);
-//        },
-//        function ()
-//        {
-//            setMessage( 'Zoom in on Y axis' );
-//            graph.zoomWithScale(0.5);
-//        },
-//        function ()
-//        {
-//            setMessage( 'Zoom out on Y axis' );
-//            graph.zoomWithScale(0.5);
-//        },
         function ()
         {
-            setMessage( 'Hide icons menu' );
-            graph.setDisplayIconsMenu( false );
-            graph.update();
+            zoom( 'Zoom in on X axis', true, false, true );
         },
         function ()
         {
-            setMessage( 'Show icons menu' );
-            graph.setDisplayIconsMenu( true );
-            graph.update();
+            zoom( 'Zoom in on X axis', true, false, true );
+        },
+        function ()
+        {
+            zoom( 'Zoom in on X axis', true, false, true );
         },
         function ()
         {
@@ -385,6 +383,78 @@ var demos = [
         {
             setMessage( 'Reset zoom' );
             graph.initZoom();
+        },
+        function ()
+        {
+            zoom( 'Zoom in', true, true, true );
+        },
+        function ()
+        {
+            zoom( 'Zoom in', true, true, true );
+        },
+        function ()
+        {
+            zoom( 'Zoom in', true, true, true );
+        },
+        function ()
+        {
+            zoom( 'Zoom out', true, true, false );
+        },
+        function ()
+        {
+            zoom( 'Zoom out', true, true, false );
+        },
+        function ()
+        {
+            zoom( 'Zoom out', true, true, false );
+        },
+        function ()
+        {
+            zoom( 'Zoom in on X axis', true, false, true );
+        },
+        function ()
+        {
+            zoom( 'Zoom in on X axis', true, false, true );
+        },
+        function ()
+        {
+            zoom( 'Zoom in on X axis', true, false, true );
+        },
+        function ()
+        {
+            zoom( 'Zoom out on X axis', true, false, false );
+        },
+        function ()
+        {
+            zoom( 'Zoom out on X axis', true, false, false );
+        },
+        function ()
+        {
+            zoom( 'Zoom out on X axis', true, false, false );
+        },
+        function ()
+        {
+            zoom( 'Zoom in on Y axis', false, true, true );
+        },
+        function ()
+        {
+            zoom( 'Zoom in on Y axis', false, true, true );
+        },
+        function ()
+        {
+            zoom( 'Zoom in on Y axis', false, true, true );
+        },
+        function ()
+        {
+            zoom( 'Zoom in on Y axis', false, true, false );
+        },
+        function ()
+        {
+            zoom( 'Zoom in on Y axis', false, true, false );
+        },
+        function ()
+        {
+            zoom( 'Zoom in on Y axis', false, true, false );
         },
         function ()
         {
@@ -436,6 +506,18 @@ var demos = [
         },
         function ()
         {
+            setMessage( 'Hide icons menu' );
+            graph.setDisplayIconsMenu( false );
+            graph.update();
+        },
+        function ()
+        {
+            setMessage( 'Show icons menu' );
+            graph.setDisplayIconsMenu( true );
+            graph.update();
+        },
+        function ()
+        {
             setMessage( 'End Demo' );
             stopDemo();
         }
@@ -452,13 +534,12 @@ function startDemo()
     timer = setInterval( function()
     {
         demos[currentIndex++]();
-    }, 2000 );
+    }, 1000 );
 }
 
 function stopDemo()
 {
     graph.init();
-
     clearInterval( timer );
     currentIndex = 0;
     $( '#message' ).html( defaultMessage );
@@ -469,7 +550,7 @@ function stopDemo()
 //  ******************************** GRAPH *******************************
 //  **********************************************************************
 var options = {containerId: "woodpeckerContainer",
-    height: 200,
+    height: 300,
     xAxisLabelText:'Date',
     yAxisLabelText: 'Values',
     data: jQuery.extend( true, new Array(), dataToDisplay ),

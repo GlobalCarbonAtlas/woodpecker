@@ -130,6 +130,26 @@ var Woodpecker = Class.create( {
         this.displayContextualMenu = displayContextualMenu;
     },
 
+    getYDomain: function()
+    {
+        return this.yDomain;
+    },
+
+    getXDomain: function()
+    {
+        return this.xDomain;
+    },
+
+    setZoomXAvailable: function( zoomXAvailable )
+    {
+        this.zoomXAvailable = zoomXAvailable;
+    },
+
+    setZoomYAvailable: function( zoomYAvailable )
+    {
+        this.zoomYAvailable = zoomYAvailable;
+    },
+
 
 // **************************************************************
 // *********************** DATA *********************************
@@ -990,31 +1010,22 @@ var Woodpecker = Class.create( {
     onClickZoomX:function()
     {
         this.zoomXAvailable = !this.zoomXAvailable;
-        this.createOrUpdateIconsMenu();
-        this.createOrUpdateContextMenu();
+        if( this.displayIconsMenu )
+            this.createOrUpdateIconsMenu();
+        if( this.displayContextualMenu )
+            this.createOrUpdateContextMenu();
         this.bindZoom();
     },
 
     onClickZoomY:function()
     {
         this.zoomYAvailable = !this.zoomYAvailable;
-        this.createOrUpdateIconsMenu();
-        this.createOrUpdateContextMenu();
+        if( this.displayIconsMenu )
+            this.createOrUpdateIconsMenu();
+        if( this.displayContextualMenu )
+            this.createOrUpdateContextMenu();
         this.bindZoom();
     },
-
-//    zoomWithScale: function(scale) {
-//        var svg = d3.select("body").select("svg");
-////        var container = svg.select("g");
-//        var h = svg.attr("height"), w = svg.attr("width");
-//
-//        // Note: works only on the <g> element and not on the <svg> element
-//        // which is a common mistake
-//        this.plot.attr("transform",
-//            "translate(" + w/2 + ", " + h/2 + ") " +
-//                "scale(" + scale + ") " +
-//                "translate(" + (-w/2) + ", " + (-h/2) + ")");
-//    },
 
 
 // **************************************************************
