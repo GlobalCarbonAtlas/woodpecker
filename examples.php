@@ -103,26 +103,26 @@
 
 <div class="sourcecode">
         <pre><code class="html javascript">
-        function generateData()
-        {
-            var today = new Date();
-            var sin = [],
-                    sin2 = [],
-                    cos = [],
-                    cos2 = [],
-                    r1 = Math.random(),
-                    r2 = Math.random(),
-                    r3 = Math.random(),
-                    r4 = Math.random();
-
-            for( var i = 0; 100 > i; i++ )
+            function generateData()
             {
-                sin.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r1 * Math.sin( r2 + i / (10 * (r4 + .5) ) )] );
-                cos.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r2 * Math.cos( r3 + i / (10 * (r3 + .5) ) )] );
-                sin2.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r3 * Math.sin( r1 + i / (10 * (r2 + .5) ) )] );
-            }
+                var today = new Date();
+                var sin = [],
+                sin2 = [],
+                cos = [],
+                cos2 = [],
+                r1 = Math.random(),
+                r2 = Math.random(),
+                r3 = Math.random(),
+                r4 = Math.random();
 
-            return [
+                for( var i = 0; 100 > i; i++ )
+                {
+                    sin.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r1 * Math.sin( r2 + i / (10 * (r4 + .5) ) )] );
+                    cos.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r2 * Math.cos( r3 + i / (10 * (r3 + .5) ) )] );
+                    sin2.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r3 * Math.sin( r1 + i / (10 * (r2 + .5) ) )] );
+                }
+
+                return [
                 {
                     data: sin,
                     label: "Sine Wave"
@@ -134,22 +134,21 @@
                 {
                     data: sin2,
                     label: "Sine2 Wave"
-                }
-            ];
-        }
+                }];
+            }
 
-        var dataToDisplay = generateData();
+            var dataToDisplay = generateData();
     <span class="value">
-        var options = {containerId: "woodpeckerContainer",
-            height: 200,
-            xAxisLabelText:'Date',
-            yAxisLabelText: 'Values',
-            data:dataToDisplay,
-            displayContextualMenu: true,
-            displayIconsMenu: true,
-            activeKeys:true};
+            var options = {containerId: "woodpeckerContainer",
+                height: 200,
+                xAxisLabelText:'Date',
+                yAxisLabelText: 'Values',
+                data:dataToDisplay,
+                displayContextualMenu: true,
+                displayIconsMenu: true,
+                activeKeys:true};
 
-        new Woodpecker( options );</span>
+            new Woodpecker( options );</span>
         </code></pre>
 </div>
 
@@ -171,6 +170,11 @@
                 <h4><a role="button" href="examples/multiple.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Multiple Line Chart</h4>
 
                 <p>Create multiple line chart with multiple data.</p>
+            </div>
+            <div class="col-md-4">
+                <h4><a role="button" href="examples/linearXAxis.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Linear X axis</h4>
+
+                <p>Create simple line chart with linear X axis.</p>
             </div>
         </div>
     </div>

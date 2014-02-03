@@ -52,6 +52,7 @@ var Woodpecker = Class.create( {
         this.ymin = parameters.ymin || 0;
         this.xDomain = parameters.xDomain ? parameters.xDomain : false;
         this.yDomain = parameters.yDomain ? parameters.yDomain : false;
+        this.isLinearXAxis = parameters.isLinearXAxis ? parameters.isLinearXAxis : false; // X axis is time by default
 
         // Dimensions
         this.translateGraph = {"top": 10, "right": 0, "bottom": 70, "left": 70};
@@ -73,7 +74,10 @@ var Woodpecker = Class.create( {
         this.selectedLineIndex = 0;
         this.selectedLine = false;
 
-        this.x = d3.time.scale().domain( [this.xmin, this.xmax] ).range( [0, this.plotSize.width] );
+        if( this.isLinearXAxis )
+            this.x = d3.scale.linear().domain( [this.xmin, this.xmax] ).nice().range( [0, this.plotSize.width] ).nice();
+        else
+            this.x = d3.time.scale().domain( [this.xmin, this.xmax] ).range( [0, this.plotSize.width] );
         this.y = d3.scale.linear().domain( [this.ymin, this.ymax] ).nice().range( [0, this.plotSize.height] ).nice();
 
         this.xAxis = d3.svg.axis().scale( this.x ).orient( 'bottom' );
@@ -446,10 +450,18 @@ var Woodpecker = Class.create( {
         this.divAxis.css( {position:"absolute", top:$( "#WPaxisIcon" ).offset().top + 50 + "px", left : $( "#WPaxisIcon" ).offset().left + "px", "zIndex": this.zIndex} );
         this.divAxis.fadeToggle();
         var xDomain = this.getXDomain();
-        var xTime = Date.parse( xDomain[0] );
-        $( "#xMin" ).val( $.datepicker.formatDate( 'yy-mm-dd', new Date( xTime ) ) );
-        var yTime = Date.parse( xDomain[1] );
-        $( "#xMax" ).val( $.datepicker.formatDate( 'yy-mm-dd', new Date( yTime ) ) );
+        if( this.isLinearXAxis )
+        {
+            $( "#xMin" ).val( xDomain[0].toFixed( 5 ) );
+            $( "#xMax" ).val( xDomain[1].toFixed( 5 ) );
+        }
+        else
+        {
+            var xTimeMin = Date.parse( xDomain[0] );
+            $( "#xMin" ).val( $.datepicker.formatDate( 'yy-mm-dd', new Date( xTimeMin ) ) );
+            var xTimeMax = Date.parse( xDomain[1] );
+            $( "#xMax" ).val( $.datepicker.formatDate( 'yy-mm-dd', new Date( xTimeMax ) ) );
+        }
         var yDomain = this.getYDomain();
         $( "#yMin" ).val( yDomain[0].toFixed( 5 ) );
         $( "#yMax" ).val( yDomain[1].toFixed( 5 ) );
@@ -457,7 +469,10 @@ var Woodpecker = Class.create( {
 
     onClickUpdateAxis: function()
     {
-        var xDomain = [new Date( $( "#xMin" ).val() ), new Date( $( "#xMax" ).val() )];
+        if( this.isLinearXAxis )
+            var xDomain = [$( "#xMin" ).val(), $( "#xMax" ).val()];
+        else
+            var xDomain = [new Date( $( "#xMin" ).val() ), new Date( $( "#xMax" ).val() )];
         var yDomain = [$( "#yMin" ).val(), $( "#yMax" ).val()];
         this.updateXYDomainsWithValues( xDomain, yDomain );
         this.redraw();
@@ -575,15 +590,20 @@ var Woodpecker = Class.create( {
         points.enter().append( 'circle' )
                 .append( "title" )
                 .attr( "class", "titleClass" )
-                .text( function( d )
+                .text( jQuery.proxy( function( d )
         {
-            var timeValue = Date.parse( d[0] );
-            return $.datepicker.formatDate( 'yy-mm-dd', new Date( timeValue ) ) + ", " + d[1].toFixed( 5 )
-        } );
+            if( this.isLinearXAxis )
+                return  d[0].toFixed( 5 ) + ", " + d[1].toFixed( 5 );
+            else
+            {
+                var timeValue = Date.parse( d[0] );
+                return $.datepicker.formatDate( 'yy-mm-dd', new Date( timeValue ) ) + ", " + d[1].toFixed( 5 );
+            }
+        }, this ) );
         points.exit().remove();
         points.attr( 'class', function( d, i )
         {
-            return 'point point-' + i
+            return 'point point-' + i;
         } );
 
         d3.transition( points )
@@ -1458,8 +1478,8 @@ var Woodpecker = Class.create( {
 
         // Axis
         this.divAxis = this.createSimpleBox( "WPaxis", "Axis" );
-        this.divAxis.append( '<div class="WPcontainerContent"><div class="WPaxisTitle">Date axis</div>Minimum : &nbsp;<input id="xMin" size="9"/><BR/>Maximum : <input id="xMax" size="9"/><BR/>' +
-                '<div class="WPaxisTitle">Value axis</div>Minimum : &nbsp;<input id="yMin" size="9"/><BR/>Maximum : <input id="yMax" size="9"/><BR/>' +
+        this.divAxis.append( '<div class="WPcontainerContent"><div class="WPaxisTitle">' + this.xAxisLabelText + '</div>Minimum : &nbsp;<input id="xMin" size="9"/><BR/>Maximum : <input id="xMax" size="9"/><BR/>' +
+                '<div class="WPaxisTitle">'+this.yAxisLabelText+'</div>Minimum : &nbsp;<input id="yMin" size="9"/><BR/>Maximum : <input id="yMax" size="9"/><BR/>' +
                 '<div id="axisButtonUpdate">Update Axis</div></div>' );
         $( divContainer ).append( this.divAxis );
 
