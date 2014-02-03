@@ -43,115 +43,115 @@
     </code></pre>
 </div>
 
-<!--<div class="page-header sub">-->
-<!--    <h2>Setup in html</h2>-->
-<!--</div>-->
-<!--<div class="sourcecode highlight">-->
-<!--    <pre><code class="html">-->
-<!--        <span class="comment">&lt;!-- Load css for styles --&gt;</span>-->
-<!--        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span-->
-<!--            class="attr">type</span>=<span class="value">"text/css"</span> <span class="attr">href</span>=<span-->
-<!--            class="value">"Woodpecker/Tree.css"</span>&gt;-->
-<!--        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span-->
-<!--            class="attr">type</span>=<span class="value">"text/css"</span> <span class="attr">href</span>=<span-->
-<!--            class="value">"Woodpecker/farbtastic/farbtastic.css"</span>&gt;-->
-<!--        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span-->
-<!--            class="attr">type</span>=<span class="value">"text/css"</span> <span class="attr">href</span>=<span-->
-<!--            class="value">"Woodpecker/contextmenu.css"</span>&gt;-->
-<!--        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span-->
-<!--            class="attr">type</span>=<span class="value">"text/css"</span> <span class="attr">href</span>=<span-->
-<!--            class="value">"Woodpecker/d3.css"</span>&gt;-->
-<!--        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span-->
-<!--            class="attr">type</span>=<span class="value">"text/css"</span> <span class="attr">href</span>=<span-->
-<!--            class="value">"Woodpecker/Woodpecker.css"</span>&gt;-->
-<!---->
-<!--        <span class="comment">&lt;!-- Load javascript librairies--&gt;</span>-->
-<!--        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span-->
-<!--            class="value">"text/javascript"</span><span class="attr">src</span>=<span-->
-<!--            class="value">"Woodpecker/js_library/jquery-1.9.1.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;-->
-<!--        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span-->
-<!--            class="value">"text/javascript"</span><span class="attr">src</span>=<span-->
-<!--            class="value">"Woodpecker/js_library/jquery.class.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;-->
-<!--        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span-->
-<!--            class="value">"text/javascript"</span><span class="attr">src</span>=<span-->
-<!--            class="value">"Woodpecker/js_library/jquery-ui-1.10.2.custom.min.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;-->
-<!--        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span-->
-<!--            class="value">"text/javascript"</span><span class="attr">src</span>=<span-->
-<!--            class="value">"Woodpecker/js_library/jshashtable-2.1.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;-->
-<!--        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span-->
-<!--            class="value">"text/javascript"</span><span class="attr">src</span>=<span-->
-<!--            class="value">"Woodpecker/d3.v3/d3.v3.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;-->
-<!---->
-<!--        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span-->
-<!--            class="value">"text/javascript"</span><span class="attr">src</span>=<span-->
-<!--            class="value">"Woodpecker/Tree.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;-->
-<!--        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span-->
-<!--            class="value">"text/javascript"</span><span class="attr">src</span>=<span class="value">"Woodpecker/farbtastic/farbtastic.js"</span>&gt;&lt;/<span-->
-<!--            class="tag">script</span>&gt;-->
-<!--        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span-->
-<!--            class="value">"text/javascript"</span><span class="attr">src</span>=<span class="value">"Woodpecker/contextmenu.js"</span>&gt;&lt;/<span-->
-<!--            class="tag">script</span>&gt;-->
-<!--        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span-->
-<!--            class="value">"text/javascript"</span><span class="attr">src</span>=<span class="value">"Woodpecker/Woodpecker.js"</span>&gt;&lt;/<span-->
-<!--            class="tag">script</span>&gt;-->
-<!--    </code></pre>-->
-<!--</div>-->
+<div class="page-header sub">
+    <h2>Setup in html</h2>
+</div>
+<div class="sourcecode highlight">
+    <pre><code class="html">
+        <span class="comment">&lt;!-- Load css for styles --&gt;</span>
+        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span
+            class="attr">type</span>=<span class="value">"text/css"</span> <span class="attr">href</span>=<span
+            class="value">"Woodpecker/Tree.css"</span>&gt;
+        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span
+            class="attr">type</span>=<span class="value">"text/css"</span> <span class="attr">href</span>=<span
+            class="value">"Woodpecker/farbtastic/farbtastic.css"</span>&gt;
+        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span
+            class="attr">type</span>=<span class="value">"text/css"</span> <span class="attr">href</span>=<span
+            class="value">"Woodpecker/contextmenu.css"</span>&gt;
+        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span
+            class="attr">type</span>=<span class="value">"text/css"</span> <span class="attr">href</span>=<span
+            class="value">"Woodpecker/d3.css"</span>&gt;
+        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span><span
+            class="attr">type</span>=<span class="value">"text/css"</span> <span class="attr">href</span>=<span
+            class="value">"Woodpecker/Woodpecker.css"</span>&gt;
+
+        <span class="comment">&lt;!-- Load javascript librairies--&gt;</span>
+        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span
+            class="value">"text/javascript"</span><span class="attr">src</span>=<span
+            class="value">"Woodpecker/js_library/jquery-1.9.1.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span
+            class="value">"text/javascript"</span><span class="attr">src</span>=<span
+            class="value">"Woodpecker/js_library/jquery.class.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span
+            class="value">"text/javascript"</span><span class="attr">src</span>=<span
+            class="value">"Woodpecker/js_library/jquery-ui-1.10.2.custom.min.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span
+            class="value">"text/javascript"</span><span class="attr">src</span>=<span
+            class="value">"Woodpecker/js_library/jshashtable-2.1.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span
+            class="value">"text/javascript"</span><span class="attr">src</span>=<span
+            class="value">"Woodpecker/d3.v3/d3.v3.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span
+            class="value">"text/javascript"</span><span class="attr">src</span>=<span
+            class="value">"Woodpecker/Tree.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span
+            class="value">"text/javascript"</span><span class="attr">src</span>=<span class="value">"Woodpecker/farbtastic/farbtastic.js"</span>&gt;&lt;/<span
+            class="tag">script</span>&gt;
+        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span
+            class="value">"text/javascript"</span><span class="attr">src</span>=<span class="value">"Woodpecker/contextmenu.js"</span>&gt;&lt;/<span
+            class="tag">script</span>&gt;
+        &lt;<span class="tag">script</span> <span class="attr">type</span>=<span
+            class="value">"text/javascript"</span><span class="attr">src</span>=<span class="value">"Woodpecker/Woodpecker.js"</span>&gt;&lt;/<span
+            class="tag">script</span>&gt;
+    </code></pre>
+</div>
 <BR/>
 
 
-<!--<h4>Code</h4>-->
-<!---->
-<!--<div class="sourcecode">-->
-<!--        <pre><code class="html javascript">-->
-<!--            function generateData()-->
-<!--            {-->
-<!--            var today = new Date();-->
-<!--            var sin = [],-->
-<!--            sin2 = [],-->
-<!--            cos = [],-->
-<!--            cos2 = [],-->
-<!--            r1 = Math.random(),-->
-<!--            r2 = Math.random(),-->
-<!--            r3 = Math.random(),-->
-<!--            r4 = Math.random();-->
-<!---->
-<!--            for( var i = 0; 100 > i; i++ )-->
-<!--            {-->
-<!--            sin.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r1 * Math.sin( r2 + i / (10 * (r4 + .5) ) )] );-->
-<!--            cos.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r2 * Math.cos( r3 + i / (10 * (r3 + .5) ) )] );-->
-<!--            sin2.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r3 * Math.sin( r1 + i / (10 * (r2 + .5) ) )] );-->
-<!--            }-->
-<!---->
-<!--            return [-->
-<!--            {-->
-<!--            data: sin,-->
-<!--            label: "Sine Wave"-->
-<!--            },-->
-<!--            {-->
-<!--            data: cos,-->
-<!--            label: "Cosine Wave"-->
-<!--            },-->
-<!--            {-->
-<!--            data: sin2,-->
-<!--            label: "Sine2 Wave"-->
-<!--            }-->
-<!--            ];-->
-<!--            }-->
-<!---->
-<!--            var dataToDisplay = generateData();-->
-<!--    <span class="value">-->
-<!--    var options = {containerId: "woodpeckerContainer",-->
-<!--        height: 200,-->
-<!--        xAxisLabelText:'Date',-->
-<!--        yAxisLabelText: 'Values',-->
-<!--        data:dataToDisplay,-->
-<!--        displayContextualMenu: true,-->
-<!--        displayIconsMenu: true,-->
-<!--        activeKeys:true};-->
-<!---->
-<!--    new Woodpecker( options );</span>-->
-<!--        </code></pre>-->
-<!--</div>-->
+<h4>Code</h4>
+
+<div class="sourcecode">
+        <pre><code class="html javascript">
+        function generateData()
+        {
+            var today = new Date();
+            var sin = [],
+                    sin2 = [],
+                    cos = [],
+                    cos2 = [],
+                    r1 = Math.random(),
+                    r2 = Math.random(),
+                    r3 = Math.random(),
+                    r4 = Math.random();
+
+            for( var i = 0; 100 > i; i++ )
+            {
+                sin.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r1 * Math.sin( r2 + i / (10 * (r4 + .5) ) )] );
+                cos.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r2 * Math.cos( r3 + i / (10 * (r3 + .5) ) )] );
+                sin2.push( [ new Date( today.getTime() + i * 1000 * 60 * 60 * 24 ), r3 * Math.sin( r1 + i / (10 * (r2 + .5) ) )] );
+            }
+
+            return [
+                {
+                    data: sin,
+                    label: "Sine Wave"
+                },
+                {
+                    data: cos,
+                    label: "Cosine Wave"
+                },
+                {
+                    data: sin2,
+                    label: "Sine2 Wave"
+                }
+            ];
+        }
+
+        var dataToDisplay = generateData();
+    <span class="value">
+        var options = {containerId: "woodpeckerContainer",
+            height: 200,
+            xAxisLabelText:'Date',
+            yAxisLabelText: 'Values',
+            data:dataToDisplay,
+            displayContextualMenu: true,
+            displayIconsMenu: true,
+            activeKeys:true};
+
+        new Woodpecker( options );</span>
+        </code></pre>
+</div>
 
 <div class="page-header sub">
     <h2>Tips</h2>
@@ -218,27 +218,6 @@
     <div>
         <div class="row">
             <div class="col-md-4">
-                <h4>Zoom on X axis</h4>
-
-                <p><a role="button" href="examples/zoomXMouse.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by mouse wheel event only on X axis.</p>
-
-                <p><a role="button" href="examples/zoomXKey.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by X key only on X axis.</p>
-            </div>
-            <div class="col-md-4">
-                <h4>Zoom on Y axis</h4>
-
-                <p><a role="button" href="examples/zoomYMouse.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by mouse wheel event only on Y axis.</p>
-
-                <p><a role="button" href="examples/zoomYKey.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by Y key only on Y axis.</p>
-            </div>
-            <div class="col-md-4">
-                <h4><a role="button" href="examples/interpolationIcon.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Interpolation</h4>
-
-                <p>Change interpolation on live.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
                 <h4><a role="button" href="examples/hide.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Hide line</h4>
 
                 <p>Hide or display line on live.</p>
@@ -252,6 +231,34 @@
                 <h4><a role="button" href="examples/domainsIcon.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Axis domains</h4>
 
                 <p>Change axis domains on live.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4><a role="button" href="examples/interpolationIcon.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Interpolation</h4>
+
+                <p>Change interpolation on live.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4><a role="button" href="examples/zoomMouse.html" class="btn btn-default">view »</a>&nbsp;&nbsp;Zoom</h4>
+
+                <p>Zoom by mouse wheel event on both axis.</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Zoom on X axis</h4>
+
+                <p><a role="button" href="examples/zoomXMouse.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by mouse wheel event only on X axis.</p>
+
+                <p><a role="button" href="examples/zoomXKey.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by X key only on X axis.</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Zoom on Y axis</h4>
+
+                <p><a role="button" href="examples/zoomYMouse.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by mouse wheel event only on Y axis.</p>
+
+                <p><a role="button" href="examples/zoomYKey.html" class="btn btn-default">view »</a>&nbsp;&nbsp;- by Y key only on Y axis.</p>
             </div>
         </div>
     </div>
@@ -338,18 +345,6 @@ var currentIndex = 0;
 var timer;
 var stepZoom = 2;
 var demos = [
-        function ()
-        {
-            zoom( 'Zoom in on X axis', true, false, true );
-        },
-        function ()
-        {
-            zoom( 'Zoom in on X axis', true, false, true );
-        },
-        function ()
-        {
-            zoom( 'Zoom in on X axis', true, false, true );
-        },
         function ()
         {
             setMessage( 'Remove line 1 : Sine Wave' );
