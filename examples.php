@@ -19,10 +19,10 @@
 
 <div class="page-header title">
     <h1 style="float:left;">Woodpecker
-        <small>D3-based reusable chart library for time series</small>
+        <small>D3-based reusable chart library for chart (time series by default)</small>
     </h1>
     <div id="link">
-        <a target="_blank" href="https://github.com/GlobalCarbonAtlas/woodpecker/tree/master/Woodpecker"><img class="git-icon" src="examples/GitHub-64px.png"></a>
+        <a target="_blank" href="https://github.com/GlobalCarbonAtlas/WoodpeckerObject"><img class="git-icon" src="examples/GitHub-64px.png"></a>
     </div>
     <div class="clearfix"></div>
 </div>
