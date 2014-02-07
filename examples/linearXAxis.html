@@ -45,27 +45,24 @@
 
     <div class="sourcecode">
         <pre><code class="html javascript">
-            var dataToDisplay = [{
-            data:
-                [
-                    [new Date( 1390658594684 ),10],
-                    [new Date( 1390745019861 ),22],
-                    [new Date( 1390831429424 ),5],
-                    [new Date( 1390917836977 ),15],
-                    [new Date( 1391004254838 ),1],
-                ],
-            label:"Simple line"
-            }];
+            var dataToDisplay = [
+            {data:
+                    [
+                        [1,10],
+                        [2,22],
+                        [3,5],
+                        [7,15],
+                        [11,1],
+                    ], label:"Simple line"}
+            ];
 
-            var options = {
-                containerId: "woodpeckerContainer",
+            var options = {containerId: "woodpeckerContainer",
                 height: 250,
-                xAxisLabelText:'Date',
-                yAxisLabelText: 'Values',
+                xAxisLabelText:'X Values',
+                yAxisLabelText: 'Y Values',
                 data:dataToDisplay,
                 <span class="value">isLinearXAxis:true,</span>
-                imgPath:"../Woodpecker/img"
-            };
+                imgPath:"../Woodpecker/img"};
 
             new Woodpecker( options );
         </code></pre>
@@ -98,7 +95,6 @@
             yAxisLabelText: 'Y Values',
             data:dataToDisplay,
             isLinearXAxis:true,
-            displayIconsMenu: true,
             imgPath:"../Woodpecker/img"};
 
         new Woodpecker( options );
