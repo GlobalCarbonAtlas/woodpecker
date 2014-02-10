@@ -617,6 +617,7 @@ var WPInterfaceW = Class.create( {
         var parameters = new Object();
 
         parameters.helpArray = [
+            {linkType:"right", divToHelpId:"clearAll", text:"Init all the selected fields", marginTop:23, marginLeft:72, stage:1},
             {linkType:"simple", divToHelpId:"regionSelect", text:"Select a region in the given list. A map helps you by showing the differents regions", textLengthByLine:35, marginTop:8, marginLeft:-40},
             {linkType:"simple", divToHelpId:"periodSelect", text:"Choose your period", textLengthByLine:35, marginTop:8, marginLeft:-40},
             {linkType:"simple", divToHelpId:"resourceSelect", text:"Select one or several resources in the given list", textLengthByLine:30, marginTop:10, marginLeft:-40},
