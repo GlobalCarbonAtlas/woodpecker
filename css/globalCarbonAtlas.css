@@ -96,7 +96,7 @@ select {
     padding-top: 0 !important;
 }
 
-.leftMenu {
+.leftMenu, .leftMenuUp {
     padding: 10px 1px 11px 0;
     float: left;
     width: 100%;
@@ -121,6 +121,9 @@ select {
     margin: 5px 10px;
 }
 
+.leftMenuUp {
+    padding: 0;
+}
 /********************* STYLES WEDOODATA *************************/
 .menu_link_left, .menu_link_middle, .menu_link_right {
     color: #333333;
@@ -225,6 +228,21 @@ select {
 }
 
 /****************************************************************/
+
+#clearAll {
+    background: url("../img/clearAll.png") no-repeat scroll 6px 0 #F2F2F2;
+    color: #808080;
+    display: block;
+    margin-top: -21px;
+    width: 110px;
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 20px;
+    padding-left: 30px;
+    text-decoration: none;
+    text-shadow: 1px 1px #FFFFFF;
+    cursor: pointer;
+}
 
 /*********************** FANCY MENU *****************************/
 .fancytree-container {
@@ -338,7 +356,7 @@ span.fancytree-title:hover div.complexToolTip {
 /************************* BUTTONS ******************************/
 /****************************************************************/
 .orangeButton {
-    background: url("../img/WDD/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
     color: white;
     font-size: 11px;
     line-height: 28px;
@@ -362,7 +380,7 @@ span.fancytree-title:hover div.complexToolTip {
 }
 
 .orangeButton.disabled, .orangeButton.disabled:hover {
-    background: url("../img/WDD/btn_menu_disabled_middle.png") repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_disabled_middle.png") repeat scroll 0 0 transparent;
     color: white;
     border: none;
     border-right: 1px solid #777878;

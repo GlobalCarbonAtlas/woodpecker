@@ -73,7 +73,16 @@ var WPInterfaceW = Class.create( {
         this.createRegionSelect( regionsTreeData );
         this.mapregion1 = this.createRegionMap();
         this.createResourceSelect( resourcesTreeData );
+    },
 
+    initInterface: function()
+    {
+        $( "#regionSelect" ).fancytree().init();
+        $( "button#btnResetSearchRegion" ).click();
+        $( "#MonthlyPeriod" ).click();
+        this.createOrUpdateSelectedPeriod();
+        $( "#resourceSelect" ).fancytree().init();
+        $( "button#btnResetSearchResource" ).click();
     },
 
 
@@ -114,26 +123,26 @@ var WPInterfaceW = Class.create( {
         // Filter
         var tree = $( "#regionSelect" ).fancytree( "getTree" );
         $( "input[name=searchRegion]" ).keyup(
-                function( e )
+            function( e )
+            {
+                tree.options.filter.mode = "hide";
+                var match = $( this ).val();
+                if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
                 {
-                    tree.options.filter.mode = "hide";
-                    var match = $( this ).val();
-                    if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
-                    {
-                        $( "button#btnResetSearchRegion" ).click();
-                        return;
-                    }
-                    // Pass text as filter string (will be matched as substring in the node title)
-                    var n = tree.applyFilter( match );
-                    $( "button#btnResetSearchRegion" ).attr( "disabled", false );
-                } );
+                    $( "button#btnResetSearchRegion" ).click();
+                    return;
+                }
+                // Pass text as filter string (will be matched as substring in the node title)
+                var n = tree.applyFilter( match );
+                $( "button#btnResetSearchRegion" ).attr( "disabled", false );
+            } );
 
         $( "button#btnResetSearchRegion" ).click(
-                function( e )
-                {
-                    $( "input[name=searchRegion]" ).val( "" );
-                    tree.clearFilter();
-                } ).attr( "disabled", true );
+            function( e )
+            {
+                $( "input[name=searchRegion]" ).val( "" );
+                tree.clearFilter();
+            } ).attr( "disabled", true );
 
         this.activateTitleForRegionMap();
     },
@@ -149,10 +158,10 @@ var WPInterfaceW = Class.create( {
                 this.updateRegionMap( currentregion );
             }
         }, this ) )
-                .on( "mouseout", function( d, i )
-        {
-            $( "#regionMapDiv" ).hide();
-        } )
+            .on( "mouseout", function( d, i )
+            {
+                $( "#regionMapDiv" ).hide();
+            } )
     },
 
     onSelectRegion: function( isInit, data )
@@ -172,42 +181,42 @@ var WPInterfaceW = Class.create( {
     {
         $( "#regionMapDiv" ).show();
         var mapland = new OpenLayers.Layer.WMS(
-                "Land mask",
-                "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-        {
-            VERSION: '1.1.1',
-            LAYERS: "GCA:GCA_landMask",
-            transparent: true,
-            FORMAT: 'image/png'
-        }, {
-            isBaseLayer: true,
-            wrapDateLine: true
-        } );
+            "Land mask",
+            "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+            {
+                VERSION: '1.1.1',
+                LAYERS: "GCA:GCA_landMask",
+                transparent: true,
+                FORMAT: 'image/png'
+            }, {
+                isBaseLayer: true,
+                wrapDateLine: true
+            } );
 
         var mapregion1 = new OpenLayers.Layer.WMS(
-                "Region",
-                "http://www.globalcarbonatlas.org:8080/thredds/wms/Atlas/Flux/Inversions/yearlymean/regions/regions_mask.nc",
-        {
-            VERSION: '1.3.0',
-            LAYERS: 'mask_region',
-            ELEVATION: region,
-            NUMCOLORBANDS: 1,
-            STYLES: 'boxfill/orange' ,
-            COLORSCALERANGE: '1,1',
-            TRANSPARENT: 'true',
-            ABOVEMAXCOLOR: 'transparent',
-            BELOWMINCOLOR: 'transparent',
-            FORMAT: 'image/png'
-        }, {
-            opacity: 0.75
-        } );
+            "Region",
+            "http://www.globalcarbonatlas.org:8080/thredds/wms/Atlas/Flux/Inversions/yearlymean/regions/regions_mask.nc",
+            {
+                VERSION: '1.3.0',
+                LAYERS: 'mask_region',
+                ELEVATION: region,
+                NUMCOLORBANDS: 1,
+                STYLES: 'boxfill/orange' ,
+                COLORSCALERANGE: '1,1',
+                TRANSPARENT: 'true',
+                ABOVEMAXCOLOR: 'transparent',
+                BELOWMINCOLOR: 'transparent',
+                FORMAT: 'image/png'
+            }, {
+                opacity: 0.75
+            } );
 
         var map1 = new OpenLayers.Map( 'regionMap',
-        {
-            controls: [],         // to remove zoom control (select2 is modal so disable other actions elsewhere)
-            projection: new OpenLayers.Projection( "EPSG:3857" ),
-            tileSize:  new OpenLayers.Size( 128, 128 )
-        } );
+            {
+                controls: [],         // to remove zoom control (select2 is modal so disable other actions elsewhere)
+                projection: new OpenLayers.Projection( "EPSG:3857" ),
+                tileSize:  new OpenLayers.Size( 128, 128 )
+            } );
         map1.addLayers( [mapland, mapregion1] );
         map1.zoomToMaxExtent();
         $( "#regionMapDiv" ).hide();
@@ -287,26 +296,26 @@ var WPInterfaceW = Class.create( {
         // Filter
         var tree = $( "#resourceSelect" ).fancytree( "getTree" );
         $( "input[name=searchResource]" ).keyup(
-                function( e )
+            function( e )
+            {
+                tree.options.filter.mode = "hide";
+                var match = $( this ).val();
+                if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
                 {
-                    tree.options.filter.mode = "hide";
-                    var match = $( this ).val();
-                    if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
-                    {
-                        $( "button#btnResetSearchResource" ).click();
-                        return;
-                    }
-                    // Pass text as filter string (will be matched as substring in the node title)
-                    var n = tree.applyFilter( match );
-                    $( "button#btnResetSearchResource" ).attr( "disabled", false );
-                } );
+                    $( "button#btnResetSearchResource" ).click();
+                    return;
+                }
+                // Pass text as filter string (will be matched as substring in the node title)
+                var n = tree.applyFilter( match );
+                $( "button#btnResetSearchResource" ).attr( "disabled", false );
+            } );
 
         $( "button#btnResetSearchResource" ).click(
-                function( e )
-                {
-                    $( "input[name=searchResource]" ).val( "" );
-                    tree.clearFilter();
-                } ).attr( "disabled", true );
+            function( e )
+            {
+                $( "input[name=searchResource]" ).val( "" );
+                tree.clearFilter();
+            } ).attr( "disabled", true );
     },
 
     onSelectResource: function( isInit, data )
@@ -438,7 +447,7 @@ var WPInterfaceW = Class.create( {
         jQuery.each( this.hashVariables.keys(), jQuery.proxy( function( i, key )
         {
             if( ("Terrestrial_flux" == key && 0 < $.arrayIntersect( selectedParentRegions, ["Global", "Land + Ocean", "Land", "TransCom"] ).length && 0 < $.arrayIntersect( selectedParentResources, ["Inversions", "Land Models"] ).length)
-                    || ("Ocean_flux" == key && 0 < $.arrayIntersect( selectedParentRegions, ["Global", "Land + Ocean", "Ocean"] ).length && 0 < $.arrayIntersect( selectedParentResources, ["Inversions", "Ocean Models"] ).length) )
+                || ("Ocean_flux" == key && 0 < $.arrayIntersect( selectedParentRegions, ["Global", "Land + Ocean", "Ocean"] ).length && 0 < $.arrayIntersect( selectedParentResources, ["Inversions", "Ocean Models"] ).length) )
             {
                 var index = this.variablesToDisplay.indexOf( key );
                 hashResult.put( key, this.variableNamesToDisplay[index] );
@@ -723,10 +732,10 @@ var WPInterfaceW = Class.create( {
         this.help.wrapper.append( divFooter );
 
         var divContentFooter = $( '' +
-                '<div class="helpFooterContentRight">' +
-                '<div class="helpFooterContentFloat">A project realised by</div>' +
-                '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
-                '</div>' );
+            '<div class="helpFooterContentRight">' +
+            '<div class="helpFooterContentFloat">A project realised by</div>' +
+            '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
+            '</div>' );
 
         divFooter.append( divContentFooter );
     },
@@ -754,6 +763,11 @@ var WPInterfaceW = Class.create( {
         {
             $( "#errors" ).hide();
         } );
+
+        $("#clearAll").on("click", jQuery.proxy(function()
+        {
+            this.initInterface();
+        }, this ) );
     },
 
     /**
