@@ -25,9 +25,8 @@ select {
     margin: 0;
     padding-left: 34px;
     position: relative;
-    font-family: "Ubuntu",Arial,sans-serif;
+    font-family: "Ubuntu", Arial, sans-serif;
 }
-
 
 /* ============================================== */
 #printable {
@@ -78,7 +77,6 @@ select {
     -webkit-box-shadow: inset 0 0 0 1px rgb(79, 79, 79), inset 0 0 0 6px rgb(102, 102, 102);
 }
 
-
 /****************************************************************/
 /************************ LEFT MENU *****************************/
 /****************************************************************/
@@ -124,6 +122,7 @@ select {
 .leftMenuUp {
     padding: 0;
 }
+
 /********************* STYLES WEDOODATA *************************/
 .menu_link_left, .menu_link_middle, .menu_link_right {
     color: #333333;
@@ -145,53 +144,53 @@ select {
 
 /* CENTER */
 .menu_title {
-    background: url("../img/WDD/btn_menu_default_middle.png") repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_default_middle.png") repeat scroll 0 0 transparent;
     cursor: pointer;
     float: left;
     width: 100%;
 }
 
 .menu_title.active {
-    background: url("../img/WDD/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
 }
 
 .menu_title.disabled {
-    background: url("../img/WDD/btn_menu_disabled_middle.png") repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_disabled_middle.png") repeat scroll 0 0 transparent;
     cursor: default;
 }
 
 /* LEFT */
 .menu_title .menu_link_left {
-    background: url("../img/WDD/btn_menu_default_left.png") no-repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_default_left.png") no-repeat scroll 0 0 transparent;
     width: 5px;
 }
 
 .menu_title.active .menu_link_left {
-    background: url("../img/WDD/btn_menu_active_left.png") no-repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_active_left.png") no-repeat scroll 0 0 transparent;
     width: 5px;
 }
 
 .menu_title.disabled .menu_link_left {
-    background: url("../img/WDD/btn_menu_disabled_left.png") no-repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_disabled_left.png") no-repeat scroll 0 0 transparent;
     width: 5px;
     cursor: default;
 }
 
 /* RIGHT */
 .menu_title .menu_link_right {
-    background: url("../img/WDD/btn_menu_default_right.png") no-repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_default_right.png") no-repeat scroll 0 0 transparent;
     float: right;
     width: 28px;
 }
 
 .menu_title.active .menu_link_right {
-    background: url("../img/WDD/btn_menu_active_right.png") no-repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_active_right.png") no-repeat scroll 0 0 transparent;
     float: right;
     width: 29px;
 }
 
 .menu_title.disabled .menu_link_right {
-    background: url("../img/WDD/btn_menu_disabled_right.png") no-repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_disabled_right.png") no-repeat scroll 0 0 transparent;
     float: right;
     width: 30px;
     cursor: default;
@@ -278,8 +277,7 @@ span.fancytree-title:hover div.complexToolTip {
     display: block;
     position: absolute;
     padding: .5em;
-    content: attr(title);
-   // min-width: 600px;
+    content: attr(title); /*/ / min-width : 600 px;*/
     text-align: left;
     width: auto;
     height: auto;
@@ -416,7 +414,7 @@ span.fancytree-title:hover div.complexToolTip {
 }
 
 #errors .containerTitle {
-    background: url("../img/WDD/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
+    background: url("../img/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
     color: #464646;
     font-weight: bold;
     font-size: 14px;
@@ -447,7 +445,7 @@ span.fancytree-title:hover div.complexToolTip {
 /* ************************* OTHER ************************ */
 /* ******************************************************** */
 .ui-dialog {
-    z-index:10000 !important;
+    z-index: 10000 !important;
 }
 
 /******************** HELP ***********************/
@@ -484,58 +482,57 @@ span.fancytree-title:hover div.complexToolTip {
 }
 
 .helpFooterContentFloat {
-    float:left;
+    float: left;
     margin-left: 10px;
     text-align: center;
 }
 
 .helpFooterLogo1 {
     position: relative;
-    top:4px;
+    top: 4px;
 }
 
-.helpFooterLogo2{
+.helpFooterLogo2 {
     position: relative;
-    top:16px;
+    top: 16px;
     margin-right: 30px;
 }
 
 /******************** BUBBLE ***********************/
-#variablesBubble:before {
-    background: none repeat scroll 0 0 #FAA62E;
-    border-radius: 30px 30px 30px 30px;
-    content: "";
-    height: 20px;
-    position: absolute;
-    width: 20px;
-    top: -17px;
-    right: 25px;
-}
+/*#variablesBubble:before {*/
+    /*background: none repeat scroll 0 0 #FAA62E;*/
+    /*border-radius: 30px 30px 30px 30px;*/
+    /*content: "";*/
+    /*height: 20px;*/
+    /*position: absolute;*/
+    /*width: 20px;*/
+    /*top: -17px;*/
+    /*right: 25px;*/
+/*}*/
 
-#variablesBubble:after {
-    background: none repeat scroll 0 0 #FAA62E;
-    border-radius: 15px 15px 15px 15px;
-    content: "";
-    height: 10px;
-    position: absolute;
-    width: 10px;
-    top: -27px;
-    right: 45px;
-}
+/*#variablesBubble:after {*/
+    /*background: none repeat scroll 0 0 #FAA62E;*/
+    /*border-radius: 15px 15px 15px 15px;*/
+    /*content: "";*/
+    /*height: 10px;*/
+    /*position: absolute;*/
+    /*width: 10px;*/
+    /*top: -27px;*/
+    /*right: 45px;*/
+/*}*/
 
-#variablesBubble {
-    background: none repeat scroll 0 0 #FAA62E;
-    border-radius: 24px;
-    color: #FFFFFF;
-    font-weight: bold;
-    padding: 5px;
-    position: relative;
-    text-align: center;
-    display: none;
-}
+/*#variablesBubble {*/
+    /*background: none repeat scroll 0 0 #FAA62E;*/
+    /*border-radius: 24px;*/
+    /*color: #FFFFFF;*/
+    /*font-weight: bold;*/
+    /*padding: 5px;*/
+    /*position: relative;*/
+    /*text-align: center;*/
+    /*display: none;*/
+/*}*/
 
-
-/******************** PERIOD ***********************/
+/******************** PERIOD, RESOURCES & VARIABLES ***********************/
 #periodSelect {
     margin-left: 19px;
 }
@@ -546,7 +543,6 @@ span.fancytree-title:hover div.complexToolTip {
     top: -3px;
 }
 
-/******************** RESOURCES & VARIABLES ***********************/
 #resourceSelect ul, #regionSelect ul {
     outline: none !important;
 }
@@ -571,21 +567,23 @@ span.fancytree-title:hover div.complexToolTip {
 }
 
 #periodSelect label, #variableSelect label {
-   font-weight:normal;
-   display: inline;
-   margin-left: 5px;
-   position: relative;
-//   top:-2px;
+    font-weight: normal;
+    display: inline;
+    margin-left: 5px;
+    position: relative;
+}
+
+.variable {
+    position: relative;
+    top: -2px;
 }
 
 /******************** OTHER ***********************/
 .noticeLSCE {
-//    border-top: 1px solid #CCCCCC;
-//    background-color: white;
+/*border-top: 1px solid #CCCCCC;*/
+/*background-color: white;*/
     text-align: center;
     color: #464646;
     font-size: 9px;
 }
-
-
 

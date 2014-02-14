@@ -6,6 +6,9 @@
                 <div id="clearAll">Clear all selections</div>
             </div>
         </div>
+        <div class="leftMenu firstLeftMenu">
+            <div id="submitAddToGraph" class="orangeButton">ADD TO GRAPH</div>
+        </div>
         <div class="leftMenu">
             <h2 title="Select a region in the given list. A map helps you by showing the differents regions">
                 <img src="img/1step.png">
@@ -58,8 +61,6 @@
                 <img src="img/4step.png">
                 VARIABLE
             </h2>
-
-            <div id="variablesBubble">Click on one variable to display in the graph</div>
             <div id="variableSelect"></div>
         </div>
 

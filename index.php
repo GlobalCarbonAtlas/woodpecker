@@ -22,12 +22,6 @@
     <link rel="stylesheet" type="text/css" href="css/WPInterface.css">
     <link rel="stylesheet" type="text/css" href="js/library/jquery-ui-1.10.2.custom/css/smoothness/jquery-ui-1.10.2.custom.css">
 
-    <!--    Files already called by Woodpecker -->
-    <!--    <script type="text/javascript" src="js/d3.v3/d3.v3.js"></script>-->
-    <!--    <script type="text/javascript" src="js/library/jquery-1.9.1.js"></script>-->
-    <!--    <script type="text/javascript" src="js/library/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>-->
-    <!--    <script type="text/javascript" src="js/library/jquery.class.js"></script>-->
-    <!--    <script type="text/javascript" src="js/jshashtable-2.1.js"></script>-->
     <?php include "Woodpecker/Woodpecker.html" ?>
     <script type="text/javascript" src="js/helper.js"></script>
     <script type="text/javascript" src="js/OpenLayers-2.12/OpenLayers.js"></script>

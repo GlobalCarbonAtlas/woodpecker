@@ -20,6 +20,7 @@ var WPInterfaceW = Class.create( {
         this.dataToDisplay = new Array();
         this.graph = false;
         this.displayFirstVariable = true;
+        this.isAvailableSubmit = false;
 
         this.threddsPath = jQuery.i18n.prop( "threddsPath" ) != "[threddsPath]" ? jQuery.i18n.prop( "threddsPath" ) : "Atlas/Flux";
         this.imgPath = "img";
@@ -123,26 +124,26 @@ var WPInterfaceW = Class.create( {
         // Filter
         var tree = $( "#regionSelect" ).fancytree( "getTree" );
         $( "input[name=searchRegion]" ).keyup(
-            function( e )
-            {
-                tree.options.filter.mode = "hide";
-                var match = $( this ).val();
-                if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
+                function( e )
                 {
-                    $( "button#btnResetSearchRegion" ).click();
-                    return;
-                }
-                // Pass text as filter string (will be matched as substring in the node title)
-                var n = tree.applyFilter( match );
-                $( "button#btnResetSearchRegion" ).attr( "disabled", false );
-            } );
+                    tree.options.filter.mode = "hide";
+                    var match = $( this ).val();
+                    if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
+                    {
+                        $( "button#btnResetSearchRegion" ).click();
+                        return;
+                    }
+                    // Pass text as filter string (will be matched as substring in the node title)
+                    var n = tree.applyFilter( match );
+                    $( "button#btnResetSearchRegion" ).attr( "disabled", false );
+                } );
 
         $( "button#btnResetSearchRegion" ).click(
-            function( e )
-            {
-                $( "input[name=searchRegion]" ).val( "" );
-                tree.clearFilter();
-            } ).attr( "disabled", true );
+                function( e )
+                {
+                    $( "input[name=searchRegion]" ).val( "" );
+                    tree.clearFilter();
+                } ).attr( "disabled", true );
 
         this.activateTitleForRegionMap();
     },
@@ -158,10 +159,10 @@ var WPInterfaceW = Class.create( {
                 this.updateRegionMap( currentregion );
             }
         }, this ) )
-            .on( "mouseout", function( d, i )
-            {
-                $( "#regionMapDiv" ).hide();
-            } )
+                .on( "mouseout", function( d, i )
+        {
+            $( "#regionMapDiv" ).hide();
+        } )
     },
 
     onSelectRegion: function( isInit, data )
@@ -174,49 +175,48 @@ var WPInterfaceW = Class.create( {
             } );
         this.activateTitleForRegionMap();
         this.createVariables();
-        this.displayVariableBubble();
     },
 
     createRegionMap: function( region )
     {
         $( "#regionMapDiv" ).show();
         var mapland = new OpenLayers.Layer.WMS(
-            "Land mask",
-            "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-            {
-                VERSION: '1.1.1',
-                LAYERS: "GCA:GCA_landMask",
-                transparent: true,
-                FORMAT: 'image/png'
-            }, {
-                isBaseLayer: true,
-                wrapDateLine: true
-            } );
+                "Land mask",
+                "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+        {
+            VERSION: '1.1.1',
+            LAYERS: "GCA:GCA_landMask",
+            transparent: true,
+            FORMAT: 'image/png'
+        }, {
+            isBaseLayer: true,
+            wrapDateLine: true
+        } );
 
         var mapregion1 = new OpenLayers.Layer.WMS(
-            "Region",
-            "http://www.globalcarbonatlas.org:8080/thredds/wms/Atlas/Flux/Inversions/yearlymean/regions/regions_mask.nc",
-            {
-                VERSION: '1.3.0',
-                LAYERS: 'mask_region',
-                ELEVATION: region,
-                NUMCOLORBANDS: 1,
-                STYLES: 'boxfill/orange' ,
-                COLORSCALERANGE: '1,1',
-                TRANSPARENT: 'true',
-                ABOVEMAXCOLOR: 'transparent',
-                BELOWMINCOLOR: 'transparent',
-                FORMAT: 'image/png'
-            }, {
-                opacity: 0.75
-            } );
+                "Region",
+                "http://www.globalcarbonatlas.org:8080/thredds/wms/Atlas/Flux/Inversions/yearlymean/regions/regions_mask.nc",
+        {
+            VERSION: '1.3.0',
+            LAYERS: 'mask_region',
+            ELEVATION: region,
+            NUMCOLORBANDS: 1,
+            STYLES: 'boxfill/orange' ,
+            COLORSCALERANGE: '1,1',
+            TRANSPARENT: 'true',
+            ABOVEMAXCOLOR: 'transparent',
+            BELOWMINCOLOR: 'transparent',
+            FORMAT: 'image/png'
+        }, {
+            opacity: 0.75
+        } );
 
         var map1 = new OpenLayers.Map( 'regionMap',
-            {
-                controls: [],         // to remove zoom control (select2 is modal so disable other actions elsewhere)
-                projection: new OpenLayers.Projection( "EPSG:3857" ),
-                tileSize:  new OpenLayers.Size( 128, 128 )
-            } );
+        {
+            controls: [],         // to remove zoom control (select2 is modal so disable other actions elsewhere)
+            projection: new OpenLayers.Projection( "EPSG:3857" ),
+            tileSize:  new OpenLayers.Size( 128, 128 )
+        } );
         map1.addLayers( [mapland, mapregion1] );
         map1.zoomToMaxExtent();
         $( "#regionMapDiv" ).hide();
@@ -296,26 +296,26 @@ var WPInterfaceW = Class.create( {
         // Filter
         var tree = $( "#resourceSelect" ).fancytree( "getTree" );
         $( "input[name=searchResource]" ).keyup(
-            function( e )
-            {
-                tree.options.filter.mode = "hide";
-                var match = $( this ).val();
-                if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
+                function( e )
                 {
-                    $( "button#btnResetSearchResource" ).click();
-                    return;
-                }
-                // Pass text as filter string (will be matched as substring in the node title)
-                var n = tree.applyFilter( match );
-                $( "button#btnResetSearchResource" ).attr( "disabled", false );
-            } );
+                    tree.options.filter.mode = "hide";
+                    var match = $( this ).val();
+                    if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
+                    {
+                        $( "button#btnResetSearchResource" ).click();
+                        return;
+                    }
+                    // Pass text as filter string (will be matched as substring in the node title)
+                    var n = tree.applyFilter( match );
+                    $( "button#btnResetSearchResource" ).attr( "disabled", false );
+                } );
 
         $( "button#btnResetSearchResource" ).click(
-            function( e )
-            {
-                $( "input[name=searchResource]" ).val( "" );
-                tree.clearFilter();
-            } ).attr( "disabled", true );
+                function( e )
+                {
+                    $( "input[name=searchResource]" ).val( "" );
+                    tree.clearFilter();
+                } ).attr( "disabled", true );
     },
 
     onSelectResource: function( isInit, data )
@@ -328,8 +328,6 @@ var WPInterfaceW = Class.create( {
             } );
 
         this.createVariables();
-        if( !isInit )
-            this.displayVariableBubble();
     },
 
 
@@ -339,6 +337,8 @@ var WPInterfaceW = Class.create( {
     createVariables: function()
     {
         $( "#variableSelect" ).html( 'Updating...' );
+        $( "#submitAddToGraph" ).addClass( "disabled" );
+        this.isAvailableSubmit = false;
         this.hashVariables = new Hashtable();
         this.createAllVariables( 0 );
     },
@@ -355,9 +355,6 @@ var WPInterfaceW = Class.create( {
             var url = "http://" + location.hostname + "/thredds/wms/" + this.threddsPath + "/" +
                     this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
                     this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
-            //var url = "http://" + location.hostname + "/thredds/wms?DATASET=/data/Flux/" +
-            //        this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
-            //        this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
 
             this.getVariables( url, i );
         }
@@ -367,29 +364,36 @@ var WPInterfaceW = Class.create( {
             if( 0 == this.hashVariables.keys().length )
             {
                 $( "#variableSelect" ).html( 'No variable' );
+                $( "#submitAddToGraph" ).addClass( "disabled" );
+                this.isAvailableSubmit = false;
                 return;
             }
 
-            this.variable = this.hashVariables.keys()[0];
+            if( !this.variable )
+                this.variable = this.hashVariables.keys()[0];
             this.hashVariables = sortHashTable( this.hashVariables );
             jQuery.each( this.hashVariables.keys(), jQuery.proxy( function( i, d )
             {
                 var divVariable = $( '<input type="radio" name="variableRadio" id="' + d + '"><label for="' + d + '"><span class="variable">' + this.hashVariables.get( d ) + '</span></label><BR/>' );
                 divVariable.on( "click", jQuery.proxy( function( element )
                 {
-                    if( "label" == element.currentTarget.localName )
+                    if( "input" != element.currentTarget.localName )
                         return;
                     this.variable = element.currentTarget.id;
-                    this.extractDataFromCSVAndDisplayGraph( 0, 0 );
-                    this.hideVariableBubble();
                 }, this ) );
                 $( "#variableSelect" ).append( divVariable );
+                if( d == this.variable )
+                    divVariable.click();
             }, this ) );
+
+            $( "#submitAddToGraph" ).removeClass( "disabled" );
+            this.isAvailableSubmit = true;
 
             if( this.displayFirstVariable )
             {
                 $( "#" + this.hashVariables.keys()[0] ).click();
                 this.displayFirstVariable = false;
+                $( "#submitAddToGraph" ).click();
             }
         }
     },
@@ -447,7 +451,7 @@ var WPInterfaceW = Class.create( {
         jQuery.each( this.hashVariables.keys(), jQuery.proxy( function( i, key )
         {
             if( ("Terrestrial_flux" == key && 0 < $.arrayIntersect( selectedParentRegions, ["Global", "Land + Ocean", "Land", "TransCom"] ).length && 0 < $.arrayIntersect( selectedParentResources, ["Inversions", "Land Models"] ).length)
-                || ("Ocean_flux" == key && 0 < $.arrayIntersect( selectedParentRegions, ["Global", "Land + Ocean", "Ocean"] ).length && 0 < $.arrayIntersect( selectedParentResources, ["Inversions", "Ocean Models"] ).length) )
+                    || ("Ocean_flux" == key && 0 < $.arrayIntersect( selectedParentRegions, ["Global", "Land + Ocean", "Ocean"] ).length && 0 < $.arrayIntersect( selectedParentResources, ["Inversions", "Ocean Models"] ).length) )
             {
                 var index = this.variablesToDisplay.indexOf( key );
                 hashResult.put( key, this.variableNamesToDisplay[index] );
@@ -462,17 +466,6 @@ var WPInterfaceW = Class.create( {
     {
         i++;
         this.createAllVariables( i );
-    },
-
-    displayVariableBubble: function()
-    {
-        $( "input[name='variableRadio']" ).val( ['0'] );
-        $( "#variablesBubble" ).fadeIn();
-    },
-
-    hideVariableBubble: function()
-    {
-        $( "#variablesBubble" ).hide();
     },
 
 
@@ -498,7 +491,6 @@ var WPInterfaceW = Class.create( {
                         this.selectedResourceKeys[resourceIndex] + "_" + selectedPeriod + "_region" + this.selectedRegionKeys[regionIndex] + ".nc"
                         + "?var=" + this.variable
                         + "&latitude=0&longitude=0&temporal=all&accept=csv";
-                //console.log( "extractDataFromCSVAndDisplayGraph : " + request );
 
                 d3.text( request, jQuery.proxy( this.extractDataFromCSV, [this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[0], regionIndex, resourceIndex, this] ) );
             }
@@ -618,11 +610,12 @@ var WPInterfaceW = Class.create( {
         var parameters = new Object();
 
         parameters.helpArray = [
-            {linkType:"right", divToHelpId:"clearAll", text:"Init all the selected fields", marginTop:24, marginLeft:71, stage:1},
+            {linkType:"simple", divToHelpId:"clearAll", text:"Init all the selected fields", marginTop:5, marginLeft:31},
+            {linkType:"simple", divToHelpId:"submitAddToGraph", text:"Display the data corresponded to the selected fields in the graph", textLengthByLine:35, marginTop:11, marginLeft:20},
             {linkType:"simple", divToHelpId:"regionSelect", text:"Select a region in the given list. A map helps you by showing the differents regions", textLengthByLine:35, marginTop:8, marginLeft:-40},
             {linkType:"simple", divToHelpId:"periodSelect", text:"Choose your period", textLengthByLine:35, marginTop:8, marginLeft:-40},
             {linkType:"simple", divToHelpId:"resourceSelect", text:"Select one or several resources in the given list", textLengthByLine:30, marginTop:10, marginLeft:-40},
-            {linkType:"simple", divToHelpId:"variableSelect", text:"Union of the variables available for each selected resources. Pick one, it will automatically display in the graph", textLengthByLine:65, marginTop:10, marginLeft:-35},
+            {linkType:"simple", divToHelpId:"variableSelect", text:"Union of the variables available for each selected resources", textLengthByLine:65, marginTop:6, marginLeft:-60},
 
             {linkType:"left", divToHelpId:"WPlineIcon", text:"Remove all lines", marginTop:36, marginLeft: 20, stage:9},
             {linkType:"left", divToHelpId:"WPexportIcon", text:"Export your graph",  linkedHelp: ["WPExport"], marginTop:36, marginLeft: 20, stage:8},
@@ -644,7 +637,7 @@ var WPInterfaceW = Class.create( {
 
         parameters.parentContainerId = "#pageWrapper";
         //parameters.globalMarginTop = -110;
-        //parameters.globalMarginLeft = -110;		// TODO: do not handle width resizing 
+        //parameters.globalMarginLeft = -110;		// TODO: do not handle width resizing
 
         this.help = new Help( parameters );
 
@@ -734,10 +727,10 @@ var WPInterfaceW = Class.create( {
         this.help.wrapper.append( divFooter );
 
         var divContentFooter = $( '' +
-            '<div class="helpFooterContentRight">' +
-            '<div class="helpFooterContentFloat">A project realised by</div>' +
-            '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
-            '</div>' );
+                '<div class="helpFooterContentRight">' +
+                '<div class="helpFooterContentFloat">A project realised by</div>' +
+                '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
+                '</div>' );
 
         divFooter.append( divContentFooter );
     },
@@ -757,7 +750,12 @@ var WPInterfaceW = Class.create( {
         $( "input[name='period']" ).on( 'click', jQuery.proxy( function()
         {
             this.createOrUpdateSelectedPeriod();
-            this.displayVariableBubble();
+        }, this ) );
+
+        $( "#submitAddToGraph" ).on( "click", jQuery.proxy( function()
+        {
+            if( this.isAvailableSubmit )
+                this.extractDataFromCSVAndDisplayGraph( 0, 0 );
         }, this ) );
 
         this.containerErrors.draggable();
@@ -766,7 +764,7 @@ var WPInterfaceW = Class.create( {
             $( "#errors" ).hide();
         } );
 
-        $("#clearAll").on("click", jQuery.proxy(function()
+        $( "#clearAll" ).on( "click", jQuery.proxy( function()
         {
             this.initInterface();
         }, this ) );
@@ -833,5 +831,3 @@ var WPInterfaceW = Class.create( {
 
 
 } );
-
-
