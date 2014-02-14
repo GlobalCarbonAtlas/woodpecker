@@ -697,7 +697,7 @@ var Woodpecker = Class.create( {
                 .attr( "class", "removeLegend" )
                 .on( 'click', jQuery.proxy( function( d, i )
         {
-            this.onDblClickLegend( d );
+            this.onDblClickLegend( this.data[i] );
         }, this ) );
         legends.exit().remove();
 
@@ -1479,7 +1479,7 @@ var Woodpecker = Class.create( {
         // Axis
         this.divAxis = this.createSimpleBox( "WPaxis", "Axis" );
         this.divAxis.append( '<div class="WPcontainerContent"><div class="WPaxisTitle">' + this.xAxisLabelText + '</div>Minimum : &nbsp;<input id="xMin" size="9"/><BR/>Maximum : <input id="xMax" size="9"/><BR/>' +
-                '<div class="WPaxisTitle">'+this.yAxisLabelText+'</div>Minimum : &nbsp;<input id="yMin" size="9"/><BR/>Maximum : <input id="yMax" size="9"/><BR/>' +
+                '<div class="WPaxisTitle">' + this.yAxisLabelText + '</div>Minimum : &nbsp;<input id="yMin" size="9"/><BR/>Maximum : <input id="yMax" size="9"/><BR/>' +
                 '<div id="axisButtonUpdate">Update Axis</div></div>' );
         $( divContainer ).append( this.divAxis );
 
