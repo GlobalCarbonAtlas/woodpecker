@@ -91,9 +91,9 @@ text {
 }
 
 .line.notHover path {
-    stroke-opacity: 0.5;
+    stroke-opacity: 0.2;
 }
 
 .line.notHover circle {
-    stroke-opacity: 0.1;
+    stroke-opacity: 0.05;
 }
