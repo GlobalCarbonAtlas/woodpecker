@@ -25,7 +25,7 @@ rect {
 }
 
 #WPgraphSvg .lines path{
-    stroke-width:2px !important;
+    stroke-width:2px;
     cursor: pointer;
 }
 

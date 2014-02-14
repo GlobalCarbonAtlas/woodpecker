@@ -523,6 +523,10 @@ var Woodpecker = Class.create( {
         {
             return d.hover
         } )
+                .classed( 'NotHover', jQuery.proxy( function( d )
+        {
+            return this.isOverOneLegend;
+        }, this ) )
                 .style( 'fill', jQuery.proxy( function( d, i )
         {
             if( !d.color )
@@ -767,6 +771,7 @@ var Woodpecker = Class.create( {
     onMouseOverOrOutLegend: function( d, isOver )
     {
         d.hover = isOver;
+        this.isOverOneLegend = isOver;
         this.addOrUpdateLinesAndPoints();
     },
 

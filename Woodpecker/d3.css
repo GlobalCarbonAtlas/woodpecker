@@ -75,7 +75,8 @@ text {
 }
 
 .line.hover path {
-    stroke-width: 3px;
+    stroke-width: 3px !important;
+    stroke-opacity: 1 !important;
 }
 
 .lines .point {
@@ -86,6 +87,13 @@ text {
 
 .lines .point.hover {
     stroke-width: 20px;
-    stroke-opacity: .5;
+    stroke-opacity: 0.5;
 }
 
+.line.notHover path {
+    stroke-opacity: 0.5;
+}
+
+.line.notHover circle {
+    stroke-opacity: 0.1;
+}
