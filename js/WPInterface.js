@@ -557,7 +557,8 @@ var WPInterfaceW = Class.create( {
             var dataToDisplay =
             {
                 data:extractedData,
-                label: resourceLabel + " / " + context.hashVariables.get( context.variable ) + " / " + context.hashRegions.get( context.selectedRegionKeys[regionIndex] )[0] + " / " + context.selectedPeriod.title
+                label: resourceLabel + " / " + context.hashVariables.get( context.variable ) + " / " + context.hashRegions.get( context.selectedRegionKeys[regionIndex] )[0] + " / " + context.selectedPeriod.title,
+                shortLabel: resourceLabel + " / " + context.hashVariables.get( context.variable ) + " / " + context.getShortRegionTitle( context.hashRegions.get( context.selectedRegionKeys[regionIndex] )[0] ) + " / " + context.getShortPeriodTitle( context.selectedPeriod.title )
             };
             context.dataToDisplay.push( dataToDisplay );
 
@@ -805,6 +806,29 @@ var WPInterfaceW = Class.create( {
     {
         var binImage = getBinaryy( imagePath );
         return base64Encode( binImage );
+    },
+
+    getShortRegionTitle: function( regionTitle )
+    {
+        var splitedRegion = regionTitle.split( " " );
+        var shortTitle = splitedRegion[0] + " ";
+        splitedRegion.shift();
+        jQuery.each( splitedRegion, function( i, d )
+        {
+            shortTitle += d.substring( 0, 1 );
+        } );
+        return shortTitle;
+    },
+
+    getShortPeriodTitle: function( periodTitle )
+    {
+        var splitedPeriod = periodTitle.split( " " );
+        var shortTitle = "";
+        jQuery.each( splitedPeriod, function( i, d )
+        {
+            shortTitle += d.substring( 0, 1 );
+        } );
+        return shortTitle;
     }
 
 

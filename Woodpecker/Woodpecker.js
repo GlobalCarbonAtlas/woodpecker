@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright Patrick Brockmann, Vanessa Maigne & Pascal Evano, 2013
  *
  * Patrick.Brockmann@lsce.ipsl.fr
@@ -651,8 +651,10 @@ var Woodpecker = Class.create( {
         if( !this.displayPlot )
             return;
 
-        var legendLeft = this.translateGraph.left + 15;
-        var gLegends = d3.select( 'g.legends' ).attr( 'transform', 'translate(' + legendLeft + ',' + (this.plotSize.height + this.translateGraph.top + 45) + ')' );
+        var isTwoColumns = 10 < this.data.length;
+        var gLegends = d3.select( 'g.legends' ).attr( 'transform', 'translate(' + (this.translateGraph.left + 15) + ',' + (this.plotSize.height + this.translateGraph.top + 45) + ')' );
+        if( isTwoColumns )
+            gLegends = d3.select( 'g.legends' ).attr( 'transform', 'translate(' + this.translateGraph.left + ',' + (this.plotSize.height + this.translateGraph.top + 45) + ')' );
 
         var legends = gLegends.selectAll( '.legend' ).data( this.data );
         var legendsEnter = legends.enter().append( 'g' ).attr( 'class', 'legend' );
@@ -702,9 +704,12 @@ var Woodpecker = Class.create( {
         legends.exit().remove();
 
         // Update text when remove legend
-        legends.select( 'text' ).text( function( d )
+        legends.select( 'text' ).text( function( d, i )
         {
-            return d.label
+            if( isTwoColumns )
+                return d.shortLabel ? d.shortLabel : d.label;
+            else
+                return d.label;
         } );
 
         // Update color when remove legend
@@ -734,11 +739,18 @@ var Woodpecker = Class.create( {
 
         var ypos = 5;
         var xpos = 5;
-        legends.attr( 'transform', function( d, i )
+        legends.attr( 'transform', jQuery.proxy( function( d, i )
         {
+            if( isTwoColumns && 0 != i % 2 )
+            {
+                ypos -= 20;
+                xpos = this.plotSize.width / 2 + 10;
+            }
+            else
+                xpos = 5;
             ypos += 20;
             return 'translate(' + xpos + ',' + ypos + ')';
-        } )
+        }, this ) )
                 .classed( 'disabled', function( d )
         {
             return d.disabled
@@ -1595,4 +1607,3 @@ function getStyleSheetPropertyValue( selectorText, propertyName )
     }
     return null;
 }
-
