@@ -221,47 +221,47 @@ var Woodpecker = Class.create( {
     createSVG: function()
     {
         this.vis = d3.select( "#" + this.containerId )
-                .append( "div" ).attr( "id", "WPdivToExportGraph" )
-                .append( 'svg' )
-                .attr( "version", "1.1" )
-                .attr( "xml:space", "preserve" )
-                .attr( "xmlns", "http://www.w3.org/2000/svg" )
-                .attr( "xmlns:xmlns:xlink", "http://www.w3.org/1999/xlink" )
-                .attr( "viewBox", "0 0 " + this.svgWidth + " " + this.svgHeight )
-                .attr( "preserveAspectRatio", "xMinYMin" )
+            .append( "div" ).attr( "id", "WPdivToExportGraph" )
+            .append( 'svg' )
+            .attr( "version", "1.1" )
+            .attr( "xml:space", "preserve" )
+            .attr( "xmlns", "http://www.w3.org/2000/svg" )
+            .attr( "xmlns:xmlns:xlink", "http://www.w3.org/1999/xlink" )
+            .attr( "viewBox", "0 0 " + this.svgWidth + " " + this.svgHeight )
+            .attr( "preserveAspectRatio", "xMinYMin" )
 //                .attr( "width", this.svgWidth )
 //                .attr( "height", this.svgHeight )
-                .attr( "id", "WPgraphSvg" )
-                .attr( "pointer-events", "all" )
-                .append( "g" )
-                .attr( 'class', 'wrap' );
+            .attr( "id", "WPgraphSvg" )
+            .attr( "pointer-events", "all" )
+            .append( "g" )
+            .attr( 'class', 'wrap' );
 
         // ClipPath to block zoom and pan in one zone
         this.vis.append( "defs" ).append( "clipPath" )
-                .attr( "id", "clip" )
-                .append( "rect" )
-                .attr( "id", "clip-rect" )
-                .attr( "width", this.plotSize.width )
-                .attr( "height", this.plotSize.height );
+            .attr( "id", "clip" )
+            .append( "rect" )
+            .attr( "id", "clip-rect" )
+            .attr( "width", this.plotSize.width )
+            .attr( "height", this.plotSize.height );
 
         // Legends
         this.vis.append( 'g' ).attr( 'class', 'legends' );
 
         // Zone to plot and manage events
         this.plot = this.vis.append( "g" )
-                .attr( "transform", 'translate(' + this.translateGraph.left + ',' + this.translateGraph.top + ')' );
+            .attr( "transform", 'translate(' + this.translateGraph.left + ',' + this.translateGraph.top + ')' );
 
         this.plot.append( "rect" )
-                .attr( "width", this.plotSize.width )
-                .attr( "height", this.plotSize.height )
-                .attr( "style", "fill:white" );
+            .attr( "width", this.plotSize.width )
+            .attr( "height", this.plotSize.height )
+            .attr( "style", "fill:white" );
 
         // Axis and graph
         this.ticksX = this.plot.append( 'g' ).attr( 'class', 'x axis' );
         this.ticksY = this.plot.append( 'g' ).attr( 'class', 'y axis' );
         this.plot.append( 'g' )
-                .attr( "clip-path", "url(#clip)" )
-                .attr( 'class', 'lines' );
+            .attr( "clip-path", "url(#clip)" )
+            .attr( 'class', 'lines' );
     },
 
     onClickRemoveLines: function()
@@ -274,9 +274,11 @@ var Woodpecker = Class.create( {
         this.selectedLineIndex = 0;
     },
 
-    removeLine: function( i )
+    removeLine: function( i, callback )
     {
         this.onDblClickLegend( this.data[i] );
+        if(callback)
+            callback();
     },
 
     onClickPoint: function()
@@ -312,14 +314,14 @@ var Woodpecker = Class.create( {
         var xLabel = this.getAxisLabelInArrayWithExponent( this.xAxisLabelText );
 
         g.select( '.x.axis' ).append( 'text' )
-                .attr( 'class', 'axislabel' )
-                .attr( 'text-anchor', 'middle' )
-                .attr( 'x', this.x.range()[1] / 2 + 35 )
-                .attr( 'y', this.translateGraph.bottom - 30 );
+            .attr( 'class', 'axislabel' )
+            .attr( 'text-anchor', 'middle' )
+            .attr( 'x', this.x.range()[1] / 2 + 35 )
+            .attr( 'y', this.translateGraph.bottom - 30 );
 
         var xAxisLabel = g.select( '.x.axis text.axislabel' ).selectAll( 'tspan' ).data( xLabel );
         xAxisLabel.enter().append( 'tspan' )
-                .attr( 'dy', jQuery.proxy( function( d )
+            .attr( 'dy', jQuery.proxy( function( d )
         {
             if( d.isExponent )
                 return -5;
@@ -333,14 +335,14 @@ var Woodpecker = Class.create( {
         } );
 
         g.select( '.x.axis' )
-                .attr( 'transform', 'translate(0,' + this.y.range()[0] + ')' )
-                .call( this.xAxis )
-                .selectAll( 'line' )
-                .filter( function( d )
-        {
-            return !d
-        } )
-                .classed( 'zero', true );
+            .attr( 'transform', 'translate(0,' + this.y.range()[0] + ')' )
+            .call( this.xAxis )
+            .selectAll( 'line' )
+            .filter( function( d )
+            {
+                return !d
+            } )
+            .classed( 'zero', true );
 
         // Y axis
         //this.yAxisLabelText = "m2/h/m33/g/m2/m2/d";
@@ -348,14 +350,14 @@ var Woodpecker = Class.create( {
         var yLabel = this.getAxisLabelInArrayWithExponent( this.yAxisLabelText );
 
         g.select( '.y.axis' ).append( 'text' )
-                .attr( 'class', 'axislabel' )
-                .attr( 'transform', 'rotate(-90)' )
-                .attr( 'y', 15 - this.translateGraph.left )
-                .attr( 'x', -this.y.range()[0] / 2 - 45 );
+            .attr( 'class', 'axislabel' )
+            .attr( 'transform', 'rotate(-90)' )
+            .attr( 'y', 15 - this.translateGraph.left )
+            .attr( 'x', -this.y.range()[0] / 2 - 45 );
 
         var yAxisLabel = g.select( '.y.axis text.axislabel' ).selectAll( 'tspan' ).data( yLabel );
         yAxisLabel.enter().append( 'tspan' )
-                .attr( 'dy', jQuery.proxy( function( d )
+            .attr( 'dy', jQuery.proxy( function( d )
         {
             if( d.isExponent )
                 return -5;
@@ -369,13 +371,13 @@ var Woodpecker = Class.create( {
         } );
 
         g.select( '.y.axis' )
-                .call( this.yAxis )
-                .selectAll( 'line' )
-                .filter( function( d )
-        {
-            return !d
-        } )
-                .classed( 'zero', true );
+            .call( this.yAxis )
+            .selectAll( 'line' )
+            .filter( function( d )
+            {
+                return !d
+            } )
+            .classed( 'zero', true );
 
         g.selectAll( '.y.axis g text' ).attr( "x", -5 );
         g.selectAll( '.x.axis g text' ).attr( "y", 5 );
@@ -513,88 +515,88 @@ var Woodpecker = Class.create( {
         var linesEnter = lines.enter().append( 'g' ).attr( 'class', 'line' );
 
         d3.transition( lines )
-                .style( 'stroke-opacity', 1 )
-                .style( 'fill-opacity', .5 );
+            .style( 'stroke-opacity', 1 )
+            .style( 'fill-opacity', .5 );
         lines.attr( 'class', function( d, i )
         {
             return 'line line-' + i
         } )
-                .classed( 'hover', function( d )
-        {
-            return d.hover
-        } )
-                .classed( 'NotHover', jQuery.proxy( function( d )
+            .classed( 'hover', function( d )
+            {
+                return d.hover
+            } )
+            .classed( 'NotHover', jQuery.proxy( function( d )
         {
             return this.isOverOneLegend;
         }, this ) )
-                .style( 'fill', jQuery.proxy( function( d, i )
+            .style( 'fill', jQuery.proxy( function( d, i )
         {
             if( !d.color )
                 d.color = this.getFreeColor( i );
             return d.color
         }, this ) )
-                .style( 'stroke', jQuery.proxy( function( d, i )
+            .style( 'stroke', jQuery.proxy( function( d, i )
         {
             if( !d.color )
                 d.color = this.getFreeColor( i );
             return d.color
         }, this ) )
-                .on( 'click', jQuery.proxy( function( d, i )
+            .on( 'click', jQuery.proxy( function( d, i )
         {
             this.onClickLine( i, d );
         }, this ) );
         d3.transition( lines.exit() )
-                .style( 'stroke-opacity', 1e-6 )
-                .style( 'fill-opacity', 1e-6 )
-                .remove();
+            .style( 'stroke-opacity', 1e-6 )
+            .style( 'fill-opacity', 1e-6 )
+            .remove();
 
         var paths = lines.selectAll( 'path' )
-                .data( function( d, i )
-        {
-            return [d.data]
-        } );
+            .data( function( d, i )
+            {
+                return [d.data]
+            } );
         paths.enter().append( 'path' )
-                .attr( 'd', d3.svg.line()
-                .defined( function( d )
-        {
-            return !isNaN( d[1] );
-        } )
-                .x( jQuery.proxy( function( d )
+            .attr( 'd', d3.svg.line()
+            .defined( function( d )
+            {
+                return !isNaN( d[1] );
+            } )
+            .x( jQuery.proxy( function( d )
         {
             return this.x( d[0] )
         }, this ) )
-                .y( jQuery.proxy( function( d )
+            .y( jQuery.proxy( function( d )
         {
             return this.y( d[1] )
         }, this ) ) );
         paths.exit().remove();
 
         d3.transition( paths )
-                .attr( 'd', d3.svg.line()
-                .defined( function( d )
-        {
-            return !isNaN( d[1] );
-        } )
-                .interpolate( this.interpolation )
-                .x( jQuery.proxy( function( d )
+            .attr( 'd', d3.svg.line()
+            .defined( function( d )
+            {
+                return !isNaN( d[1] );
+            } )
+            .interpolate( this.interpolation )
+            .x( jQuery.proxy( function( d )
         {
             return this.x( d[0] )
         }, this ) )
-                .y( jQuery.proxy( function( d )
+            .y( jQuery.proxy( function( d )
         {
             return this.y( d[1] )
         }, this ) ) );
 
         var points = lines.selectAll( 'circle.point' )
-                .data(
-                function( d )
-                {
-                    return d.data
-                } );
+            .data(
+            function( d )
+            {
+                return d.data
+            } );
         points.enter().append( 'circle' )
-                .append( "title" )
-                .attr( "class", "titleClass" )
-                .text( jQuery.proxy( function( d )
+            .append( "title" )
+            .attr( "class", "titleClass" )
+            .text( jQuery.proxy( function( d )
         {
             if( this.isLinearXAxis )
                 return  d[0].toFixed( 5 ) + ", " + d[1].toFixed( 5 );
@@ -611,21 +613,21 @@ var Woodpecker = Class.create( {
         } );
 
         d3.transition( points )
-                .attr( 'cx', jQuery.proxy( function( d )
+            .attr( 'cx', jQuery.proxy( function( d )
         {
             return this.x( d[0] )
         }, this ) )
-                .attr( 'cy', jQuery.proxy( function( d )
+            .attr( 'cy', jQuery.proxy( function( d )
         {
             return this.y( d[1] )
         }, this ) )
-                .attr( 'r', function( d )
-        {
-            if( !isNaN( d[1] ) )
-                return dotRadius;
-            else
-                return 0;
-        } );
+            .attr( 'r', function( d )
+            {
+                if( !isNaN( d[1] ) )
+                    return dotRadius;
+                else
+                    return 0;
+            } );
     },
 
     onClickLine: function( i, d )
@@ -664,20 +666,20 @@ var Woodpecker = Class.create( {
         var legendsEnter = legends.enter().append( 'g' ).attr( 'class', 'legend' );
 
         legendsEnter.append( 'circle' )
-                .attr( 'r', 5 )
-                .attr( "id", jQuery.proxy( function( d, i )
+            .attr( 'r', 5 )
+            .attr( "id", jQuery.proxy( function( d, i )
         {
             return "WPLegendCircle" + i;
         }, this ) );
         legendsEnter.append( 'text' )
-                .attr( 'text-anchor', 'start' )
-                .attr( 'dy', '.32em' )
-                .attr( 'dx', '8' )
-                .on( 'click', jQuery.proxy( function( d, i )
+            .attr( 'text-anchor', 'start' )
+            .attr( 'dy', '.32em' )
+            .attr( 'dx', '8' )
+            .on( 'click', jQuery.proxy( function( d, i )
         {
             this.onClickLegend( d );
         }, this ) )
-                .on( 'dblclick', jQuery.proxy( function( d, i )
+            .on( 'dblclick', jQuery.proxy( function( d, i )
         {
             this.onDblClickLegend( d );
         }, this ) );
@@ -686,22 +688,22 @@ var Woodpecker = Class.create( {
         {
             this.onMouseOverOrOutLegend( d, true );
         }, this ) )
-                .on( 'mouseout', jQuery.proxy( function( d, i )
+            .on( 'mouseout', jQuery.proxy( function( d, i )
         {
             this.onMouseOverOrOutLegend( d, false );
         }, this ) );
         legendsEnter.append( "svg:image" )
-                .attr( "xlink:href", this.imgPath + "/trash2.svg" )
-                .attr( "width", "20" )
-                .attr( "height", "20" )
-                .attr( "x", "-35" )
-                .attr( "y", "-12" )
-                .attr( "id", jQuery.proxy( function( d, i )
+            .attr( "xlink:href", this.imgPath + "/trash2.svg" )
+            .attr( "width", "20" )
+            .attr( "height", "20" )
+            .attr( "x", "-35" )
+            .attr( "y", "-12" )
+            .attr( "id", jQuery.proxy( function( d, i )
         {
             return "WPLegendImage" + i;
         }, this ) )
-                .attr( "class", "removeLegend" )
-                .on( 'click', jQuery.proxy( function( d, i )
+            .attr( "class", "removeLegend" )
+            .on( 'click', jQuery.proxy( function( d, i )
         {
             this.onDblClickLegend( this.data[i] );
         }, this ) );
@@ -718,18 +720,18 @@ var Woodpecker = Class.create( {
 
         // Update color when remove legend
         legends.select( 'circle' )
-                .style( 'fill', jQuery.proxy( function( d, i )
+            .style( 'fill', jQuery.proxy( function( d, i )
         {
             if( d.disabled )
                 return "white";
             return d.color || this.getFreeColor( i )
         }, this ) )
-                .style( 'stroke', jQuery.proxy( function( d, i )
+            .style( 'stroke', jQuery.proxy( function( d, i )
         {
             return d.color || this.getFreeColor( i )
         }, this ) );
         legends.select( 'text.removeLegend' )
-                .style( 'fill', jQuery.proxy( function( d, i )
+            .style( 'fill', jQuery.proxy( function( d, i )
         {
             return d.color
         }, this ) );
@@ -755,15 +757,15 @@ var Woodpecker = Class.create( {
             ypos += 20;
             return 'translate(' + xpos + ',' + ypos + ')';
         }, this ) )
-                .classed( 'disabled', function( d )
-        {
-            return d.disabled
-        } );
+            .classed( 'disabled', function( d )
+            {
+                return d.disabled
+            } );
 
         // svg
         var newHeight = this.svgHeight + ypos + 20;
         d3.select( "#" + this.containerId ).select( "svg" )
-                .attr( "viewBox", "0 0 " + this.svgWidth + " " + newHeight );
+            .attr( "viewBox", "0 0 " + this.svgWidth + " " + newHeight );
         // graph
         this.container.attr( "style", "height:" + newHeight + "px" );
     },
@@ -781,10 +783,10 @@ var Woodpecker = Class.create( {
 
         // If no more data to display, we display all the series
         if( !this.data.filter(
-                function( d )
-                {
-                    return !d.disabled
-                } ).length )
+            function( d )
+            {
+                return !d.disabled
+            } ).length )
         {
             this.data.forEach( function( d )
             {
@@ -841,7 +843,7 @@ var Woodpecker = Class.create( {
             {
                 return d[0]
             } ) )
-                    .range( [0, this.plotSize.width] );
+                .range( [0, this.plotSize.width] );
         else
             this.x.domain( this.xDomain ).range( [0, this.plotSize.width] );
 
@@ -850,7 +852,7 @@ var Woodpecker = Class.create( {
             {
                 return d[1]
             } ) )
-                    .range( [this.plotSize.height, 0] );
+                .range( [this.plotSize.height, 0] );
         else
             this.y.domain( this.yDomain ).range( [this.plotSize.height, 0] );
 
@@ -864,13 +866,13 @@ var Woodpecker = Class.create( {
     getEnableDataSeries: function()
     {
         return this.data.filter(
-                function( d )
-                {
-                    return !d.disabled
-                } ).map( function( d )
-        {
-            return d.data;
-        } );
+            function( d )
+            {
+                return !d.disabled
+            } ).map( function( d )
+            {
+                return d.data;
+            } );
     },
 
     updateDomainIfUniqueValue: function( domain, axisDomain )
@@ -912,16 +914,16 @@ var Woodpecker = Class.create( {
         // Update lines
         var paths = lines.selectAll( 'path' );
         paths.attr( 'd', d3.svg.line()
-                .defined( function( d )
-        {
-            return !isNaN( d[1] );
-        } )
-                .interpolate( this.interpolation )
-                .x( jQuery.proxy( function( d )
+            .defined( function( d )
+            {
+                return !isNaN( d[1] );
+            } )
+            .interpolate( this.interpolation )
+            .x( jQuery.proxy( function( d )
         {
             return this.x( d[0] )
         }, this ) )
-                .y( jQuery.proxy( function( d )
+            .y( jQuery.proxy( function( d )
         {
             return this.y( d[1] )
         }, this ) ) );
@@ -937,11 +939,11 @@ var Woodpecker = Class.create( {
                 else
                     return 0;
             }, this ) )
-                    .attr( 'cx', jQuery.proxy( function( d )
+                .attr( 'cx', jQuery.proxy( function( d )
             {
                 return this.x( d[0] )
             }, this ) )
-                    .attr( 'cy', jQuery.proxy( function( d )
+                .attr( 'cy', jQuery.proxy( function( d )
             {
                 return this.y( d[1] )
             }, this ) );
@@ -958,18 +960,18 @@ var Woodpecker = Class.create( {
         {
             return d.disabled ? "white" : d.color;
         } )
-                .style( 'stroke', function( d, i )
-        {
-            return d.color
-        } );
+            .style( 'stroke', function( d, i )
+            {
+                return d.color
+            } );
         lines.style( 'fill', function( d, i )
         {
             return d.color
         } )
-                .style( 'stroke', function( d, i )
-        {
-            return d.color
-        } );
+            .style( 'stroke', function( d, i )
+            {
+                return d.color
+            } );
         var seriesLegendText = d3.selectAll( '.legend text.removeLegend' );
         seriesLegendText.style( 'fill', function( d, i )
         {
@@ -993,8 +995,8 @@ var Woodpecker = Class.create( {
     bindZoomsToGraph: function()
     {
         var wheelEventAllBrowsers = "onwheel" in document.createElement( "div" ) ? "wheel" : // Modern browsers support "wheel"
-                document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
-                        "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
+            document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
+                "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
 
         this.plot.call( d3.behavior.zoom().x( this.x ).y( this.y ).on( "zoom", jQuery.proxy( this.redrawAfterPanOrZoom, this ) ) );
 
@@ -1384,8 +1386,8 @@ var Woodpecker = Class.create( {
         d3.select( "#WPdivToCloneToExportGraph svg" ).select( "g.y.axis text.axislabel" ).attr( 'x', -context.y.range()[0] / 4 - 45 );
 
         d3.select( "#WPdivToCloneToExportGraph svg" )
-                .attr( "width", $( "#WPdivToExportGraph" ).width() )
-                .attr( "height", $( "#WPdivToExportGraph" ).height() );
+            .attr( "width", $( "#WPdivToExportGraph" ).width() )
+            .attr( "height", $( "#WPdivToExportGraph" ).height() );
 
         // Add logo if necessary
         if( context.imagesToInsertInExport )
@@ -1400,35 +1402,35 @@ var Woodpecker = Class.create( {
             footerRectWidth += 20 * (context.imagesToInsertInExport.images.length - 1);
 
             var footerExport = d3.select( "#WPdivToCloneToExportGraph svg" ).append( "g" )
-                    .attr( 'transform', 'translate(' + (context.plotSize.width - footerRectWidth + 50) + ',' + (context.plotSize.height + 20 + $( ".legend" ).size() * 20 / 2) + ')' );
+                .attr( 'transform', 'translate(' + (context.plotSize.width - footerRectWidth + 50) + ',' + (context.plotSize.height + 20 + $( ".legend" ).size() * 20 / 2) + ')' );
 
             if( context.imagesToInsertInExport.displayBackground )
             {
                 footerExport.append( "rect" ).attr( 'class', 'exportFooter' )
-                        .attr( "width", footerRectWidth + "px" )
-                        .attr( "height", footerRectHeight + "px" );
+                    .attr( "width", footerRectWidth + "px" )
+                    .attr( "height", footerRectHeight + "px" );
             }
             var footerExportImages = footerExport.selectAll( "image" ).data( context.imagesToInsertInExport.images );
             footerExportImages.enter().append( "svg:image" ).attr( "xlink:href", function( d )
             {
                 return "data:image/jpeg;base64," + d.encodedImage
             } )
-                    .attr( "width", function( d )
-            {
-                return d.width;
-            } )
-                    .attr( "height", function( d )
-            {
-                return d.height;
-            } )
-                    .attr( "x", function( d, i )
-            {
-                return 0 < i ? context.imagesToInsertInExport.images[i - 1].width + 20 : 0;
-            } )
-                    .attr( "y", function( d )
-            {
-                return (footerRectHeight - d.height) / 2;
-            } );
+                .attr( "width", function( d )
+                {
+                    return d.width;
+                } )
+                .attr( "height", function( d )
+                {
+                    return d.height;
+                } )
+                .attr( "x", function( d, i )
+                {
+                    return 0 < i ? context.imagesToInsertInExport.images[i - 1].width + 20 : 0;
+                } )
+                .attr( "y", function( d )
+                {
+                    return (footerRectHeight - d.height) / 2;
+                } );
         }
 
         context.submitDownloadForm( value );
@@ -1496,8 +1498,8 @@ var Woodpecker = Class.create( {
         // Axis
         this.divAxis = this.createSimpleBox( "WPaxis", "Axis" );
         this.divAxis.append( '<div class="WPcontainerContent"><div class="WPaxisTitle">' + this.xAxisLabelText + '</div>Minimum : &nbsp;<input id="xMin" size="9"/><BR/>Maximum : <input id="xMax" size="9"/><BR/>' +
-                '<div class="WPaxisTitle">' + this.yAxisLabelText + '</div>Minimum : &nbsp;<input id="yMin" size="9"/><BR/>Maximum : <input id="yMax" size="9"/><BR/>' +
-                '<div id="axisButtonUpdate">Update Axis</div></div>' );
+            '<div class="WPaxisTitle">' + this.yAxisLabelText + '</div>Minimum : &nbsp;<input id="yMin" size="9"/><BR/>Maximum : <input id="yMax" size="9"/><BR/>' +
+            '<div id="axisButtonUpdate">Update Axis</div></div>' );
         $( divContainer ).append( this.divAxis );
 
         // Export
@@ -1548,12 +1550,12 @@ var Woodpecker = Class.create( {
             return [-1];
         }
         var t = (ignoreCase) ? this.toLowerCase() : this,
-                s = (ignoreCase) ? string.toString().toLowerCase() : string.toString(),
-                i = this.indexOf( s ),
-                len = this.length,
-                n,
-                indx = 0,
-                result = [];
+            s = (ignoreCase) ? string.toString().toLowerCase() : string.toString(),
+            i = this.indexOf( s ),
+            len = this.length,
+            n,
+            indx = 0,
+            result = [];
         if( i === -1 || 0 === len )
         {
             return [i];
@@ -1603,7 +1605,7 @@ function getStyleSheetPropertyValue( selectorText, propertyName )
     for( var s = document.styleSheets.length - 1; s >= 0; s-- )
     {
         var cssRules = document.styleSheets[s].cssRules ||
-                document.styleSheets[s].rules || []; // IE support
+            document.styleSheets[s].rules || []; // IE support
         for( var c = 0; c < cssRules.length; c++ )
         {
             if( cssRules[c].selectorText === selectorText )
