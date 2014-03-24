@@ -37,8 +37,8 @@
                 <input type="radio" name="period" id="MonthlyPeriod" value="monthlymean" title="Monthly mean" checked="checked"><label for="MonthlyPeriod"><span class="period">Monthly mean</span></label><BR/>
                 <input type="radio" name="period" id="YearlyPeriod" value="yearlymean" title="Yearly mean"><label for="YearlyPeriod"><span
                     class="period">Yearly mean</span></label><BR/>
-                <input type="radio" name="period" id="GlobalPeriod" value="longterm" title="Global mean"><label for="GlobalPeriod"><span
-                    class="period">Global mean</span></label>
+                <input type="radio" name="period" id="GlobalPeriod" value="longterm" title="Long term mean"><label for="GlobalPeriod"><span
+                    class="period">Long term mean</span></label>
             </div>
         </div>
 
