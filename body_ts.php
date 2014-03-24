@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="leftMenu firstLeftMenu">
-            <div id="submitAddToGraph" class="orangeButton">ADD TO GRAPH</div>
+            <div id="submitAddToGraph" class="orangeButton">CREATE PLOT</div>
         </div>
         <div class="leftMenu">
             <h2 title="Select a region in the given list. A map helps you by showing the differents regions">
