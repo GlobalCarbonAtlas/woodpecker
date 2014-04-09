@@ -1,0 +1,602 @@
+<HTML>
+<HEAD>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>GCA Time Series examples</title>
+    <link rel="icon" href="img/globe.png" type="image/png">
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="examples/styles.css">
+</HEAD>
+
+<BODY>
+
+
+<div class="container">
+
+<div class="page-header title">
+    <h1 style="float:left;">Woodpecker API</h1>
+
+    <div id="link">
+        <a target="_blank" href="https://github.com/GlobalCarbonAtlas/WoodpeckerObject"><img class="git-icon" src="examples/GitHub-64px.png"></a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="page-header sub row">
+    <h2>Files
+        <small>(necessary files for implementation)</small>
+    </h2>
+    <div class="col-md-6">
+        <ul>
+            <li>script perl download.pl (put into the cgi-bin repository or see cgiPath parameter)</li>
+            <li>jquery and javascript librairies
+                <ul>
+                    <li>Woodpecker/js_library/jquery-1.9.1.js</li>
+                    <li>Woodpecker/js_library/jquery.class.js</li>
+                    <li>Woodpecker/js_library/jquery-ui-1.10.2.custom.min.js</li>
+                    <li>Woodpecker/js_library/jshashtable-2.1.js</li>
+                </ul>
+            </li>
+            <li>d3.js
+                <ul>
+                    <li>Woodpecker/d3.css</li>
+                    <li>Woodpecker/d3.v3/d3.v3.js</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <ul>
+            <li>for the contextual menu (right click on the chart)
+                <ul>
+                    <li>Woodpecker/contextmenu.css</li>
+                    <li>Woodpecker/contextmenu.js</li>
+                </ul>
+            </li>
+            <li>for the colorpicker (click on a color circle in the legend or a line)
+                <ul>
+                    <li>Woodpecker/farbtastic/farbtastic.css</li>
+                    <li>Woodpecker/farbtastic/farbtastic.js</li>
+                </ul>
+            </li>
+            <li>for the tree interpolation (click on the interpolation icon)
+                <ul>
+                    <li>Woodpecker/Tree.css</li>
+                    <li>Woodpecker/Tree.js</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="page-header sub row">
+    <h2>Parameters</h2>
+
+    <ul>
+        <li><span class="parameter">containerId :</span> identifier of the div containing the graph <span class="comment">(mandatory)</span></li>
+        <li><span class="parameter">data :</span> data to display <span class="default">(default value = false)</span></li>
+        <li><span class="parameter">toolsContainer :</span> container div for the tools like colorPicker, the interpolation, the axis and the exports <span class="default">(default value = "body")</span>
+        </li>
+        <li><span class="parameter">displayContextualMenu :</span> boolean to display the contextual menu <span class="default">(default value = false)</span></li>
+        <li><span class="parameter">displayIconsMenu :</span> boolean to display the icons menu <span class="default">(default value = false)</span></li>
+        <li><span class="parameter">displayPoints :</span> boolean to display points <span class="default">(default value = false)</span></li>
+        <li><span class="parameter">imagesToInsertInExport :</span> boolean to insert images (as logo by example) in the exports <span
+                class="default">(default value = false)</span></li>
+        - imagesToInsertInExport :
+        - displayBackground : boolean to indicates if we add a background to the images (for transparents images by example). Use of exportFooter style in css.
+        - images : array of images to display
+        - encodedImage : the encoded image in base64
+        - width : the width of the image (need to calculate the rect width if a background is asked)
+        - height : the height of the image (need to calculate the rect height if a background is asked)
+
+        <li><span class="parameter">cgiPath :</span> path for cgi script "download.pl" <span class="default">(default value = "/cgi-bin/export/")</span></li>
+        <li><span class="parameter">imgPath :</span> path for images to be inserted in the exports <span class="default">(default value = "Woodpecker/img")</span></li>
+        <li><span class="parameter">activeKeys :</span> boolean to activate keys (X and Y) to zoom with keyboard <span class="default">(default value = false)</span></li>
+        <li><span class="parameter">callbackWhenRemoveLine :</span> function to call after the deletion of a line <span class="default">(default value = false)</span></li>
+        <li><span class="parameter">xAxisLabelText :</span> label of the X axis <span class="default">(default value = false)</span></li>
+        <li><span class="parameter">yAxisLabelText :</span> label of the Y axis <span class="default">(default value = false)</span></li>
+        <li><span class="parameter">xDomain :</span> values domain for X axis. If no setted domain, it will be adjusted in function of the dataset <span class="default">(default value = false)</span>
+        </li>
+        <li><span class="parameter">yDomain :</span> values domain for Y axis. If no setted domain, it will be adjusted in function of the dataset <span class="default">(default value = false)</span>
+        </li>
+        <li><span class="parameter">isLinearXAxis :</span> boolean to state if X axis is linear (d3.scale.linear()) or time (d3.time.scale()) <span class="default">(default value = false for time axis)</span>
+        </li>
+        <li><span class="parameter">svgWidth :</span> width of the svg chart <span
+                class="default">(default value = width of container (containerId) if exists, "500px" otherwise)</span>
+        </li>
+        <li><span class="parameter">svgHeight :</span> height of the svg chart <span
+                class="default">(default value = height of container (containerId) if > 260, "400px" otherwise)</span>
+        </li>
+        <li><span class="parameter">interpolation :</span> interpolation of the data <span class="default">(default value = "linear")</span></li>
+    </ul>
+</div>
+
+<div class="page-header sub row">
+    <div id="functions"><h2>Functions</h2></div>
+
+    <ul>
+        <div class="row">
+            <div class="col-md-3">
+                <a href="#data" class="functions">Data</a>
+                <li><a href="#setData">setData</a></li>
+                <li><a href="#getEnableDataSeries">getEnableDataSeries</a></li>
+                <li><a href="#addData">addData</a></li>
+            </div>
+            <div class="col-md-3">
+                <a href="#graph" class="functions">Graph</a>
+                <li><a href="#createGraph">createGraph</a></li>
+                <li><a href="#createSVG">createSVG</a></li>
+                <li><a href="#update">update</a></li>
+                <li><a href="#init">init</a></li>
+                <li><a href="#redrawAfterPanOrZoom">redrawAfterPanOrZoom</a></li>
+                <li><a href="#redraw">redraw</a></li>
+
+            </div>
+            <div class="col-md-3">
+                <a href="#axis" class="functions">Axis</a>
+                <li><a href="#setYAxisLabelText">setYAxisLabelText</a></li>
+                <li><a href="#getAxisLabelInArrayWithExponent">getAxisLabelInArrayWithExponent</a></li>
+                <li><a href="#createOrUpdateAxis">createOrUpdateAxis</a></li>
+                <li><a href="#onClickAxis">onClickAxis</a></li>
+                <li><a href="#onClickUpdateAxis">onClickUpdateAxis</a></li>
+
+            </div>
+            <div class="col-md-3">
+                <a href="#domains" class="functions">Domains</a>
+                <li><a href="#getYDomain">getYDomain</a></li>
+                <li><a href="#getXDomain">getXDomain</a></li>
+                <li><a href="#updateXYDomainsWithValues">updateXYDomainsWithValues</a></li>
+                <li><a href="#updateXYDomains">updateXYDomains</a></li>
+                <li><a href="#updateDomainIfUniqueValue">updateDomainIfUniqueValue</a></li>
+            </div>
+        </div>
+        <BR/>
+
+        <div class="row">
+            <div class="col-md-3">
+                <a href="#linesPoints" class="functions">Lines, points</a>
+                <li><a href="#setDisplayPoints">setDisplayPoints</a></li>
+                <li><a href="#addOrUpdateLinesAndPoints">addOrUpdateLinesAndPoints</a></li>
+                <li><a href="#removeLine">removeLine</a></li>
+                <li><a href="#removeAllLines">removeAllLines</a></li>
+                <li><a href="#hideOrDisplayLine">hideOrDisplayLine</a></li>
+                <li><a href="#onClickLine">onClickLine</a></li>
+                <li><a href="#onClickRemoveAllLines">onClickRemoveAllLines</a></li>
+                <li><a href="#onClickPoint">onClickPoint</a></li>
+            </div>
+            <div class="col-md-3">
+                <a href="#legends" class="functions">Legends</a>
+                <li><a href="#createOrUpdateLegend">createOrUpdateLegend</a></li>
+                <li><a href="#onMouseOverOrOutLegend">onMouseOverOrOutLegend</a></li>
+                <li><a href="#onClickLegend">onClickLegend</a></li>
+                <li><a href="#onDblClickLegend">onDblClickLegend</a></li>
+                <li><a href="#onClickLegendCircle">onClickLegendCircle</a></li>
+            </div>
+            <div class="col-md-3">
+                <a href="#zooms" class="functions">Zooms</a>
+                <li><a href="#setZoomXAvailable">setZoomXAvailable</a></li>
+                <li><a href="#setZoomYAvailable">setZoomYAvailable</a></li>
+                <li><a href="#bindZoomsToGraph">bindZoomsToGraph</a></li>
+                <li><a href="#bindZoom">bindZoom</a></li>
+                <li><a href="#initZoom">initZoom</a></li>
+                <li><a href="#updateZoomXY">updateZoomXY</a></li>
+                <li><a href="#onClickZoomX">onClickZoomX</a></li>
+                <li><a href="#onClickZoomY">onClickZoomY</a></li>
+            </div>
+            <div class="col-md-3">
+                <a href="#keys" class="functions">Keys</a>
+                <li><a href="#keydownXY">keydownXY</a></li>
+                <li><a href="#keyupXY">keyupXY</a></li>
+
+                <a href="#menus" class="functions">Menus</a>
+                <li><a href="#setDisplayIconsMenu">setDisplayIconsMenu</a></li>
+                <li><a href="#setDisplayContextualMenu">setDisplayContextualMenu</a></li>
+                <li><a href="#createOrUpdateContextMenu">createOrUpdateContextMenu</a></li>
+                <li><a href="#createOrUpdateIconsMenu">createOrUpdateIconsMenu</a></li>
+                <li><a href="#removeIconsMenu">removeIconsMenu</a></li>
+            </div>
+        </div>
+        <BR/>
+
+        <div class="row">
+            <div class="col-md-3">
+                <a href="#colors" class="functions">Colors</a>
+                <li><a href="#getFreeColor">getFreeColor</a></li>
+                <li><a href="#createColorPicker">createColorPicker</a></li>
+                <li><a href="#changeColor">changeColor</a></li>
+                <li><a href="#onClickColorPicker">onClickColorPicker</a></li>
+            </div>
+            <div class="col-md-3">
+                <a href="#interpolations" class="functions">Interpolations</a>
+                <li><a href="#getDataForInterpolation">getDataForInterpolation</a></li>
+                <li><a href="#setInterpolation">setInterpolation</a></li>
+                <li><a href="#createTreeForInterpolation">createTreeForInterpolation</a></li>
+                <li><a href="#resizeDivForTree">resizeDivForTree</a></li>
+                <li><a href="#onClickDisplayInterpolation">onClickDisplayInterpolation</a></li>
+                <li><a href="#onClickInterpolation">onClickInterpolation</a></li>
+            </div>
+            <div class="col-md-3">
+                <a href="#exports" class="functions">Exports</a>
+                <li><a href="#onClickExport">onClickExport</a></li>
+                <li><a href="#onClickExportSVG">onClickExportSVG</a></li>
+                <li><a href="#onClickExportPNG">onClickExportPNG</a></li>
+                <li><a href="#onClickExportWithParameters">onClickExportWithParameters</a></li>
+                <li><a href="#submitDownloadForm">submitDownloadForm</a></li>
+            </div>
+            <div class="col-md-3">
+                <a href="#others" class="functions">Others</a>
+                <li><a href="#createSimpleBox">createSimpleBox</a></li>
+                <li><a href="#createDivsForGraph">createDivsForGraph</a></li>
+                <li><a href="#bindTools">bindTools</a></li>
+            </div>
+        </div>
+    </ul>
+</div>
+
+
+<div class="page-header sub row">
+    <div id="data"><h2><a href="#functions">#</a> Data</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="setData">setData( data )</div>
+        </h5>
+        Set the dataset with the new data. This function doesn't automatically update the graph (you have to call the function update).
+        <h5>
+            <div id="getEnableDataSeries">getEnableDataSeries()</div>
+        </h5>
+        Return only the enabled data.
+        <h5>
+            <div id="addData">addData( data, color )</div>
+        </h5>
+        Add data to current dataset, set the color (if given) to the new line and update the graph.
+    </div>
+</div>
+
+<div class="page-header sub row">
+    <div id="graph"><h2><a href="#functions">#</a> Graph</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="createGraph">createGraph( isNewGraph )</div>
+        </h5>
+        Create a graph with all given parameters. If it's a new graph (isNewGraph = true), some divs for svg, interpolation, color, etc... will be created.
+        <h5>
+            <div id="createSVG">createSVG()</div>
+        </h5>
+        Build the svg structure.
+        <h5>
+            <div id="update">update()</div>
+        </h5>
+        Update the graph with all new setted parameters (axis, zooms, domains, colors, ...).
+        <h5>
+            <div id="init">init()</div>
+        </h5>
+        Init the graph with all original parameters.
+        <h5>
+            <div id="redrawAfterPanOrZoom">redrawAfterPanOrZoom()</div>
+        </h5>
+        Update the X and Y domains and redraw the graph.
+        <h5>
+            <div id="redraw">redraw()</div>
+        </h5>
+        Update all the svg elements in the graph (lines, points, axis, legends, colors...).
+    </div>
+</div>
+
+<div class="page-header sub row">
+    <div id="axis"><h2><a href="#functions">#</a> Axis</h2></div>
+
+    <div class="col-md-12">
+        <h5>
+            <div id="setYAxisLabelText">setYAxisLabelText( yAxisLabelText )</div>
+        </h5>
+        Set a new label for the Y axis.
+        <h5>
+            <div id="getAxisLabelInArrayWithExponent">getAxisLabelInArrayWithExponent( label )</div>
+        </h5>
+        Return the label for axis with raised exponents (if exist).
+        <h5>
+            <div id="createOrUpdateAxis">createOrUpdateAxis()</div>
+        </h5>
+        Create or update the svg axis elements (label, ticks...).
+        <h5>
+            <div id="onClickAxis">onClickAxis()</div>
+        </h5>
+        Display the "WPaxis" div with the current domains values.
+        <h5>
+            <div id="onClickUpdateAxis">onClickUpdateAxis()</div>
+        </h5>
+        Update the X and Y axis with the new domains values given in the "WPaxis" div ("xMin", "xMax", yMin", "yMax"). Zooms are no more available because of the new setted domains.
+    </div>
+</div>
+
+
+<div class="page-header sub row">
+    <div id="domains"><h2><a href="#functions">#</a> Domains</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="getYDomain">getYDomain()</div>
+        </h5>
+        Get the yDomain : values domain of the Y axis.
+        <h5>
+            <div id="getXDomain">getXDomain()</div>
+        </h5>
+        Get the xDomain : values domain of the X axis.
+        <h5>
+            <div id="updateXYDomainsWithValues">updateXYDomainsWithValues( xDomain, yDomain )</div>
+        </h5>
+        Set the X and Y domains and adjust to the size of the graph.
+        <h5>
+            <div id="updateXYDomains">updateXYDomains()</div>
+        </h5>
+        Update the X and Y domains in function of the enable data and the size of the graph.
+        <h5>
+            <div id="updateDomainIfUniqueValue">updateDomainIfUniqueValue( domain, axisDomain )</div>
+        </h5>
+        Create fake domains if there's only one unique value for data : [value - value/2, value + value/2]
+    </div>
+</div>
+
+<div class="page-header sub row">
+    <div id="linesPoints"><h2><a href="#functions">#</a> Lines, Points</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="setDisplayPoints">setDisplayPoints( displayPoints )</div>
+        </h5>
+        Set the displayPoints value : boolean to display or not points.
+        <h5>
+            <div id="addOrUpdateLinesAndPoints">addOrUpdateLinesAndPoints()</div>
+        </h5>
+        Add or update the svg lines and points (color, radius, opacity, ...).
+        <h5>
+            <div id="removeLine">removeLine( i )</div>
+        </h5>
+        Remove only the line number i and update graph and menus.
+        <h5>
+            <div id="removeAllLines">removeAllLines()</div>
+        </h5>
+        Remove all the lines and update graph and menus.
+        <h5>
+            <div id="hideOrDisplayLine">hideOrDisplayLine( i )</div>
+        </h5>
+        Hide the selected line or display if it was already hided. If all lines are hided, we display all the series.
+        <h5>
+            <div id="onClickLine">onClickLine( i, d )</div>
+        </h5>
+        Display the color picker to change the color of the line.
+        <h5>
+            <div id="onClickRemoveLines">onClickRemoveLines()</div>
+        </h5>
+        Remove all lines and update graph and menus.
+        <h5>
+            <div id="onClickPoint">onClickPoint()</div>
+        </h5>
+        Display or hide points and update graph and menus.
+    </div>
+</div>
+
+<div class="page-header sub row">
+    <div id="legends"><h2><a href="#functions">#</a> Legends</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="createOrUpdateLegend">createOrUpdateLegend()</div>
+        </h5>
+        Create the legend with a trash icon, a color circle and the text line, and adjust the height graph if necessary.
+        <h5>
+            <div id="onMouseOverOrOutLegend">onMouseOverOrOutLegend( d, isOver )</div>
+        </h5>
+        Highlight the line when mouse is over.
+        <h5>
+            <div id="onClickLegend">onClickLegend( d )</div>
+        </h5>
+        Hide the selected line or display if it was already hided. If all lines are hided, we display all the series.
+        <h5>
+            <div id="onDblClickLegend">onDblClickLegend( d )</div>
+        </h5>
+        Remove the selected line and update graph and menus.
+        <h5>
+            <div id="onClickLegendCircle">onClickLegendCircle( d, i )</div>
+        </h5>
+        Display the color picker to change the color of the line.
+    </div>
+</div>
+
+
+<div class="page-header sub row">
+    <div id="zooms"><h2><a href="#functions">#</a> Zooms</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="setZoomXAvailable">setZoomXAvailable( zoomXAvailable )</div>
+        </h5>
+        Set the zoomXAvailable value : boolean to allow or not zoom on X axis.
+        <h5>
+            <div id="setZoomYAvailable">setZoomYAvailable( zoomYAvailable )</div>
+        </h5>
+        Set the zoomYAvailable value : boolean to allow or not zoom on Y axis.
+        <h5>
+            <div id="bindZoomsToGraph">bindZoomsToGraph()</div>
+        </h5>
+        Bind zooms on events depended on the browser : standard zoom to mousewheel, zoom by X axis to shitfKey + mousewheel and zoom by Y axis to shitfKey + altKey + mousewheel.
+        <h5>
+            <div id="bindZoom">bindZoom()</div>
+        </h5>
+        Bind zooms on X or Y axis or both in function of the setted variables "zoomXAvailable" and "zoomYAvailable".
+        <h5>
+            <div id="initZoom">initZoom()</div>
+        </h5>
+        Init the graph with the basic zoom and update the axis domains.
+        <h5>
+            <div id="updateZoomXY">updateZoomXY()</div>
+        </h5>
+        Bind zooms after a parameter change on X or Y axis and update graph and menus.
+        <h5>
+            <div id="onClickZoomX">onClickZoomX()</div>
+        </h5>
+        Allow or forbid zoom on X axis and update menus.
+        <h5>
+            <div id="onClickZoomY">onClickZoomY()</div>
+        </h5>
+        Allow or forbid zoom on Y axis and update menus.
+    </div>
+</div>
+
+
+<div class="page-header sub row">
+    <div id="keys"><h2><a href="#functions">#</a> Keys</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="keydownXY">keydownXY()</div>
+        </h5>
+        Change zoom rights on X or Y axis in function of the used key : press X to zoom on X axis only, Y to zoom on Y axis only.
+        <h5>
+            <div id="keyupXY">keyupXY()</div>
+        </h5>
+        Allow the zooms on both axis when no key is pressed.
+    </div>
+</div>
+
+<div class="page-header sub row">
+    <div id="menus"><h2><a href="#functions">#</a> Menus</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="setDisplayIconsMenu">setDisplayIconsMenu( displayIconsMenu )</div>
+        </h5>
+        Set the displayIconsMenu value : boolean to display or not icons menu.
+        <h5>
+            <div id="setDisplayContextualMenu">setDisplayContextualMenu( displayContextualMenu )</div>
+        </h5>
+        Set the displayContextualMenu value : boolean to display or not contextual menu.
+        <h5>
+            <div id="createOrUpdateContextMenu">createOrUpdateContextMenu()</div>
+        </h5>
+        Create or update the context menu content and display by using the files "contextmenu.css" and "contextmenu.js".
+        <h5>
+            <div id="createOrUpdateIconsMenu">createOrUpdateIconsMenu()</div>
+        </h5>
+        Create or update the icons menu content.
+        <h5>
+            <div id="removeIconsMenu">removeIconsMenu()</div>
+        </h5>
+        Remove the icons menu (delete the div content).
+    </div>
+</div>
+
+<div class="page-header sub row">
+    <div id="colors"><h2><a href="#functions">#</a> Colors</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="getFreeColor">getFreeColor( i )</div>
+        </h5>
+        Return the first color in the color array not already used by a line. After 20 displayed colors, it returns the ith color of the array.
+        <h5>
+            <div id="createColorPicker">createColorPicker()</div>
+        </h5>
+        Create the color picker element by using the files "farbtastic.css" and "farbtastic.js".
+        <h5>
+            <div id="changeColor">changeColor( i, color )</div>
+        </h5>
+        Change the color of the ith line.
+        <h5>
+            <div id="onClickColorPicker">onClickColorPicker()</div>
+        </h5>
+        Change the color of the selected line and update the color picker background.
+    </div>
+</div>
+
+<div class="page-header sub row">
+    <div id="interpolations"><h2><a href="#functions">#</a> Interpolations</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="getDataForInterpolation">getDataForInterpolation()</div>
+        </h5>
+        Return the json values of interpolations to create the tree.
+        <h5>
+            <div id="setInterpolation">setInterpolation( interpolation )</div>
+        </h5>
+        Set the interpolation value.
+        <h5>
+            <div id="createTreeForInterpolation">createTreeForInterpolation()</div>
+        </h5>
+        Create the interpolation tree element by using the files "Tree.css" and "Tree.js".
+        <h5>
+            <div id="resizeDivForTree">resizeDivForTree( argument, containerId, treeInitWidth )</div>
+        </h5>
+        Adjust the size of the interpolation div after a click on a tree element.
+        <h5>
+            <div id="onClickDisplayInterpolation">onClickDisplayInterpolation()</div>
+        </h5>
+        Display or hide the interpolation element.
+        <h5>
+            <div id="onClickInterpolation">onClickInterpolation( argument )</div>
+        </h5>
+        Adjust the size of the interpolation div after a click on a tree element and update the graph with the new interpolation value.
+    </div>
+</div>
+
+<div class="page-header sub row">
+    <div id="exports"><h2><a href="#functions">#</a> Exports</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="onClickExport">onClickExport()</div>
+        </h5>
+        Display or hide the export element.
+        <h5>
+            <div id="onClickExportSVG">onClickExportSVG()</div>
+        </h5>
+        Export graph in SVG format.
+        <h5>
+            <div id="onClickExportPNG">onClickExportPNG()</div>
+        </h5>
+        Export graph in PNG format.
+        <h5>
+            <div id="onClickExportWithParameters">onClickExportWithParameters( value )</div>
+        </h5>
+        Clone the graph in a new element, change styles, add logo if asked (imagesToInsertInExport = true), and submit the form (using of a perl script "download.pl") to export this cloned graph.
+        <h5>
+            <div id="submitDownloadForm">submitDownloadForm( output_format )</div>
+        </h5>
+        Extract the data of the cloned graph as SVG text string and submit the form to the server. The form calls the cgi-bin perl script "/cgi-bin/export/download.pl". The result will be an attachment file to download.
+    </div>
+</div>
+
+<div class="page-header sub row">
+    <div id="others"><h2><a href="#functions">#</a> Others</h2></div>
+
+    <div class="col-md-10">
+        <h5>
+            <div id="createSimpleBox">createSimpleBox( id, text )</div>
+        </h5>
+        Create a basic div box with title, style, ... for elements like interpolation, color picker, ...
+        <h5>
+            <div id="createDivsForGraph">createDivsForGraph( divContainer, title )</div>
+        </h5>
+        Create the div elements for interpolation, color picker, axis, export, and form to export.
+        <h5>
+            <div id="bindTools">bindTools()</div>
+        </h5>
+        Bind some actions and behaviours on some div elements.
+    </div>
+</div>
+
+<footer>
+    <a href="mailto:Vanessa.Maigne@lsce.ipsl.fr?Subject=WoodpeckerObject">
+        <div class="ff-element ff-mail"></div>
+    </a>
+
+    <p><a target="_blank" href="http://www.globalcarbonatlas.org/?q=flux_ts">&copy; Global Carbon Atlas 2013</a></p>
+</footer>
+
+</div>
+</BODY>
+</HTML>
