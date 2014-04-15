@@ -7,3 +7,7 @@ TO CLONE THIS PROJECT :
   - git submodule init
   - git submodule update
 
+TO UPDATE THE SUBMODULE :
+  - cd WoodpeckerObject
+  - git pull origin master
+
