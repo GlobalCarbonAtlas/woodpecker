@@ -379,14 +379,15 @@ var WPInterfaceW = Class.create( {
                     if( "input" != element.currentTarget.localName )
                         return;
                     this.variable = element.currentTarget.id;
+                    $( "#submitAddToGraph" ).removeClass( "disabled" );
+                    this.isAvailableSubmit = true;
                 }, this ) );
+
                 $( "#variableSelect" ).append( divVariable );
+
                 if( d == this.variable )
                     divVariable.click();
             }, this ) );
-
-            $( "#submitAddToGraph" ).removeClass( "disabled" );
-            this.isAvailableSubmit = true;
 
             if( this.displayFirstVariable )
             {
