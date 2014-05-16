@@ -1,0 +1,3 @@
+[submodule "WoodpeckerObject"]
+	path = WoodpeckerObject
+	url = https://github.com/GlobalCarbonAtlas/WoodpeckerObject.git
