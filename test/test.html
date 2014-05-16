@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Metrics LSCE</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            line-height: 20px;
+        }
+
+        .dataframe td, .dataframe th {
+            padding: 4px;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        .dataframe table, .dataframe tr, .dataframe th, .dataframe td {
+            border: 1px solid black;
+        }
+
+        .modelRotateDiv, .variableRotateDiv {
+            -ms-transform: rotate(293deg); /* IE 9 */
+            -moz-transform: rotate(293deg); /* Firefox */
+            -webkit-transform: rotate(293deg); /* Safari and Chrome */
+            -o-transform: rotate(293deg); /* Opera */
+        }
+
+        .modelRotateSpan, .variableRotateSpan {
+            -ms-transform: rotate(293deg); /* IE 9 */
+            -moz-transform: rotate(293deg); /* Firefox */
+            -webkit-transform: rotate(293deg); /* Safari and Chrome */
+            -o-transform: rotate(293deg); /* Opera */
+            position: relative;
+        }
+
+        .container {
+            margin: 50px;
+            width: 900px;
+            float: left;
+        }
+
+        .row, .nudeRow {
+            width: 800px;
+            float: left;
+        }
+
+        .box {
+            float: left;
+            padding: 5px;
+        }
+
+        .row .box {
+            border: 1px black solid;
+        }
+    </style>
+
+    <script type="text/javascript" src="../Woodpecker/js_library/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../Woodpecker/js_library/jquery-ui-1.10.2.custom.min.js"></script>
+
+
+    <!--<script src="../common/js/library/jquery-1.9.1.js"></script>-->
+    <!--<script src="../common/js/library/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>-->
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+    function getMaxWidth( div )
+    {
+        var max = 0;
+        div.each( function( i, d )
+        {
+            max = Math.max( max, $( d ).width() );
+        } );
+        return max;
+    }
+
+    $( document ).ready( function()
+    {
+        // Table
+        $( '.modelRotateTh' ).css( 'height', $( '.modelRotateDiv' ).width() );
+        $( '.variableRotateTh' ).css( 'height', $( '.variableRotateDiv' ).width() );
+        $( '.variableRotateDiv' ).css( 'width', $( '.variableRotateTh' ).height() );
+        $( '.modelRotateDiv' ).css( 'width', $( '.modelRotateTh' ).height() );
+
+
+        // Div : recalcule des largeurs
+        $( '.col1' ).css( 'width', getMaxWidth( $( '.col1' ) ) );
+        $( '.col2' ).css( 'width', getMaxWidth( $( '.col2' ) ) );
+        $( '.col3' ).css( 'width', Math.max( getMaxWidth( $( '.col3' ) ), getMaxWidth( $( '.rotateCol3.variableRotateSpan' ) ) ) );
+        $( '.col4' ).css( 'width', Math.max( getMaxWidth( $( '.col4' ) ), getMaxWidth( $( '.rotateCol4.variableRotateSpan' ) ) ) );
+        $( '.col5' ).css( 'width', Math.max( getMaxWidth( $( '.col5' ) ), getMaxWidth( $( '.rotateCol5.variableRotateSpan' ) ) ) );
+        $( '.col6' ).css( 'width', Math.max( getMaxWidth( $( '.col6' ) ), getMaxWidth( $( '.rotateCol6.variableRotateSpan' ) ) ) );
+
+        $( '.modelRotateRow .box' ).css( 'height', getMaxWidth( $( '.modelRotateSpan' ) ) );
+        $( '.variableRotateRow .box' ).css( 'height', getMaxWidth( $( '.variableRotateSpan' ) ) );
+        $( '.modelRotateRow.box' ).css( 'height', getMaxWidth( $( '.modelRotateSpan' ) ) );
+        $( '.variableRotateRow.box' ).css( 'height', getMaxWidth( $( '.variableRotateSpan' ) ) );
+        $( '.modelRotateSpan' ).css( 'height', $( '.col3' ).width() );
+        $( '.rotateCol3' ).css( 'width', $( '.col3' ).width() );
+        $( '.rotateCol4' ).css( 'width', $( '.col4' ).width() );
+        $( '.rotateCol5' ).css( 'width', $( '.col5' ).width() );
+        $( '.rotateCol6' ).css( 'width', $( '.col6' ).width() );
+        $( ".modelRotateSpan" ).css( 'top', Math.abs( $( '.modelRotateRow .rotateCol3' ).width() - $( '.modelRotateRow .rotateCol3' ).height() ) );
+        $( ".variableRotateSpan" ).css( 'top', Math.abs( $( '.variableRotateRow .rotateCol3' ).width() - $( '.variableRotateRow .rotateCol3' ).height() ) );
+
+        $( '.dataframe td' ).on( 'click', function()
+        {
+            $( '.value' ).toggle();
+        } );
+
+    } );
+
+</script>
+
+<center>
+
+<div class="container">
+    <div class="nudeRow">
+        <div class="box col1">&nbsp;</div>
+        <div class="box col2">&nbsp;</div>
+        <div class="box col3">Result</div>
+    </div>
+
+    <div class="nudeRow modelRotateRow">
+        <div class="box col1"></div>
+        <div class="box col2">Model</div>
+        <div class="box rotateCol3">
+            <div class="modelRotateSpan">
+                IPSL-CM5A-LR
+            </div>
+        </div>
+        <div class="box rotateCol4">
+            <div class="modelRotateSpan">IPSL-CM5A-MR</div>
+        </div>
+        <div class="box rotateCol5">
+            <div class="modelRotateSpan">IPSL-CM5B-LR</div>
+        </div>
+    </div>
+
+    <div class="nudeRow variableRotateRow">
+        <div class="box col1"></div>
+        <div class="box col2">Variable</div>
+        <div class="box rotateCol3">
+            <!--<div class="variableRotateSpan">-->
+                <svg width="80px" height="40px">
+                    <polygon points="21,0  0,40  43,40  63,0" style="stroke: grey; fill:white;"></polygon>
+                    <text y="6" transform="rotate(302 40,5)">zg500</text>
+                </svg>
+            <!--</div>-->
+        </div>
+        <div class="box rotateCol4">
+            <div class="variableRotateSpan">zg500</div>
+        </div>
+        <div class="box rotateCol5">
+            <div class="variableRotateSpan">va200</div>
+        </div>
+        <div class="box rotateCol6">
+            <div class="variableRotateSpan">zg500</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="box col1">Bias</div>
+        <div class="box col2">Globe</div>
+        <div class="box col3">-52.271</div>
+        <div class="box col4">-27.605</div>
+        <div class="box col5">+0.135</div>
+        <div class="box col6">-49.761</div>
+    </div>
+
+    <div class="row">
+        <div class="box col1">Bias</div>
+        <div class="box col2">Globe</div>
+        <div class="box col3">+1.000</div>
+        <div class="box col4">+1.000</div>
+        <div class="box col5">+0.749</div>
+        <div class="box col6">+0.076</div>
+    </div>
+
+</div>
+
+
+<table border="1">
+    <tbody>
+    <tr>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">-0.50</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(24, 24, 255)">-0.45</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(50, 50, 255)">-0.40</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(76, 76, 255)">-0.35</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(102, 102, 255)">-0.30</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(128, 128, 255)">-0.25</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(152, 152, 255)">-0.20</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(178, 178, 255)">-0.15</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(204, 204, 255)">-0.10</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(230, 230, 255)">-0.05</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 254, 254)">+0.00</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 230, 230)">+0.05</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 204, 204)">+0.10</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 178, 178)">+0.15</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 152, 152)">+0.20</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 126, 126)">+0.25</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 102, 102)">+0.30</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 76, 76)">+0.35</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 49, 49)">+0.40</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 24, 24)">+0.45</td>
+        <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">+0.50</td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<table border="1" class="dataframe">
+<thead>
+<tr>
+    <th title=""></th>
+    <th title=""></th>
+    <th colspan="4" halign="left" title="Result">Result</th>
+</tr>
+<tr>
+    <th title=""></th>
+    <th title="Model">Model</th>
+    <th title="IPSL-CM5A-LR" class="modelRotateTh">
+        <div class="modelRotateDiv">IPSL-CM5A-LR</div>
+    </th>
+    <th title="IPSL-CM5A-MR" class="modelRotateTh">
+        <div class="modelRotateDiv">IPSL-CM5A-MR</div>
+    </th>
+    <th colspan="2" halign="left" title="IPSL-CM5B-LR" class="modelRotateTh">
+        <div class="modelRotateDiv">IPSL-CM5B-LR</div>
+    </th>
+</tr>
+<tr>
+    <th title=""></th>
+    <th title="Variable">Variable</th>
+    <th title="zg500" class="variableRotateTh">
+        <div class="variableRotateDiv">zg500</div>
+    </th>
+    <th title="zg500" class="variableRotateTh">
+        <div class="variableRotateDiv">zg500</div>
+    </th>
+    <th title="va200" class="variableRotateTh">
+        <div class="variableRotateDiv">va200</div>
+    </th>
+    <th title="zg500" class="variableRotateTh">
+        <div class="variableRotateDiv">zg500</div>
+    </th>
+</tr>
+<tr>
+    <th title="MetricName">MetricName</th>
+    <th title="RegionName">RegionName</th>
+    <th title=""></th>
+    <th title=""></th>
+    <th title=""></th>
+    <th title=""></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <th rowspan="4" title="bias" valign="top">bias</th>
+    <th title="Globe">Globe</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-52.271</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-27.605</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 186, 186)">
+        <div class="value">+0.135</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-49.761</div>
+    </td>
+</tr>
+<tr>
+    <th title="NHEX">NHEX</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-53.180</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-27.329</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 216, 216)">
+        <div class="value">+0.078</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-73.641</div>
+    </td>
+</tr>
+<tr>
+    <th title="SHEX">SHEX</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-54.221</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-28.202</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(238, 238, 255)">
+        <div class="value">-0.034</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-20.485</div>
+    </td>
+</tr>
+<tr>
+    <th title="Tropics">Tropics</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-49.995</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-26.580</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(194, 194, 255)">
+        <div class="value">-0.120</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(0, 0, 255)">
+        <div class="value">-60.155</div>
+    </td>
+</tr>
+<tr>
+    <th rowspan="4" title="corr" valign="top">corr</th>
+    <th title="Globe">Globe</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.000</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.000</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.749</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.999</div>
+    </td>
+</tr>
+<tr>
+    <th title="NHEX">NHEX</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.000</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.000</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.716</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.000</div>
+    </td>
+</tr>
+<tr>
+    <th title="SHEX">SHEX</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.999</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.000</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.681</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.999</div>
+    </td>
+</tr>
+<tr>
+    <th title="Tropics">Tropics</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.937</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.948</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.830</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.944</div>
+    </td>
+</tr>
+<tr>
+    <th rowspan="4" title="crmse" valign="top">crmse</th>
+    <th title="Globe">Globe</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 33, 33)">
+        <div class="value">+0.432</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 110, 110)">
+        <div class="value">+0.285</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 248, 248)">
+        <div class="value">+0.015</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 1, 1)">
+        <div class="value">+0.493</div>
+    </td>
+</tr>
+<tr>
+    <th title="NHEX">NHEX</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.643</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 48, 48)">
+        <div class="value">+0.405</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 240, 240)">
+        <div class="value">+0.029</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.890</div>
+    </td>
+</tr>
+<tr>
+    <th title="SHEX">SHEX</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.835</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.575</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 246, 246)">
+        <div class="value">+0.018</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.807</div>
+    </td>
+</tr>
+<tr>
+    <th title="Tropics">Tropics</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+2.197</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.211</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 206, 206)">
+        <div class="value">+0.096</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+2.628</div>
+    </td>
+</tr>
+<tr>
+    <th rowspan="4" title="nrmse" valign="top">nrmse</th>
+    <th title="Globe">Globe</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 222, 222)">
+        <div class="value">+0.064</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 232, 232)">
+        <div class="value">+0.045</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.238</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 216, 216)">
+        <div class="value">+0.076</div>
+    </td>
+</tr>
+<tr>
+    <th title="NHEX">NHEX</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 226, 226)">
+        <div class="value">+0.057</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 236, 236)">
+        <div class="value">+0.038</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.250</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 216, 216)">
+        <div class="value">+0.077</div>
+    </td>
+</tr>
+<tr>
+    <th title="SHEX">SHEX</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 216, 216)">
+        <div class="value">+0.075</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 228, 228)">
+        <div class="value">+0.055</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.362</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 214, 214)">
+        <div class="value">+0.082</div>
+    </td>
+</tr>
+<tr>
+    <th title="Tropics">Tropics</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+2.140</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.180</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.281</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+2.544</div>
+    </td>
+</tr>
+<tr>
+    <th rowspan="4" title="sdratio" valign="top">sdratio</th>
+    <th title="Globe">Globe</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.983</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.989</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.113</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.978</div>
+    </td>
+</tr>
+<tr>
+    <th title="NHEX">NHEX</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.985</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.990</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.085</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.978</div>
+    </td>
+</tr>
+<tr>
+    <th title="SHEX">SHEX</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.977</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.984</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.049</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+0.974</div>
+    </td>
+</tr>
+<tr>
+    <th title="Tropics">Tropics</th>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.058</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.049</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.338</div>
+    </td>
+    <td style="font-family: monospace; font-size:10px; text-align: center; background-color:rgb(255, 0, 0)">
+        <div class="value">+1.081</div>
+    </td>
+</tr>
+</tbody>
+</table>
+
+</center>
+
+</body>
+</html>
+

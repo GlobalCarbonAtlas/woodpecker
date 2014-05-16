@@ -12,6 +12,7 @@ var WPInterfaceW = Class.create( {
 
     initialize: function( resourcesTreeData, regionsTreeData, variablesToKeepArray, variableNamesToKeepArray )
     {
+
         // Param
         this.containerErrors = $( "#errors" );
         this.containerContentErrors = $( "#contentErrors" );
@@ -22,7 +23,6 @@ var WPInterfaceW = Class.create( {
         this.isAvailableSubmit = false;
 
         this.threddsPath = jQuery.i18n.prop( "threddsPath" ) != "[threddsPath]" ? jQuery.i18n.prop( "threddsPath" ) : "Atlas/Flux";
-        this.hostName = jQuery.i18n.prop( "hostname" ) ? jQuery.i18n.prop( "hostname" ) : location.hostname;
         this.imgPath = "img";
 
         /**
@@ -351,9 +351,15 @@ var WPInterfaceW = Class.create( {
         if( i < this.selectedResourceKeys.length )
         {
             var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[i] )[1] );
-            var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" +
+            // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
+//            var url = "http://" + location.hostname + "/thredds/wms/" + this.threddsPath + "/" +
+//                    this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
+//                    this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
+            // LOCAL
+            var url = "http://webportals.ipsl.jussieu.fr/thredds/wms/" + this.threddsPath + "/" +
                     this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
                     this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
+            // FIN LOCAL
 
             this.getVariables( url, i );
         }
@@ -399,19 +405,31 @@ var WPInterfaceW = Class.create( {
 
     getVariables: function( url, i )
     {
-        $.ajax( {
-            type: "GET",
-            url: url,
-            dataType: "xml",
-            success: jQuery.proxy( function( xml )
-            {
-                this.getVariablesSuccess( xml, i );
-            }, this ),
-            error: jQuery.proxy( function( argument )
-            {
-                this.getVariablesError( i );
-            }, this )
-        } );
+        // LOCAL
+        var proxyTest = 'test/php-simple-proxy-master/ba-simple-proxy.php';
+
+        var url = proxyTest + '?url=' + encodeURIComponent( url );
+
+        $.get( url, jQuery.proxy( function( data )
+        {
+            this.getVariablesSuccess( data.contents, i );
+        }, this ) );
+        // FIN LOCAL
+
+//        $.ajax( {
+//            type: "GET",
+//            url: url,
+//            dataType: "xml",
+//            success: jQuery.proxy( function( xml )
+//            {
+//                this.getVariablesSuccess( xml, i );
+//            }, this ),
+//            error: jQuery.proxy( function( argument )
+//            {
+//                this.getVariablesSuccess( argument.responseText, i );
+////                this.getVariablesError( i );
+//            }, this )
+//        } );
     },
 
     getVariablesSuccess: function( data, i )
@@ -484,14 +502,31 @@ var WPInterfaceW = Class.create( {
                 var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[1] );
 
                 // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
-                var request = "http://" + this.hostName + "/thredds/ncss/grid/" + this.threddsPath + "/" +
+                var request = "http://" + location.hostname + "/thredds/ncss/grid/" + this.threddsPath + "/" +
                         this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[1] + "/" + selectedPeriod + "/" +
                         "regions/region" + this.selectedRegionKeys[regionIndex] + "/" +
                         this.selectedResourceKeys[resourceIndex] + "_" + selectedPeriod + "_region" + this.selectedRegionKeys[regionIndex] + ".nc"
                         + "?var=" + this.variable
                         + "&latitude=0&longitude=0&temporal=all&accept=csv";
 
-                d3.text( request, jQuery.proxy( this.extractDataFromCSV, [this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[0], regionIndex, resourceIndex, this] ) );
+                // LOCAL
+                request = "http://webportals.ipsl.jussieu.fr/thredds/ncss/grid/" + this.threddsPath + "/" +
+                        this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[1] + "/" + selectedPeriod + "/" +
+                        "regions/region" + this.selectedRegionKeys[regionIndex] + "/" +
+                        this.selectedResourceKeys[resourceIndex] + "_" + selectedPeriod + "_region" + this.selectedRegionKeys[regionIndex] + ".nc"
+                        + "?var=" + this.variable
+                        + "&latitude=0&longitude=0&temporal=all&accept=csv";
+
+                var proxyTest = 'test/php-simple-proxy-master/ba-simple-proxy.php';
+                var url = proxyTest + '?url=' + encodeURIComponent( request );
+
+                $.get( url, jQuery.proxy( function( data )
+                {
+                    this.extractDataFromCSV( this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[0], regionIndex, resourceIndex, data.contents );
+                }, this ) );
+                // FIN LOCAL
+
+//                d3.text( request, jQuery.proxy( this.extractDataFromCSV, [this.hashResources.get( this.selectedResourceKeys[resourceIndex] )[0], regionIndex, resourceIndex, this] ) );
             }
             else
             {
@@ -530,13 +565,22 @@ var WPInterfaceW = Class.create( {
 
     extractDataFromCSV:function()
     {
-        var resourceLabel = this[0];
-        var regionIndex = this[1];
-        var resourceIndex = this[2];
-        var context = this[3];
+        // LOCAL
+//        var resourceLabel = this[0];
+//        var regionIndex = this[1];
+//        var resourceIndex = this[2];
+//        var context = this[3];
 
         // Extract data from csv
-        var data = arguments[1];
+//        var data = arguments[1];
+
+        var resourceLabel = arguments[0];
+        var regionIndex = arguments[1];
+        var resourceIndex = arguments[2];
+        var context = this;
+        var data = arguments[3];
+        // FIN LOCAL
+
         if( data )
         {
             var dataArray = d3.csv.parseRows( data );

@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Test : cross domain</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+</HEAD>
+
+<BODY>
+
+<div class="container">
+    hop
+    <BR/>http://fcargoet.evolix.net/2009/02/jsonp-avec-jquery/
+    <BR/>http://www.journaldunet.com/developpeur/client-web/json-ajax-et-jquery/une-requete-inter-domaine-a-l-aide-de-jsonp.shtml
+
+    <BR/>http://62.210.193.22/metric/fetch?group=IPSL-ESM&format=json&headersonly=true
+
+    <BR/><BR/>
+
+    <div id="result"></div>
+</div>
+
+<script type="text/javascript">
+
+    var proxyTest = 'php-simple-proxy-master/ba-simple-proxy.php';
+
+    var url = proxyTest + '?url=' + encodeURIComponent( "http://jidevl:jidevp@62.210.193.22/metric/fetch?group=IPSL-ESM&format=json&headersonly=true" );
+
+    $.get( url, function( data )
+    {
+        console.log( data.contents.metrics_group_columns );
+    } );
+
+
+    //    $.ajax( {
+    //        url: "http://jidevl:jidevp@62.210.193.22/metric/fetch?callback=foo",
+    //        data: {
+    //            group: "IPSL-ESM",
+    //            format: "json",
+    //            headersonly: true
+    //        },
+    //        crossDomain: true,
+    //        success: function( data )
+    //        {
+    //            console.log( "success" );
+    //            console.log( data );
+    //        },
+    //        error: function( arguments, data )
+    //        {
+    //            console.log( "error" );
+    //        },
+    //        dataType: "jsonp"
+    //    } );
+
+    //    $.getJSON( 'http://jidevl:jidevp@62.210.193.22/metric/fetch?callback=?', function( data )
+    //    {
+    //        console.log( data );
+    //    } );
+
+    //    $.ajax( {
+    //        url: "http://jidevl:jidevp@62.210.193.22/metric/fetch?callback=foo",
+    //        dataType: "jsonp",
+    //        data: {
+    //            group: "IPSL-ESM",
+    //            format: "json",
+    //            headersonly: true
+    //        },
+    //        crossDomain: true,
+    //        success: function( data )
+    //        {
+    //            console.log( "success" );
+    //            console.log( data );
+    //        },
+    //        error: function( arguments, data )
+    //        {
+    //            console.log( "error" );
+    //        }
+    //    } );
+
+</script>
+
+</BODY>
+</HTML>
