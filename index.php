@@ -22,7 +22,7 @@
     <link rel="stylesheet" type="text/css" href="css/WPInterface.css">
     <link rel="stylesheet" type="text/css" href="js/library/jquery-ui-1.10.2.custom/css/smoothness/jquery-ui-1.10.2.custom.css">
 
-    <?php include "WoodpeckerObject/Woodpecker//Woodpecker.html" ?>
+    <?php include "Woodpecker//Woodpecker.html" ?>
     <script type="text/javascript" src="js/helper.js"></script>
     <script type="text/javascript" src="js/OpenLayers-2.12/OpenLayers.js"></script>
     <script type="text/javascript" src="js/Help.js"></script>
