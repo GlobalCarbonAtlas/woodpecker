@@ -505,8 +505,10 @@ var WPInterfaceW = Class.create( {
         {
             if( !this.graph )
             {
-                var options = {containerId: "graph",
-                    height: $( "#leftMenu" ).height() * 2 / 3,
+                $("#graph").height($( "#leftMenu" ).height() * 2 / 3);
+
+                var options = {graphContainerId: "graph",
+                    legendContainerId: "legends",
                     xAxisLabelText:'Date',
                     yAxisLabelText: this.yLabel,
                     interpolation:$( "#interpolationValue" ).html(),

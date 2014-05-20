@@ -13,9 +13,13 @@
 #graph {
     width: 70%;
     float: left;
-    padding: 0px 0px 200px 40px;
     z-index: 0;
     margin: 0px;
+}
+
+#legends {
+    float: left;
+    width: 70%;
 }
 
 rect {

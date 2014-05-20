@@ -72,6 +72,7 @@
 
     <div id="contentGraph">
         <div id="graph"></div>
+        <div id="legends"></div>
     </div>
 
     <div id="errors" class="container containerForOver">
