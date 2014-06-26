@@ -106,7 +106,7 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
             $pfile = explode( "_", $bfile );
             // $pfile[1] represent the title, character "-" replaced by " "
             $sfile = implode( "_", array_slice( $pfile, 0, 4 ) );
-            $fileInfo = explode( '.', $file );
+            $fileInfo = explode( '.nc', $file );
             $fileInfo = $fileInfo[0] . '.info';
             if( file_exists( $fileInfo ) )
             {
