@@ -78,10 +78,6 @@ var WPInterfaceW = Class.create( {
 
     initInterface: function()
     {
-        $( "#regionSelect" ).fancytree().init();
-        $( "button#btnResetSearchRegion" ).click();
-        $( "#MonthlyPeriod" ).click();
-        this.createOrUpdateSelectedPeriod();
         $( "#resourceSelect" ).fancytree().init();
         $( "button#btnResetSearchResource" ).click();
     },
