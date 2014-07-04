@@ -157,21 +157,21 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
             {title:"Inversions", folder:true, expanded: true,
                 children: [
 <?php
-                        fancytree_build_children( $properties["inversionsResourcesPath"], "Inversions", $properties["selectedInversion"] );
+                        fancytree_build_children( $properties["inversionsResourcesPath"], "Inversions", $properties["selectedInversions"] );
                 ?>
                 ]
             },
             {title:"Land Models", folder:true,
                 children: [
 <?php
-                        fancytree_build_children( $properties["landModelsResourcesPath"], "LandModels", false );
+                        fancytree_build_children( $properties["landModelsResourcesPath"], "LandModels", $properties["selectedLandModels"] );
                 ?>
                 ]
             },
             {title:"Ocean Models", folder:true,
                 children: [
 <?php
-                        fancytree_build_children( $properties["oceanModelsResourcesPath"], "OceanModels", false );
+                        fancytree_build_children( $properties["oceanModelsResourcesPath"], "OceanModels", $properties["selectedOceanModels"] );
                 ?>
                 ]
             }
