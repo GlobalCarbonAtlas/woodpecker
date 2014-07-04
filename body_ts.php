@@ -157,7 +157,7 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
             {title:"Inversions", folder:true, expanded: true,
                 children: [
 <?php
-                        fancytree_build_children( $properties["inversionsResourcesPath"], "Inversions", "MACC-V2" );
+                        fancytree_build_children( $properties["inversionsResourcesPath"], "Inversions", $properties["selectedInversion"] );
                 ?>
                 ]
             },
@@ -177,8 +177,8 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
             }
         ];
 
-        var variablesToKeepArray = ["Terrestrial_flux", "Ocean_flux"];
-        var variableNamesToKeepArray = ["Terrestrial flux", "Ocean flux"];
+        var variablesToKeepArray = JSON.parse(jQuery.i18n.prop( "variablesToKeepArray" ));
+        var variableNamesToKeepArray = JSON.parse(jQuery.i18n.prop( "variableNamesToKeepArray" ));
         // The variable regionsTreeData comes from the file regions_categories.js
         new WPInterfaceW( resourcesTreeData, regionsTreeData, variablesToKeepArray, variableNamesToKeepArray );
     } );
