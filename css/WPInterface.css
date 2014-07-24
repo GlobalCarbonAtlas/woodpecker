@@ -11,16 +11,18 @@
 }
 
 #graph {
-    width: 70%;
+    width: 80%;
     float: left;
     z-index: 0;
     margin: 0px;
+    padding: 15px 0 0 20px;
 }
 
 #legends {
     float: left;
-    width: 70%;
+    width: 80%;
     margin-left: 15px;
+    padding-left: 20px;
 }
 
 rect {
