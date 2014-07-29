@@ -34,7 +34,8 @@
             </h2>
 
             <div id="periodSelect">
-                <input type="radio" name="period" id="MonthlyPeriod" value="monthlymean" title="Monthly mean"><label for="MonthlyPeriod"><span class="period">Monthly mean</span></label><BR/>
+                <input type="radio" name="period" id="MonthlyPeriod" value="monthlymean" title="Monthly mean"><label for="MonthlyPeriod"><span
+                    class="period">Monthly mean</span></label><BR/>
                 <input type="radio" name="period" id="YearlyPeriod" value="yearlymean" title="Yearly mean" checked="checked"><label for="YearlyPeriod"><span
                     class="period">Yearly mean</span></label><BR/>
                 <input type="radio" name="period" id="GlobalPeriod" value="longterm" title="Long term mean"><label for="GlobalPeriod"><span
@@ -61,6 +62,7 @@
                 <img src="img/4step.png">
                 VARIABLE
             </h2>
+
             <div id="variableSelect"></div>
         </div>
 
@@ -154,21 +156,21 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
         testBrowser();
 
         var resourcesTreeData = [
-            {title:"Inversions", folder:true, expanded: true,
+            {title:"Inversions", folder:true, expanded: ("false" != jQuery.i18n.prop( "selectedInversions" )),
                 children: [
 <?php
                         fancytree_build_children( $properties["inversionsResourcesPath"], "Inversions", $properties["selectedInversions"] );
                 ?>
                 ]
             },
-            {title:"Land Models", folder:true,
+            {title:"Land Models", folder:true, expanded: ("false" != jQuery.i18n.prop( "selectedLandModels" )),
                 children: [
 <?php
                         fancytree_build_children( $properties["landModelsResourcesPath"], "LandModels", $properties["selectedLandModels"] );
                 ?>
                 ]
             },
-            {title:"Ocean Models", folder:true,
+            {title:"Ocean Models", folder:true, expanded:("false" != jQuery.i18n.prop( "selectedOceanModels" )),
                 children: [
 <?php
                         fancytree_build_children( $properties["oceanModelsResourcesPath"], "OceanModels", $properties["selectedOceanModels"] );
@@ -177,8 +179,8 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
             }
         ];
 
-        var variablesToKeepArray = JSON.parse(jQuery.i18n.prop( "variablesToKeepArray" ));
-        var variableNamesToKeepArray = JSON.parse(jQuery.i18n.prop( "variableNamesToKeepArray" ));
+        var variablesToKeepArray = JSON.parse( jQuery.i18n.prop( "variablesToKeepArray" ) );
+        var variableNamesToKeepArray = JSON.parse( jQuery.i18n.prop( "variableNamesToKeepArray" ) );
         // The variable regionsTreeData comes from the file regions_categories.js
         new WPInterfaceW( resourcesTreeData, regionsTreeData, variablesToKeepArray, variableNamesToKeepArray );
     } );
