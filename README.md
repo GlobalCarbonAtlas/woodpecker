@@ -11,3 +11,5 @@ TO CLONE THIS PROJECT :
 TO UPDATE THE SUBMODULE :
   - cd WoodpeckerObject
   - git pull origin master
+
+test native ssh
