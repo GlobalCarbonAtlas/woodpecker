@@ -69,7 +69,10 @@ var WPInterfaceW = Class.create( {
             this.isCtrlKeyPressed = false;
         }, this ) );
 
+        $("#periodSelect").select2();
+        $("#periodSelect").select2("val", "monthlymean");
         this.createOrUpdateSelectedPeriod();
+
         this.bindActions();
         this.createRegionSelect( regionsTreeData );
         this.mapregion1 = this.createRegionMap();
@@ -232,8 +235,8 @@ var WPInterfaceW = Class.create( {
     createOrUpdateSelectedPeriod: function()
     {
         this.selectedPeriod = new Object();
-        this.selectedPeriod.value = $( "input[name='period']:checked" ).val();
-        this.selectedPeriod.title = $( "input[name='period']:checked" )[0].title;
+        this.selectedPeriod.value = $( "#periodSelect" ).select2( "val" );
+        this.selectedPeriod.title = $( "#periodSelect" ).select2("data").text;
     },
 
     /**
@@ -745,7 +748,7 @@ var WPInterfaceW = Class.create( {
             this.createHelp();
         }, this ) );
 
-        $( "input[name='period']" ).on( 'click', jQuery.proxy( function()
+        $( "#periodSelect" ).on( 'change', jQuery.proxy( function()
         {
             this.createOrUpdateSelectedPeriod();
         }, this ) );

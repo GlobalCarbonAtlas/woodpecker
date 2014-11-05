@@ -81,3 +81,13 @@ rect {
 .exportFooter {
     fill: #FFFFFF;
 }
+
+
+/********************* SELECT *************************/
+#s2id_periodSelect {
+    width: 90%;
+}
+.select2-container {
+    display: block;
+    margin: auto !important;
+}

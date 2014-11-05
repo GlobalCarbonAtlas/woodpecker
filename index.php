@@ -18,6 +18,7 @@
     <link rel="icon" href="img/globe.png" type="image/png">
 
     <link rel="stylesheet" type="text/css" href="js/fancytree-master/src/skin-lion/ui.fancytree.css">
+    <link rel="stylesheet" type="text/css" href="js/select2/select2.css"/>
     <link rel="stylesheet" type="text/css" href="css/globalCarbonAtlas.css">
     <link rel="stylesheet" type="text/css" href="css/WPInterface.css">
     <link rel="stylesheet" type="text/css" href="js/library/jquery-ui-1.10.2.custom/css/smoothness/jquery-ui-1.10.2.custom.css">
@@ -28,6 +29,7 @@
     <script type="text/javascript" src="js/Help.js"></script>
     <script type="text/javascript" src="js/fancytree-master/src/jquery.fancytree.js"></script>
     <script type="text/javascript" src="js/fancytree-master/src/jquery.fancytree.filter.js"></script>
+    <script type="text/javascript" src="js/select2/select2.js"></script>
     <script type="text/javascript" src="js/library/jquery.i18n.properties-1.0.9.js"></script>
 
     <script type="text/javascript" src="js/regions_categories.js"></script>
