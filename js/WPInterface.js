@@ -69,6 +69,7 @@ var WPInterfaceW = Class.create( {
             this.isCtrlKeyPressed = false;
         }, this ) );
 
+        // Period
         $("#periodSelect").select2();
         $("#periodSelect").select2("val", "monthlymean");
         this.createOrUpdateSelectedPeriod();
