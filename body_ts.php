@@ -80,60 +80,6 @@
 
 </div>
 
-<?php
-
-// Load properties for resources file path
-$properties = parse_ini_file( "woodpecker.properties" );
-
-// Create resources tree
-function fancytree_build_children( $dirtoread, $category, $elementToSelect )
-{
-    $files = glob( $dirtoread . "*.nc" );
-    $len = count( $files );
-    $counter = 0;
-    echo "\n";
-    foreach( $files as $file )
-    {
-        if( is_file( $file ) )
-        {
-            $counter++;
-            $bfile = basename( $file );
-            $pfile = explode( "_", $bfile );
-            // $pfile[1] represent the title, character "-" replaced by " "
-            $sfile = implode( "_", array_slice( $pfile, 0, 4 ) );
-            $fileInfo = explode( '.nc', $file );
-            $fileInfo = $fileInfo[0] . '.info';
-            if( file_exists( $fileInfo ) )
-            {
-                $fileInfoContent = file_get_contents( $fileInfo );
-                $fileInfoContent = str_replace( "\n", '<br>', $fileInfoContent );
-                $fileInfoContent = str_replace( "Ref :", "<b>Ref :</b>", $fileInfoContent );
-                $fileInfoContent = str_replace( "Contact :", "<b>Contact :</b>", $fileInfoContent );
-            }
-            else
-                $fileInfoContent = "Not available";
-            // If first element to be selected use next line and set true for elementToSelect argument
-            //$selectedElement = $elementToSelect && ($counter == 1) ? true : false;
-            // To select a specific element
-            $selectedElement = $elementToSelect && strpos( $sfile, $elementToSelect ) ? true : false;
-            echo '                    {title:"' . str_replace( "-", " ", $pfile[1] ) . '", key:"' . $sfile . '", selected: "' . $selectedElement . '", icon:false, url:"' . $category . '", complexToolTip:"' . $fileInfoContent . '",}';
-            if( $counter != $len )
-            {
-                echo ',' . "\n";
-            }
-            else
-            {
-                // last line without ,
-                echo "\n";
-            }
-        }
-    }
-    echo "\n";
-
-}
-
-?>
-
 <script type="text/javascript">
 
     $( document ).ready( function ()
@@ -148,32 +94,47 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
 
         testBrowser();
 
-        var resourcesTreeData = [
-            {title:"Inversions", folder:true, expanded: ("false" != jQuery.i18n.prop( "selectedInversions" )),
-                children: [
-<?php
-                        fancytree_build_children( $properties["inversionsResourcesPath"], "Inversions", $properties["selectedInversions"] );
-                ?>
-                ]
-            },
-            {title:"Land Models", folder:true, expanded: ("false" != jQuery.i18n.prop( "selectedLandModels" )),
-                children: [
-<?php
-                        fancytree_build_children( $properties["landModelsResourcesPath"], "LandModels", $properties["selectedLandModels"] );
-                ?>
-                ]
-            },
-            {title:"Ocean Models", folder:true, expanded:("false" != jQuery.i18n.prop( "selectedOceanModels" )),
-                children: [
-<?php
-                        fancytree_build_children( $properties["oceanModelsResourcesPath"], "OceanModels", $properties["selectedOceanModels"] );
-                ?>
-                ]
-            }
-        ];
+        var resourcesTreeData = [];
+        var resourceList = JSON.parse( jQuery.i18n.prop( "resourceList" ) );
+        var selectedResourceList = JSON.parse( jQuery.i18n.prop( "selectedResourceList" ) );
+        var resourcePathList = JSON.parse( jQuery.i18n.prop( "resourcePathList" ) );
 
-        // The variable regionsTreeData comes from the file regions_categories.js
-        new WPInterfaceW( resourcesTreeData, regionsTreeData );
+        addResource( 0 );
+
+        function addResource( i )
+        {
+            var element = new Object();
+            element.title = resourceList[i];
+            element.folder = true;
+            element.expanded = selectedResourceList[i] ? "false" != selectedResourceList[i] : false;
+            var resourcePath = jQuery.i18n.prop( resourcePathList[i] );
+
+            if( resourcePathList[i] && resourceList[i] && (selectedResourceList[i] || "boolean" === jQuery.type( selectedResourceList[i] )) && jQuery.i18n.prop( resourcePathList[i] ) )
+                $.ajax( {
+                    url: "fancyTreeBuildChildren.php",
+                    method: "post",
+                    data: {dirtoread: jQuery.i18n.prop( resourcePathList[i] ) , category : resourceList[i] , elementToSelect : selectedResourceList[i]},
+                    success: function( data )
+                    {
+                        element.children = JSON.parse( data );
+                        resourcesTreeData.push( element );
+                        i++;
+                        if( i >= resourceList.length )
+                        // The variable regionsTreeData comes from the file regions_categories.js
+                            new WPInterfaceW( resourcesTreeData, regionsTreeData );
+                        else
+                            addResource( i );
+                    }
+                } );
+            else
+            {
+                i++;
+                if( i >= resourceList.length )
+                // The variable regionsTreeData comes from the file regions_categories.js
+                    new WPInterfaceW( resourcesTreeData, regionsTreeData );
+            }
+        }
+
     } );
 
 </script>
