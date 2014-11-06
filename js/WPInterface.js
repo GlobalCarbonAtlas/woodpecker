@@ -87,7 +87,7 @@ var WPInterfaceW = Class.create( {
     initAndCreatePeriodSelect: function()
     {
         var periodList = JSON.parse( jQuery.i18n.prop( "periodList" ) );
-        var periodNameList = JSON.parse( jQuery.i18n.prop( "periodNameList" ) );
+        var periodNameList = JSON.parse( jQuery.i18n.prop( "periodNamesList" ) );
         $.each( periodList, function( i, d )
         {
             $( "#periodSelect" ).append( "<option value='" + d[i] + "'>" + periodNameList[i] + "</option>" );
