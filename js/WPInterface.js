@@ -94,7 +94,7 @@ var WPInterfaceW = Class.create( {
         } );
 
         $( "#periodSelect" ).select2();
-        $( "#periodSelect" ).select2( "val", "monthlymean" );
+        $( "#periodSelect" ).select2( "val", jQuery.i18n.prop( "selectedPeriod" ) );
         this.createOrUpdateSelectedPeriod();
     },
 
