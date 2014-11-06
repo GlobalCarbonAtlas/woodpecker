@@ -90,7 +90,7 @@ var WPInterfaceW = Class.create( {
         var periodNameList = JSON.parse( jQuery.i18n.prop( "periodNamesList" ) );
         $.each( periodList, function( i, d )
         {
-            $( "#periodSelect" ).append( "<option value='" + d[i] + "'>" + periodNameList[i] + "</option>" );
+            $( "#periodSelect" ).append( "<option value='" + d + "'>" + periodNameList[i] + "</option>" );
         } );
 
         $( "#periodSelect" ).select2();
