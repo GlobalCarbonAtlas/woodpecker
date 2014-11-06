@@ -45,8 +45,8 @@ var WPInterfaceW = Class.create( {
          *   - key : the variable name
          *   - values : the name to display */
         this.hashVariables = new Hashtable();
-        this.variablesToDisplay = JSON.parse( jQuery.i18n.prop( "variablesToKeepArray" ) );
-        this.variableNamesToDisplay = JSON.parse( jQuery.i18n.prop( "variableNamesToKeepArray" ) );
+        this.variablesToDisplay = JSON.parse( jQuery.i18n.prop( "variableList" ) );
+        this.variableNamesToDisplay = JSON.parse( jQuery.i18n.prop( "variableNamesList" ) );
 
         // Keys
         this.isShiftKeyPressed = false;
