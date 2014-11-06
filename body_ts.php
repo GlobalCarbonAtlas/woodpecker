@@ -96,6 +96,7 @@
 
         var resourcesTreeData = [];
         var resourceList = JSON.parse( jQuery.i18n.prop( "resourceList" ) );
+        var resourceValuesList = JSON.parse( jQuery.i18n.prop( "resourceValuesList" ) );
         var selectedResourceList = JSON.parse( jQuery.i18n.prop( "selectedResourceList" ) );
         var resourcePathList = JSON.parse( jQuery.i18n.prop( "resourcePathList" ) );
 
@@ -109,11 +110,11 @@
             element.expanded = selectedResourceList[i] ? "false" != selectedResourceList[i] : false;
             var resourcePath = jQuery.i18n.prop( resourcePathList[i] );
 
-            if( resourcePathList[i] && resourceList[i] && (selectedResourceList[i] || "boolean" === jQuery.type( selectedResourceList[i] )) && jQuery.i18n.prop( resourcePathList[i] ) )
+            if( resourcePathList[i] && resourceList[i] && resourceValuesList[i] && (selectedResourceList[i] || "boolean" === jQuery.type( selectedResourceList[i] )) && jQuery.i18n.prop( resourcePathList[i] ) )
                 $.ajax( {
                     url: "fancyTreeBuildChildren.php",
                     method: "post",
-                    data: {dirtoread: jQuery.i18n.prop( resourcePathList[i] ) , category : resourceList[i] , elementToSelect : selectedResourceList[i]},
+                    data: {dirtoread: jQuery.i18n.prop( resourcePathList[i] ) , category : resourceValuesList[i] , elementToSelect : selectedResourceList[i]},
                     success: function( data )
                     {
                         element.children = JSON.parse( data );
