@@ -10,7 +10,7 @@
  */
 var WPInterfaceW = Class.create( {
 
-    initialize: function( resourcesTreeData, regionsTreeData, variablesToKeepArray, variableNamesToKeepArray )
+    initialize: function( resourcesTreeData, regionsTreeData )
     {
         // Param
         this.containerErrors = $( "#errors" );
@@ -45,8 +45,8 @@ var WPInterfaceW = Class.create( {
          *   - key : the variable name
          *   - values : the name to display */
         this.hashVariables = new Hashtable();
-        this.variablesToDisplay = variablesToKeepArray;
-        this.variableNamesToDisplay = variableNamesToKeepArray;
+        this.variablesToDisplay = JSON.parse( jQuery.i18n.prop( "variablesToKeepArray" ) );
+        this.variableNamesToDisplay = JSON.parse( jQuery.i18n.prop( "variableNamesToKeepArray" ) );
 
         // Keys
         this.isShiftKeyPressed = false;
@@ -70,9 +70,7 @@ var WPInterfaceW = Class.create( {
         }, this ) );
 
         // Period
-        $("#periodSelect").select2();
-        $("#periodSelect").select2("val", "monthlymean");
-        this.createOrUpdateSelectedPeriod();
+        this.initAndCreatePeriodSelect();
 
         this.bindActions();
         this.createRegionSelect( regionsTreeData );
@@ -84,6 +82,20 @@ var WPInterfaceW = Class.create( {
     {
         $( "#resourceSelect" ).fancytree().init();
         $( "button#btnResetSearchResource" ).click();
+    },
+
+    initAndCreatePeriodSelect: function()
+    {
+        var periodList = JSON.parse( jQuery.i18n.prop( "periodList" ) );
+        var periodNameList = JSON.parse( jQuery.i18n.prop( "periodNameList" ) );
+        $.each( periodList, function( i, d )
+        {
+            $( "#periodSelect" ).append( "<option value='" + d[i] + "'>" + periodNameList[i] + "</option>" );
+        } );
+
+        $( "#periodSelect" ).select2();
+        $( "#periodSelect" ).select2( "val", "monthlymean" );
+        this.createOrUpdateSelectedPeriod();
     },
 
 
@@ -237,7 +249,7 @@ var WPInterfaceW = Class.create( {
     {
         this.selectedPeriod = new Object();
         this.selectedPeriod.value = $( "#periodSelect" ).select2( "val" );
-        this.selectedPeriod.title = $( "#periodSelect" ).select2("data").text;
+        this.selectedPeriod.title = $( "#periodSelect" ).select2( "data" ).text;
     },
 
     /**
@@ -505,7 +517,7 @@ var WPInterfaceW = Class.create( {
         {
             if( !this.graph )
             {
-                $("#graph").height($( "#leftMenu" ).height() * 2 / 3);
+                $( "#graph" ).height( $( "#leftMenu" ).height() * 2 / 3 );
 
                 var options = {graphContainerId: "graph",
                     legendContainerId: "legends",

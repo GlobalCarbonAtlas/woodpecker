@@ -176,10 +176,8 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
             }
         ];
 
-        var variablesToKeepArray = JSON.parse( jQuery.i18n.prop( "variablesToKeepArray" ) );
-        var variableNamesToKeepArray = JSON.parse( jQuery.i18n.prop( "variableNamesToKeepArray" ) );
         // The variable regionsTreeData comes from the file regions_categories.js
-        new WPInterfaceW( resourcesTreeData, regionsTreeData, variablesToKeepArray, variableNamesToKeepArray );
+        new WPInterfaceW( resourcesTreeData, regionsTreeData );
     } );
 
 </script>
