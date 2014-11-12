@@ -103,18 +103,6 @@
         addResource( 0 );
 
 
-        function addElementToTree( element, elementChildren )
-        {
-            element.children = elementChildren;
-            resourcesTreeData.push( element );
-            i++;
-            if( i >= resourceList.length )
-            // The variable regionsTreeData comes from the file regions_categories.js
-                new WPInterfaceW( resourcesTreeData, regionsTreeData );
-            else
-                addResource( i );
-        }
-
         function getParameterValue( key, content )
         {
             var values = content.split( key + ":" );
@@ -155,11 +143,26 @@
                             children.push( elementChildren );
                         } );
 
-                        addElementToTree( element, children );
+                        element.children = children;
+                        resourcesTreeData.push( element );
+                        i++;
+                        if( i >= resourceList.length )
+                        // The variable regionsTreeData comes from the file regions_categories.js
+                            new WPInterfaceW( resourcesTreeData, regionsTreeData );
+                        else
+                            addResource( i );
+
                     },
                     success: function( data )
                     {
-                        addElementToTree( element, data );
+                        element.children = data;
+                        resourcesTreeData.push( element );
+                        i++;
+                        if( i >= resourceList.length )
+                        // The variable regionsTreeData comes from the file regions_categories.js
+                            new WPInterfaceW( resourcesTreeData, regionsTreeData );
+                        else
+                            addResource( i );
                     }
                 } );
             else
