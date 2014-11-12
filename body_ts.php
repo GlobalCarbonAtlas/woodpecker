@@ -102,29 +102,55 @@
 
         addResource( 0 );
 
+        function addElementToTree( element, elementChildren )
+        {
+            element.children = elementChildren;
+            resourcesTreeData.push( element );
+            i++;
+            if( i >= resourceList.length )
+            // The variable regionsTreeData comes from the file regions_categories.js
+                new WPInterfaceW( resourcesTreeData, regionsTreeData );
+            else
+                addResource( i );
+        }
+
         function addResource( i )
         {
             var element = new Object();
             element.title = resourceList[i];
             element.folder = true;
             element.expanded = selectedResourceList[i] ? "false" != selectedResourceList[i] : false;
+
             var resourcePath = jQuery.i18n.prop( resourcePathList[i] );
 
             if( resourcePathList[i] && resourceList[i] && resourceValuesList[i] && (selectedResourceList[i] || "boolean" === jQuery.type( selectedResourceList[i] )) && jQuery.i18n.prop( resourcePathList[i] ) )
                 $.ajax( {
                     url: "fancyTreeBuildChildren.php",
                     method: "post",
+                    dataType: "json",
                     data: {dirtoread: jQuery.i18n.prop( resourcePathList[i] ) , category : resourceValuesList[i] , elementToSelect : selectedResourceList[i]},
+                    error: function( arguments )
+                    {
+                        // WARNING : JSON.parse is not possible because of some space text in .info --> element.children = JSON.parse( data ); is not working !
+                        var childrenData = arguments[0].responseText.replace( "[", "" ).replace( "],", "" ).replace( /{/g, "" ).replace( /"/g, '' ).replace( /""/g, '' ).split( "}," );
+                        var children = [];
+                        $.each( childrenData, function( i, d )
+                        {
+                            var elementChildren = new Object();
+                            var parameters = d.split( ", " );
+                            $.each( parameters, function( ii, dd )
+                            {
+                                var parameter = dd.replace( '"', '' ).split( ":" );
+                                elementChildren[parameter[0]] = parameter[1];
+                            } );
+                            children.push( elementChildren );
+                        } );
+
+                        addElementToTree( element, children );
+                    },
                     success: function( data )
                     {
-                        element.children = JSON.parse( data );
-                        resourcesTreeData.push( element );
-                        i++;
-                        if( i >= resourceList.length )
-                        // The variable regionsTreeData comes from the file regions_categories.js
-                            new WPInterfaceW( resourcesTreeData, regionsTreeData );
-                        else
-                            addResource( i );
+                        addElementToTree( element, data );
                     }
                 } );
             else
@@ -133,6 +159,8 @@
                 if( i >= resourceList.length )
                 // The variable regionsTreeData comes from the file regions_categories.js
                     new WPInterfaceW( resourcesTreeData, regionsTreeData );
+                else
+                    addResource( i );
             }
         }
 
