@@ -24,6 +24,14 @@ var WPInterfaceW = Class.create( {
         this.threddsPath = jQuery.i18n.prop( "threddsPath" );
         this.hostName = jQuery.i18n.prop( "hostname" ) ? jQuery.i18n.prop( "hostname" ) : location.hostname;
         this.imgPath = "img";
+        try
+        {
+            this.useReduceVariablesByRegionByResource = JSON.parse( jQuery.i18n.prop( "useReduceVariablesByRegionByResource" ) );
+        }
+        catch( e )
+        {
+            this.useReduceVariablesByRegionByResource = true;
+        }
 
         /**
          * This hash contains :
@@ -440,7 +448,8 @@ var WPInterfaceW = Class.create( {
                     this.hashVariables.put( nameValue, this.variableNamesToDisplay[index] );
             }
         }, this ) );
-        this.reduceVariablesByRegionByResource();
+        if( this.useReduceVariablesByRegionByResource )
+            this.reduceVariablesByRegionByResource();
         i++;
         this.createAllVariables( i );
     },
