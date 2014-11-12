@@ -102,6 +102,7 @@
 
         addResource( 0 );
 
+
         function addElementToTree( element, elementChildren )
         {
             element.children = elementChildren;
@@ -112,6 +113,14 @@
                 new WPInterfaceW( resourcesTreeData, regionsTreeData );
             else
                 addResource( i );
+        }
+
+        function getParameterValue( key, content )
+        {
+            var values = content.split( key + ":" );
+            if( !values || !values[1] )
+                return "";
+            return  "complexToolTip" == key ? values[1] : values[1].split( ',' )[0];
         }
 
         function addResource( i )
@@ -132,17 +141,17 @@
                     error: function( arguments )
                     {
                         // WARNING : JSON.parse is not possible because of some space text in .info --> element.children = JSON.parse( data ); is not working !
-                        var childrenData = arguments[0].responseText.replace( "[", "" ).replace( "],", "" ).replace( /{/g, "" ).replace( /"/g, '' ).replace( /""/g, '' ).split( "}," );
+                        var childrenData = arguments.responseText.replace( "[", "" ).replace( "],", "" ).replace( /{/g, "" ).replace( /"/g, '' ).replace( /""/g, '' ).split( "}," );
                         var children = [];
                         $.each( childrenData, function( i, d )
                         {
                             var elementChildren = new Object();
-                            var parameters = d.split( ", " );
-                            $.each( parameters, function( ii, dd )
-                            {
-                                var parameter = dd.replace( '"', '' ).split( ":" );
-                                elementChildren[parameter[0]] = parameter[1];
-                            } );
+                            elementChildren.title = getParameterValue( "title", d );
+                            elementChildren.key = getParameterValue( "key", d );
+                            elementChildren.selected = getParameterValue( "selected", d );
+                            elementChildren.icon = JSON.parse( getParameterValue( "icon", d ) );
+                            elementChildren.url = getParameterValue( "url", d );
+                            elementChildren.complexToolTip = getParameterValue( "complexToolTip", d );
                             children.push( elementChildren );
                         } );
 
