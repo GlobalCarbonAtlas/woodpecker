@@ -60,7 +60,8 @@
         </div>
 
         <div class="noticeLSCE leftMenu">
-            Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span> &nbsp;&nbsp;&nbsp; v1.2
+            Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span>
+            &nbsp;&nbsp;&nbsp; v1.2
         </div>
 
     </div>
@@ -82,110 +83,101 @@
 
 <script type="text/javascript">
 
-    $( document ).ready( function ()
-    {
+    $(document).ready(function () {
         // Load properties file
-        jQuery.i18n.properties( {
+        jQuery.i18n.properties({
             name:'woodpecker',
             path:'',
             language:null,
             mode:'both'
-        } );
+        });
 
         testBrowser();
 
         var resourcesTreeData = [];
-        var resourceList = JSON.parse( jQuery.i18n.prop( "resourceList" ) );
-        var resourceValuesList = JSON.parse( jQuery.i18n.prop( "resourceValuesList" ) );
-        var selectedResourceList = JSON.parse( jQuery.i18n.prop( "selectedResourceList" ) );
-        try
-        {
-            var expandedResourceList = JSON.parse( jQuery.i18n.prop( "expandedResourceList" ) );
+        var resourceList = JSON.parse(jQuery.i18n.prop("resourceList"));
+        var resourceValuesList = JSON.parse(jQuery.i18n.prop("resourceValuesList"));
+        var selectedResourceList = JSON.parse(jQuery.i18n.prop("selectedResourceList"));
+        try {
+            var expandedResourceList = JSON.parse(jQuery.i18n.prop("expandedResourceList"));
         }
-        catch( e )
-        {
+        catch(e) {
             var expandedResourceList = false;
         }
 
-        var resourcePathList = JSON.parse( jQuery.i18n.prop( "resourcePathList" ) );
+        var resourcePathList = JSON.parse(jQuery.i18n.prop("resourcePathList"));
 
-        addResource( 0 );
+        addResource(0);
 
 
-        function getParameterValue( key, content )
-        {
-            var values = content.split( key + ":" );
-            if( !values || !values[1] )
+        function getParameterValue(key, content) {
+            var values = content.split(key + ":");
+            if (!values || !values[1])
                 return "";
-            return  "complexToolTip" == key ? values[1] : values[1].split( ',' )[0];
+            return  "complexToolTip" == key ? values[1] : values[1].split(',')[0];
         }
 
-        function addResource( i )
-        {
+        function addResource(i) {
             var element = new Object();
             element.title = resourceList[i];
             element.folder = true;
             element.expanded = expandedResourceList[i] ? expandedResourceList[i] : false;
 
-            var resourcePath = jQuery.i18n.prop( resourcePathList[i] );
+            var resourcePath = jQuery.i18n.prop(resourcePathList[i]);
 
-            if( resourcePathList[i] && resourceList[i] && resourceValuesList[i] && (selectedResourceList[i] || "boolean" === jQuery.type( selectedResourceList[i] )) && jQuery.i18n.prop( resourcePathList[i] ) )
-                $.ajax( {
+            if (resourcePathList[i] && resourceList[i] && resourceValuesList[i] && (selectedResourceList[i] || "boolean" === jQuery.type(selectedResourceList[i])) && jQuery.i18n.prop(resourcePathList[i]))
+                $.ajax({
                     url: "fancyTreeBuildChildren.php",
                     method: "post",
                     dataType: "json",
-                    data: {dirtoread: jQuery.i18n.prop( resourcePathList[i] ) , category : resourceValuesList[i] , elementToSelect : selectedResourceList[i]},
-                    error: function( arguments )
-                    {
+                    data: {dirtoread: jQuery.i18n.prop(resourcePathList[i]) , category : resourceValuesList[i] , elementToSelect : selectedResourceList[i]},
+                    error: function(arguments) {
                         // WARNING : JSON.parse is not possible because of some space text in .info --> element.children = JSON.parse( data ); is not working !
-                        var childrenData = arguments.responseText.replace( "[", "" ).replace( "],", "" ).replace( /{/g, "" ).replace( /"/g, '' ).replace( /""/g, '' ).split( "}," );
+                        var childrenData = arguments.responseText.replace("[", "").replace("],", "").replace(/{/g, "").replace(/"/g, '').replace(/""/g, '').split("},");
                         var children = [];
-                        $.each( childrenData, function( i, d )
-                        {
+                        $.each(childrenData, function(i, d) {
                             var elementChildren = new Object();
-                            elementChildren.title = getParameterValue( "title", d );
-                            elementChildren.key = getParameterValue( "key", d );
-                            elementChildren.selected = getParameterValue( "selected", d );
-                            elementChildren.icon = JSON.parse( getParameterValue( "icon", d ) );
-                            elementChildren.url = getParameterValue( "url", d );
-                            elementChildren.complexToolTip = getParameterValue( "complexToolTip", d );
-                            children.push( elementChildren );
-                        } );
+                            elementChildren.title = getParameterValue("title", d);
+                            elementChildren.key = getParameterValue("key", d);
+                            elementChildren.selected = getParameterValue("selected", d);
+                            elementChildren.icon = getParameterValue("icon", d);
+                            elementChildren.url = getParameterValue("url", d);
+                            elementChildren.complexToolTip = getParameterValue("complexToolTip", d);
+                            children.push(elementChildren);
+                        });
 
                         element.children = children;
-                        resourcesTreeData.push( element );
+                        resourcesTreeData.push(element);
                         i++;
-                        if( i >= resourceList.length )
+                        if (i >= resourceList.length)
                         // The variable regionsTreeData comes from the file regions_categories.js
-                            new WPInterfaceW( resourcesTreeData, regionsTreeData );
+                            new WPInterfaceW(resourcesTreeData, regionsTreeData);
                         else
-                            addResource( i );
+                            addResource(i);
 
                     },
-                    success: function( data )
-                    {
+                    success: function(data) {
                         element.children = data;
-                        resourcesTreeData.push( element );
+                        resourcesTreeData.push(element);
                         i++;
-                        if( i >= resourceList.length )
+                        if (i >= resourceList.length)
                         // The variable regionsTreeData comes from the file regions_categories.js
-                            new WPInterfaceW( resourcesTreeData, regionsTreeData );
+                            new WPInterfaceW(resourcesTreeData, regionsTreeData);
                         else
-                            addResource( i );
+                            addResource(i);
                     }
-                } );
-            else
-            {
+                });
+            else {
                 i++;
-                if( i >= resourceList.length )
+                if (i >= resourceList.length)
                 // The variable regionsTreeData comes from the file regions_categories.js
-                    new WPInterfaceW( resourcesTreeData, regionsTreeData );
+                    new WPInterfaceW(resourcesTreeData, regionsTreeData);
                 else
-                    addResource( i );
+                    addResource(i);
             }
         }
 
-    } );
+    });
 
 </script>
 
